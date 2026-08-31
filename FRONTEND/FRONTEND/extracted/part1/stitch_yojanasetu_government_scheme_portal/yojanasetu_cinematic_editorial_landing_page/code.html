@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Animation Styles */
+    .slide {
+      transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
+    }
+    
+    .slide-content > * {
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .active-slide .slide-content h1 {
+      transition-delay: 0.4s;
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .active-slide .slide-content .typewriter {
+      opacity: 1;
+      transform: translateX(0);
+      transition-delay: 1.2s; /* wait for title */
+    }
+
+    .active-slide .slide-content button {
+      transition-delay: 2s;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Typing Animation */
+    .typewriter-text {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 0;
+    }
+
+    .active-slide .typewriter-text {
+      animation: typing 2s steps(40, end) forwards;
+      animation-delay: 1.2s;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    .progress-bar-fill {
+      transition: width 7s linear;
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary": "#3157E8", /* Cobalt Blue */
+            "primary-container": "#1a56db",
+            "on-primary": "#ffffff",
+            "surface": "#f7f9fb",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f2f4f6",
+            "on-surface": "#191c1e",
+            "on-surface-variant": "#434654",
+            "outline-variant": "#c3c5d7",
+          },
+          "fontFamily": {
+            "headline-xl": ["Playfair Display", "serif"],
+            "headline-md": ["Poppins"],
+            "body-lg": ["Inter"],
+            "label-bold": ["Inter"],
+          },
+          "fontSize": {
+            "headline-xl": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+            "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+            "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Poppins:wght@100..900&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-surface font-body-lg text-on-surface overflow-hidden">
+<!-- Header -->
+<header class="absolute top-0 left-0 right-0 h-16 bg-surface-container-lowest/80 backdrop-blur-2xl z-50 flex items-center justify-between px-margin-desktop shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-white/20">
+<div class="flex items-center gap-4">
+<div class="text-primary font-headline-md text-headline-md font-bold drop-shadow-md">&nbsp; &nbsp;योजना सेतु</div>
+</div>
+<div class="flex items-center gap-4 px-margin-desktop" style="margin-right: 48px;"><button class="p-2 hover:bg-surface-container-low rounded-full transition-colors text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">dark_mode</span></button><button class="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant font-medium text-sm"><span class="material-symbols-outlined text-[20px]">language</span>EN</button><button class="px-4 py-2 bg-primary text-on-primary font-label-bold text-sm rounded-full hover:bg-primary-container transition-all hover:scale-105 shadow-md">Get Started</button></div>
+</header>
+<!-- Main Slideshow Container -->
+<main class="relative w-full h-screen overflow-hidden bg-black">
+<!-- Slides Track -->
+<div class="relative w-full h-full flex transition-transform duration-[1200ms] ease-[cubic-bezier(0.8,0,0.2,1)]" id="slides-track" style="transform: translateX(0%);">
+<!-- Slide 1 (Students) -->
+<div class="slide min-w-full h-full relative flex-shrink-0 active-slide">
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA3CAKqBDPr1LzEhL21pMbzMByIFID4RZoXPRfIvl5a1xI-XSka2aAyeJHp5a_hhmZTH-9tJkvwI0-m43zuPJKE835n5r1lggMtwqpnaU7I5RdkeWWsnrVh_rOFvrvpSg8GaButtDZCrSzS3XLBMAxy3aGOvH82Zz6ujk2VmIvz5djeZhqBO2AIf4N0o7KutfF_ERxlbxXqDI1D4cire30mPlN-4NWni37TOOH6ym6JXNPd-jR729dMlVDd7DU_r0N0SzA');"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent w-2/3"></div>
+<div class="relative h-full flex items-center px-[10%] z-10 pt-16">
+<div class="slide-content max-w-[600px]">
+<h1 class="font-headline-xl text-headline-xl text-white mb-6 drop-shadow-lg leading-tight">
+<span class="block font-light italic text-white/90">For every</span>
+<span class="block font-bold">student.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-gray-200 mb-8 drop-shadow-md typewriter">
+<span class="typewriter-text block">Discover scholarships, education support,<br>and opportunities designed to help you move forward.</span>
+</p>
+<button class="flex items-center gap-2 px-8 py-4 bg-primary text-on-primary font-label-bold text-label-bold rounded-full hover:bg-primary-container transition-all hover:scale-105 shadow-lg">
+              Get Started <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Slide 2 (Farmers) -->
+<div class="slide min-w-full h-full relative flex-shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAeJVXEf4Ht6UphuDrDvwDuTM-olUYtC2pdl-dgI9EdTWpFzIKzD62XDi00gWMzoQJNjpqkNi5CPP34fU2AtjSENnW-CTnsy_LDeYiZ-RZs_UT5CsEPBJ-o1htQhDeXBg0QBg9viEd_8jSgvcwpZ9-PlEnfd0j_07oV-v1YqfGp9zGlPQVfjA84NXrxOnZhGMg1vjmhNQrYhVX2jryhJcSDFV5oUQjgkxFZleckM8vloMDbzSBo-K4ZCSNhI9w4Hi81D20');"></div>
+<div class="absolute inset-0 bg-gradient-to-l from-black/80 via-black/40 to-transparent w-2/3 ml-auto"></div>
+<div class="relative h-full flex items-center justify-end px-[10%] z-10 pt-16">
+<div class="slide-content max-w-[600px] text-right">
+<h1 class="font-headline-xl text-headline-xl text-white mb-6 drop-shadow-lg leading-tight">
+<span class="block font-light italic text-white/90">For every</span>
+<span class="block font-bold">farmer.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-gray-200 mb-8 drop-shadow-md typewriter">
+<span class="typewriter-text block">Find agricultural support, financial assistance,<br>and schemes designed around your livelihood.</span>
+</p>
+</div>
+</div>
+</div>
+<!-- Slide 3 (Women) -->
+<div class="slide min-w-full h-full relative flex-shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDMhFp_fM50e3_ypcQq7G5TZzoZnrcLniXWj3tc2Jc81cf_pzRcf08679GbD0ZvZmCaqb_-EPWHQvlIc0lsNlkkKB6VPb0t_LXaBoUJGwFV68NkgzuNoCBJUUScRqhnBortaKOPtvIbalC_OaZdP7RHAOB8Yw8effnGkZhHhy4A6Y-YHWeQ8V9F9fPeVJQtQCRYRhfLCp_T6Q-HSlj56BdNB0IkFDpk7XHgl0PRLlKzZeGUbFJGEuCnYdZqfgPunLWpRdY');"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent w-2/3"></div>
+<div class="relative h-full flex items-center px-[10%] z-10 pt-16">
+<div class="slide-content max-w-[600px]">
+<h1 class="font-headline-xl text-headline-xl text-white mb-6 drop-shadow-lg leading-tight">
+<span class="block font-light italic text-white/90">For every</span>
+<span class="block font-bold">woman.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-gray-200 mb-8 drop-shadow-md typewriter">
+<span class="typewriter-text block">Discover benefits, financial support,<br>and opportunities that help you move forward.</span>
+</p>
+</div>
+</div>
+</div>
+<!-- Slide 4 (Entrepreneurs) -->
+<div class="slide min-w-full h-full relative flex-shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_tpCPEQLHCplnFlSGVCbFMEhPxb-LNd3vog0vk5DzMwTC28MGV01boAeOEME7Pc_np4kcb8G-DuR3b8KEUvKVKPzD6q8UTrTe8lOjx3Q74egMaoHSt_8WmDYKTqaOkSnA3435wcXebCm8Sirf5B019z8QzhWCooVvwDwm1kt31xTzdszvT1dIqnULFAJJS_mPVagIxlGJBtLobUCm9Ikf7zLYWX9_ZH6oq2E9ERszFXglB7mCFYAtxiE1W484iokaauM');"></div>
+<div class="absolute inset-0 bg-gradient-to-l from-black/80 via-black/40 to-transparent w-2/3 ml-auto"></div>
+<div class="relative h-full flex items-center justify-end px-[10%] z-10 pt-16">
+<div class="slide-content max-w-[600px] text-right">
+<h1 class="font-headline-xl text-headline-xl text-white mb-6 drop-shadow-lg leading-tight">
+<span class="block font-light italic text-white/90">For every</span>
+<span class="block font-bold">entrepreneur.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-gray-200 mb-8 drop-shadow-md typewriter">
+<span class="typewriter-text block">Find business support, incentives,<br>and government schemes built around your enterprise.</span>
+</p>
+</div>
+</div>
+</div>
+<!-- Slide 5 (Senior Citizens) -->
+<div class="slide min-w-full h-full relative flex-shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDFcIxQKSFbRIVHYySqpzmIxNcSoU3R8Cwux-yB6bnllwk0TkpwXkH7m3p3mPP0g9sJlb92vMsN59Kl9H78e_UpEnIuD05Ta95-hDVPXiHQEWPqqKnlLILOF5Aa3IL9kz90LdjjCJgZKzgAlc5N8ApePnMZyPLAu0KyaagSFaVuDGfs9nzXW1KrfA5KLNu1b2WQ1ghiomwSl_qGcg69ykEZtrQ-IfsZo7gTd93CD0hHTF3YTf9A_GKTVJ4WyOVYW2o2W-4');"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent w-2/3"></div>
+<div class="relative h-full flex items-center px-[10%] z-10 pt-16">
+<div class="slide-content max-w-[600px]">
+<h1 class="font-headline-xl text-headline-xl text-white mb-6 drop-shadow-lg leading-tight">
+<span class="block font-light italic text-white/90">For every</span>
+<span class="block font-bold">generation.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-gray-200 mb-8 drop-shadow-md typewriter">
+<span class="typewriter-text block">Discover support, benefits,<br>and schemes designed to make everyday life more secure.</span>
+</p>
+</div>
+</div>
+</div>
+<!-- Slide 6 (Citizen) -->
+<div class="slide min-w-full h-full relative flex-shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBgTOx9-hHrWJnNPvDratJWjoIFZGVZddVqB9bezMOMVCaVJo1PKsAMNjQMnCEruvkOqHJl0wCAo9Zq6JMvecqzXrF4c_EVBhpj8ORUVJf6EFrDaISpsTb949PuGBb6FmAlzLUUrnWO9yRVbcFRaQ7aEJUqGspwm0Zs5-N2sI__1uLDYJWGax3OzUpnRPhZu0BQGGSVRPgBJZGtnZ953qJPNDNvCTGc7TYlTF2nVwrASLlDacG2N_8WidwTdqp8VXjLX6A');"></div>
+<div class="absolute inset-0 bg-gradient-to-l from-black/80 via-black/40 to-transparent w-2/3 ml-auto"></div>
+<div class="relative h-full flex items-center justify-end px-[10%] z-10 pt-16">
+<div class="slide-content max-w-[600px] text-right">
+<h1 class="font-headline-xl text-headline-xl text-white mb-6 drop-shadow-lg leading-tight">
+<span class="block font-light italic text-white/90">For every</span>
+<span class="block font-bold">citizen.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-gray-200 mb-8 drop-shadow-md typewriter">
+<span class="typewriter-text block">Find government schemes and benefits<br>that are relevant to you, all in one place.</span>
+</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Integrated Footer Overlay -->
+<div class="absolute bottom-0 w-full z-20 flex flex-col items-center pb-4 px-6 gap-3">
+<!-- Trust Strip -->
+<div class="flex flex-col items-center w-full max-w-4xl mb-2">
+<span class="text-[10px] uppercase tracking-[0.2em] text-white/70 dark:text-white/60 mb-2 font-semibold">Built for every citizen</span>
+<div class="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 py-3 px-8 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-[20px] border border-white/20 dark:border-white/10 w-full">
+<span class="text-sm font-medium text-white/90">Government Schemes</span>
+<span class="w-1 h-1 rounded-full bg-white/40"></span>
+<span class="text-sm font-medium text-white/90">Citizen Services</span>
+<span class="w-1 h-1 rounded-full bg-white/40"></span>
+<span class="text-sm font-medium text-white/90">Digital Access</span>
+<span class="w-1 h-1 rounded-full bg-white/40"></span>
+<span class="text-sm font-medium text-white/90">Business Support</span>
+</div>
+</div>
+<!-- Brand Signature -->
+<div class="text-[11px] text-white/60 font-medium">
+    Made with ♥ by Team CodeFlux
+  </div>
+<!-- Legal & Disclaimer Row -->
+<div class="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl mt-2 pt-3 border-t border-white/10 gap-2">
+<div class="text-[10px] text-white/50 flex items-center gap-2">
+<span class="">© 2026 YojanaSetu</span>
+<span class="opacity-50">|</span>
+<span class="">Independent citizen platform</span>
+<span class="opacity-50">|</span>
+<a class="hover:text-white/80 transition-colors" href="#">Privacy</a>
+<span class="opacity-50">|</span>
+<a class="hover:text-white/80 transition-colors" href="#">Terms</a>
+</div>
+<div class="text-[9px] text-white/40 text-center md:text-right max-w-xl leading-tight">
+      YojanaSetu is an independent platform that helps citizens discover government schemes. Users should verify details on official sources.
+    </div>
+</div>
+</div>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const track = document.getElementById('slides-track');
+      const slides = document.querySelectorAll('.slide');
+      
+      let currentIndex = 0;
+      const totalSlides = slides.length;
+      const slideDuration = 7000; // 7 seconds
+
+      function updateSlide() {
+        // Move track
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Update active class for animations
+        slides.forEach((slide, index) => {
+          if (index === currentIndex) {
+            slide.classList.add('active-slide');
+            // Retrigger animations
+            const el = slide.querySelector('.typewriter-text');
+            if(el) {
+              el.style.animation = 'none';
+              el.offsetHeight; /* trigger reflow */
+              el.style.animation = null; 
+            }
+          } else {
+            slide.classList.remove('active-slide');
+          }
+        });
+      }
+
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlide();
+      }
+
+      // Initial start
+      updateSlide();
+      
+      // Auto advance
+      setInterval(nextSlide, slideDuration);
+    });
+  </script>
+
+
+</body></html>

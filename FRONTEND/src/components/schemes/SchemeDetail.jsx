@@ -1,0 +1,233 @@
+import React from 'react';
+import { useData } from '../../context/DataContext';
+import { useLang } from '../../context/LangContext';
+
+export const SchemeDetail = () => {
+  const { schemes, selectedSchemeId, navigateTo, isBookmarked, toggleBookmark } = useData();
+  const { t } = useLang();
+
+  const scheme = schemes.find((s) => s.id === selectedSchemeId) || schemes[0];
+  const bookmarked = isBookmarked(scheme?.id);
+
+  if (!scheme) {
+    return (
+      <div className="p-8 text-center">
+        <p>{t('schemeNotFound')}</p>
+        <button
+          onClick={() => navigateTo('dashboard')}
+          className="mt-4 px-4 py-2 bg-primary text-white rounded-lg text-sm"
+        >
+          {t('backToResults')}
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col w-full relative pb-16 px-4 sm:px-8 lg:px-margin-desktop py-6">
+      {/* Back Button */}
+      <button
+        onClick={() => navigateTo('dashboard')}
+        className="inline-flex items-center gap-2 text-primary dark:text-primary-fixed font-label-bold text-xs sm:text-sm hover:text-on-primary-fixed-variant transition-colors group mb-6"
+      >
+        <span className="material-symbols-outlined text-[18px] transform group-hover:-translate-x-1 transition-transform">
+          arrow_back
+        </span>
+        <span>{t('backToResults')}</span>
+      </button>
+
+      {/* Main 2-Column Layout */}
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Left Column - 2/3 width */}
+        <div className="w-full lg:w-2/3 flex flex-col gap-6">
+          {/* Header Card */}
+          <div className="bg-surface-container-lowest dark:bg-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm border border-outline-variant/30 dark:border-slate-700 flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <span className="px-3 py-1 bg-surface-container dark:bg-slate-700 text-on-surface-variant dark:text-slate-300 rounded-full font-status-badge text-xs uppercase tracking-wider font-semibold">
+                  {t('dept_' + scheme.id, {}, scheme.department)}
+                </span>
+                <span className="px-3 py-1 bg-secondary-container dark:bg-slate-700 text-on-secondary-container dark:text-slate-200 rounded-full font-status-badge text-xs font-semibold uppercase tracking-wider">
+                  {t('category_' + scheme.category.replace(/ /g, '_'), {}, scheme.category)}
+                </span>
+              </div>
+
+              <h1 className="font-headline-xl text-2xl sm:text-3xl lg:text-4xl text-on-surface dark:text-white font-bold mt-2">
+                {t('scheme_' + scheme.id, {}, scheme.name)}
+              </h1>
+              <p className="font-body-lg text-sm sm:text-base text-on-surface-variant dark:text-slate-300 mt-1 max-w-3xl">
+                {t('desc_' + scheme.id, {}, scheme.description)}
+              </p>
+            </div>
+
+            <div className="h-[1px] w-full bg-gradient-to-r from-outline-variant/50 to-transparent dark:from-slate-700" />
+
+            {/* Scheme Overview */}
+            <div className="flex flex-col gap-3">
+              <h2 className="font-headline-md text-lg font-bold text-on-surface dark:text-white flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary dark:text-primary-fixed">
+                  description
+                </span>
+                <span>{t('schemeOverview')}</span>
+              </h2>
+              <p className="font-body-md text-sm text-on-surface dark:text-slate-300 leading-relaxed">
+                {t('overview_' + scheme.id, {}, scheme.overview || scheme.description)}
+              </p>
+            </div>
+          </div>
+
+          {/* Grid of 2 Cards: Eligibility & Required Documents */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Eligibility Criteria */}
+            <div className="bg-surface-container-lowest dark:bg-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm border border-outline-variant/30 dark:border-slate-700 flex flex-col gap-5 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-28 h-28 bg-primary-fixed/20 dark:bg-primary/10 rounded-bl-full group-hover:scale-110 transition-transform duration-500 pointer-events-none" />
+
+              <h2 className="font-headline-md text-base sm:text-lg font-bold text-on-surface dark:text-white flex items-center gap-2 relative z-10">
+                <span className="material-symbols-outlined text-primary dark:text-primary-fixed">
+                  check_circle
+                </span>
+                <span>{t('eligibilityCriteria')}</span>
+              </h2>
+
+              <ul className="flex flex-col gap-3 font-body-md text-xs sm:text-sm text-on-surface dark:text-slate-300 relative z-10">
+                {scheme.eligibilityCriteria?.map((crit, idx) => (
+                  <li
+                    key={idx}
+                    className={`flex items-start gap-2.5 ${crit.eligible === false ? 'opacity-60 line-through' : ''}`}
+                  >
+                    <span
+                      className={`material-symbols-outlined text-[18px] shrink-0 mt-0.5 ${
+                        crit.eligible === false ? 'text-outline dark:text-slate-500' : 'text-primary dark:text-primary-fixed'
+                      }`}
+                    >
+                      {crit.eligible === false ? 'close' : 'done'}
+                    </span>
+                    <span>{t('elig_' + scheme.id + '_' + idx, {}, crit.text)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Required Documents */}
+            <div className="bg-surface-container-lowest dark:bg-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm border border-outline-variant/30 dark:border-slate-700 flex flex-col gap-5 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-28 h-28 bg-tertiary-fixed/20 dark:bg-tertiary/10 rounded-bl-full group-hover:scale-110 transition-transform duration-500 pointer-events-none" />
+
+              <h2 className="font-headline-md text-base sm:text-lg font-bold text-on-surface dark:text-white flex items-center gap-2 relative z-10">
+                <span className="material-symbols-outlined text-tertiary dark:text-tertiary-fixed">
+                  folder_open
+                </span>
+                <span>{t('requiredDocuments')}</span>
+              </h2>
+
+              <ul className="flex flex-col gap-3 font-body-md text-xs sm:text-sm text-on-surface dark:text-slate-300 relative z-10">
+                {scheme.documentsRequired?.map((doc, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5">
+                    <span className="material-symbols-outlined text-tertiary dark:text-tertiary-fixed text-[18px] shrink-0 mt-0.5">
+                      description
+                    </span>
+                    <span>{t('doc_' + scheme.id + '_' + idx, {}, doc)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column - 1/3 width */}
+        <div className="w-full lg:w-1/3 flex flex-col gap-6">
+          <div className="bg-surface-container-lowest dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-outline-variant/30 dark:border-slate-700 flex flex-col gap-5 sticky top-20">
+            {/* Urgent Deadline Banner if applicable */}
+            {scheme.isUrgent && (
+              <div className="bg-error-container/30 dark:bg-error/20 border border-error/30 p-4 rounded-xl flex items-start gap-3">
+                <span className="material-symbols-outlined text-error text-[20px] shrink-0">
+                  warning
+                </span>
+                <div className="flex flex-col">
+                  <span className="font-label-bold text-xs font-bold text-error">
+                    {t('urgentDeadline')}
+                  </span>
+                  <span className="font-body-sm text-xs text-on-surface dark:text-slate-300 mt-0.5">
+                    {t('urgentDeadlineDesc', { deadline: t('deadline_' + scheme.id, {}, scheme.deadlineText) })}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Benefit Summary */}
+            <div className="p-4 bg-surface-container-low dark:bg-slate-700/60 rounded-xl">
+              <span className="text-[11px] font-label-bold uppercase tracking-wider text-on-surface-variant dark:text-slate-400">
+                {t('directBenefit')}
+              </span>
+              <p className="font-headline-md text-xl font-bold text-primary dark:text-primary-fixed mt-0.5">
+                {t('benefit_' + scheme.id, {}, scheme.benefit)}
+              </p>
+              <p className="text-xs text-on-surface-variant dark:text-slate-300">
+                {t('benefitDetail_' + scheme.id, {}, scheme.benefitDetail)}
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => navigateTo('application-form', [scheme])}
+                className="w-full group relative overflow-hidden bg-gradient-to-r from-primary to-[#1E3A5F] text-on-primary py-3.5 px-6 rounded-xl font-label-bold text-sm flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] shadow-md hover:shadow-xl"
+              >
+                <span>{t('applyNow')}</span>
+                <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">
+                  arrow_forward
+                </span>
+              </button>
+
+              <button
+                onClick={() => toggleBookmark(scheme.id)}
+                className="w-full bg-transparent text-secondary dark:text-slate-300 py-3 px-6 rounded-xl font-label-bold text-xs sm:text-sm flex items-center justify-center gap-2 border-2 border-outline-variant dark:border-slate-600 hover:bg-surface-container-low dark:hover:bg-slate-700 transition-colors"
+              >
+                <span
+                  className="material-symbols-outlined text-[18px]"
+                  style={{ fontVariationSettings: bookmarked ? "'FILL' 1" : "'FILL' 0" }}
+                >
+                  star
+                </span>
+                <span>{bookmarked ? t('removeBookmark') : t('saveBookmark')}</span>
+              </button>
+            </div>
+
+            {/* Application Stats */}
+            <div className="pt-5 border-t border-outline-variant/30 dark:border-slate-700 flex flex-col gap-3">
+              <h3 className="font-label-bold text-xs uppercase tracking-wider text-on-surface-variant dark:text-slate-400">
+                {t('applicationStats')}
+              </h3>
+
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-on-surface-variant dark:text-slate-400">
+                  {t('processingTime')}
+                </span>
+                <span className="font-label-bold font-semibold text-on-surface dark:text-white">
+                  {scheme.processingTime || "15-30 Days"}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-on-surface-variant dark:text-slate-400">
+                  {t('approvalRate')}
+                </span>
+                <span className="font-label-bold font-bold text-primary dark:text-primary-fixed">
+                  {scheme.approvalRate || "85%"}
+                </span>
+              </div>
+
+              <div className="w-full bg-surface-container-highest dark:bg-slate-700 rounded-full h-2 mt-1 overflow-hidden">
+                <div
+                  className="bg-primary h-2 rounded-full relative overflow-hidden"
+                  style={{ width: scheme.approvalRate || '85%' }}
+                >
+                  <div className="absolute inset-0 bg-white/30 animate-[shimmer_2s_infinite]" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

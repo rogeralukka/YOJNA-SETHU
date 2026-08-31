@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
+  @keyframes fade-in-up {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+  .delay-600 { animation-delay: 600ms; }
+</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"on-tertiary-container":"#ffd6a8","error-container":"#ffdad6","on-primary":"#ffffff","surface":"#f7f9fb","tertiary-container":"#895600","surface-bright":"#f7f9fb","surface-container-high":"#e6e8ea","inverse-on-surface":"#eff1f3","secondary-fixed-dim":"#b9c7df","surface-container-low":"#f2f4f6","primary-fixed-dim":"#b5c4ff","tertiary":"#694100","on-surface-variant":"#434654","surface-dim":"#d8dadc","surface-tint":"#1353d8","surface-variant":"#e0e3e5","error":"#ba1a1a","on-primary-fixed":"#00174d","secondary-container":"#d5e3fc","primary-container":"#1a56db","tertiary-fixed":"#ffddb8","on-secondary":"#ffffff","on-secondary-container":"#57657a","on-surface":"#191c1e","on-secondary-fixed-variant":"#3a485b","on-background":"#191c1e","on-primary-fixed-variant":"#003dab","outline-variant":"#c3c5d7","tertiary-fixed-dim":"#ffb95f","outline":"#737686","surface-container-highest":"#e0e3e5","primary":"#003fb1","secondary":"#515f74","on-primary-container":"#d4dcff","on-error":"#ffffff","secondary-fixed":"#d5e3fc","on-secondary-fixed":"#0d1c2e","inverse-primary":"#b5c4ff","inverse-surface":"#2d3133","on-error-container":"#93000a","surface-container-lowest":"#ffffff","on-tertiary":"#ffffff","on-tertiary-fixed":"#2a1700","background":"#f7f9fb","surface-container":"#eceef0","on-tertiary-fixed-variant":"#653e00","primary-fixed":"#dbe1ff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin-desktop":"48px","gutter":"24px","container-max":"1280px","margin-mobile":"16px","base":"4px"},"fontFamily":{"headline-lg-mobile":["Poppins"],"body-lg":["Inter"],"status-badge":["Inter"],"headline-xl":["Poppins"],"body-md":["Inter"],"headline-md":["Poppins"],"label-bold":["Inter"],"headline-lg":["Poppins"],"body-sm":["Inter"]},"fontSize":{"headline-lg-mobile":["28px",{"lineHeight":"1.3","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}],"status-badge":["12px",{"lineHeight":"1","fontWeight":"600"}],"headline-xl":["48px",{"lineHeight":"1.2","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["16px",{"lineHeight":"1.5","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"1.4","fontWeight":"600"}],"label-bold":["14px",{"lineHeight":"1.2","letterSpacing":"0.05em","fontWeight":"600"}],"headline-lg":["32px",{"lineHeight":"1.3","letterSpacing":"-0.01em","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"1.5","fontWeight":"400"}]}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Poppins:wght@100..900&amp;display=swap" rel="stylesheet"></head><body class="bg-surface font-body-md text-on-surface"><header class="fixed top-0 left-0 right-0 h-16 bg-surface-container-lowest z-50 flex items-center justify-between px-margin-desktop shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-4"><div class="text-primary font-headline-md text-headline-md">योजना सेतु</div></div><div class="flex items-center gap-6"><div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant cursor-pointer hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">language</span><span class="text-label-bold font-label-bold">English</span></div><button class="p-2 hover:bg-surface-container-low rounded-full transition-colors"><span class="material-symbols-outlined text-on-surface-variant">dark_mode</span></button><div class="flex items-center gap-3 pl-4 border-l border-outline-variant"><div class="text-right hidden sm:block"><p class="text-label-bold font-label-bold text-on-surface">Ramesh Kumar</p><p class="text-body-sm font-body-sm text-on-surface-variant">ramesh.k@example.com</p></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer hover:scale-105 transition-transform"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-64 bg-surface-container-lowest border-r border-outline-variant z-40 transition-all duration-300 overflow-y-auto"><nav class="flex flex-col gap-1 p-4" data-active-classes="bg-primary-container text-on-primary-container font-bold"><a aria-current="page" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out bg-primary-container text-on-primary-container font-bold" data-path="dashboard" href="#"><span class="material-symbols-outlined">dashboard</span><span class="text-body-md font-body-md">Dashboard</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface hover:pl-5 transition-all duration-300 ease-in-out" data-path="my-business" href="#"><span class="material-symbols-outlined">storefront</span><span class="text-body-md font-body-md">My Business</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface hover:pl-5 transition-all duration-300 ease-in-out" data-path="my-applications" href="#"><span class="material-symbols-outlined">description</span><span class="text-body-md font-body-md">My Applications</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface hover:pl-5 transition-all duration-300 ease-in-out" data-path="bookmarks" href="#"><span class="material-symbols-outlined">bookmark</span><span class="text-body-md font-body-md">Bookmarks</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface hover:pl-5 transition-all duration-300 ease-in-out" data-path="notifications" href="#"><span class="material-symbols-outlined">notifications</span><span class="text-body-md font-body-md">Notifications &amp; Updates</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface hover:pl-5 transition-all duration-300 ease-in-out" data-path="share-eligibility" href="#"><span class="material-symbols-outlined">share</span><span class="text-body-md font-body-md">Share Eligibility</span></a></nav></aside><main class="pl-64 pt-16 min-h-screen bg-surface"><div class="flex flex-col w-full relative">
+<!-- Top Action Bar -->
+<div class="px-margin-desktop py-4 flex items-center justify-between z-30">
+<div class="flex items-center gap-4">
+<div class="relative group cursor-pointer">
+<div class="flex items-center gap-2 px-4 py-2 bg-surface-container-low hover:bg-surface-container-high rounded-full transition-colors duration-300 ease-in-out text-on-surface">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+<span class="font-label-bold text-label-bold">You (Rahul)</span>
+<span class="material-symbols-outlined text-[20px]">arrow_drop_down</span>
+</div>
+<!-- Dropdown placeholder -->
+</div>
+</div>
+<div class="flex items-center gap-4 flex-1 max-w-2xl mx-8">
+<div class="relative w-full group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline">search</span>
+</div>
+<input class="w-full bg-surface-container-highest/50 focus:bg-surface-container-lowest text-on-surface font-body-md text-body-md py-3 pl-12 pr-4 rounded-xl outline-none focus:ring-2 focus:ring-primary transition-all shadow-sm focus:shadow-md" placeholder="Search schemes, departments, or keywords..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-low hover:bg-surface-container-high rounded-full transition-colors duration-300 ease-in-out text-on-surface">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+<span class="font-label-bold text-label-bold">Category</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-low hover:bg-surface-container-high rounded-full transition-colors duration-300 ease-in-out text-on-surface">
+<span class="material-symbols-outlined text-[20px]">sort</span>
+<span class="font-label-bold text-label-bold">Sort</span>
+</button>
+</div>
+</div>
+<!-- Hero / Greeting Section -->
+<div class="px-margin-desktop pt-8 pb-12 relative overflow-hidden">
+<!-- Decorative background elements -->
+<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-primary-container/20 via-tertiary-container/10 to-transparent rounded-full blur-3xl opacity-60 -translate-y-1/4 translate-x-1/4 pointer-events-none"></div>
+<div class="absolute bottom-0 left-10 w-[400px] h-[400px] bg-gradient-to-tr from-secondary-container/20 to-transparent rounded-full blur-3xl opacity-50 translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col md:flex-row gap-8 items-start justify-between">
+<div class="flex-1 opacity-0 animate-fade-in-up delay-100">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full mb-6 shadow-sm">
+<span class="material-symbols-outlined text-[16px] animate-pulse">celebration</span>
+<span class="font-status-badge text-status-badge tracking-wider animate-pulse">NEW MATCHES FOUND</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-4">
+          Hello, Rahul!
+          <br>
+<span class="text-primary opacity-90">You are eligible for 12 schemes.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+          Based on your profile updates, we've matched you with financial assistance and agricultural support programs tailored to your region.
+        </p>
+</div>
+<!-- Action Banner -->
+<div class="w-full md:w-auto min-w-[320px] p-[2px] rounded-2xl bg-gradient-to-br from-primary to-tertiary-fixed shadow-xl transform hover:scale-[1.02] hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 ease-in-out opacity-0 animate-fade-in-up delay-200">
+<div class="bg-surface-container-lowest p-6 rounded-[14px] h-full flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 bg-primary-container rounded-full flex items-center justify-center mb-4 text-on-primary-container">
+<span class="material-symbols-outlined text-[24px]">assignment_ind</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Complete your profile</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Auto-fill applications with one click. You're currently at 65% completion.</p>
+</div>
+<div class="relative w-full h-2 bg-surface-container-high rounded-full overflow-hidden mb-4">
+<div class="absolute top-0 left-0 h-full bg-primary rounded-full w-[65%]"></div>
+</div>
+<button class="w-full py-3 bg-on-surface text-surface-container-lowest font-label-bold text-label-bold rounded-lg hover:bg-primary hover:scale-[1.02] transition-all duration-300 ease-in-out flex items-center justify-center gap-2">
+            Update Profile
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Scheme Grid -->
+<div class="px-margin-desktop pb-32">
+<div class="flex items-center justify-between mb-8 opacity-0 animate-fade-in-up delay-300">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Recommended Schemes</h2>
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+        Showing 1-12 of 12 matches
+      </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="scheme-grid">
+<!-- Card 1 -->
+<div class="scheme-card bg-surface-container-lowest rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-in-out relative group opacity-0 animate-fade-in-up delay-400">
+<div class="absolute top-6 left-6 z-10 flex items-center justify-center w-6 h-6 bg-surface-container-low border-2 border-outline-variant rounded focus-within:border-primary focus-within:ring-2 focus-within:ring-primary-container transition-colors duration-300 ease-in-out">
+<input aria-label="Select PM-KISAN scheme" class="scheme-checkbox opacity-0 absolute inset-0 cursor-pointer w-full h-full" type="checkbox">
+<span class="material-symbols-outlined text-[18px] text-primary opacity-0 pointer-events-none transform scale-50 transition-all duration-300 ease-in-out" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex justify-between items-start pl-10 mb-4">
+<div class="px-2 py-1 bg-tertiary-container text-on-tertiary-container rounded-md font-status-badge text-status-badge">
+            NEW
+          </div>
+<button aria-label="Bookmark scheme" class="text-outline-variant hover:text-tertiary transition-colors duration-300 ease-in-out">
+<span class="material-symbols-outlined">star</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1 line-clamp-1">PM-KISAN Samman Nidhi</h3>
+<p class="font-body-sm text-body-sm text-primary font-medium mb-4">Ministry of Agriculture</p>
+<div class="flex items-center gap-2 mb-6 p-3 bg-surface-container-low rounded-xl">
+<span class="material-symbols-outlined text-outline text-[20px]">payments</span>
+<div>
+<p class="font-label-bold text-label-bold text-on-surface">₹6,000 / year</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-[12px]">Direct Benefit Transfer</p>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-surface-container-highest pt-4">
+<div class="flex items-center gap-1.5 text-error">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="font-label-bold text-label-bold text-[13px]">Closes in 5 days</span>
+</div>
+<button class="font-label-bold text-label-bold text-primary hover:text-on-primary-fixed-variant transition-colors duration-300 ease-in-out group-hover:underline decoration-2 underline-offset-4">
+            View Details
+          </button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="scheme-card bg-surface-container-lowest rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-in-out relative group opacity-0 animate-fade-in-up delay-500">
+<div class="absolute top-6 left-6 z-10 flex items-center justify-center w-6 h-6 bg-surface-container-low border-2 border-outline-variant rounded focus-within:border-primary focus-within:ring-2 focus-within:ring-primary-container transition-colors duration-300 ease-in-out">
+<input aria-label="Select PM-FBY scheme" class="scheme-checkbox opacity-0 absolute inset-0 cursor-pointer w-full h-full" type="checkbox">
+<span class="material-symbols-outlined text-[18px] text-primary opacity-0 pointer-events-none transform scale-50 transition-all duration-300 ease-in-out" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex justify-between items-start pl-10 mb-4">
+<div class="px-2 py-1 bg-surface-container-high text-on-surface-variant rounded-md font-status-badge text-status-badge">
+            AGRICULTURE
+          </div>
+<button aria-label="Bookmark scheme" class="text-tertiary hover:text-tertiary-fixed-dim transition-colors duration-300 ease-in-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1 line-clamp-1">Pradhan Mantri Fasal Bima</h3>
+<p class="font-body-sm text-body-sm text-primary font-medium mb-4">Ministry of Agriculture</p>
+<div class="flex items-center gap-2 mb-6 p-3 bg-surface-container-low rounded-xl">
+<span class="material-symbols-outlined text-outline text-[20px]">security</span>
+<div>
+<p class="font-label-bold text-label-bold text-on-surface">Crop Insurance</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-[12px]">Coverage up to ₹2 Lakh</p>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-surface-container-highest pt-4">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">event</span>
+<span class="font-label-bold text-label-bold text-[13px]">Closes 31 Aug 2024</span>
+</div>
+<button class="font-label-bold text-label-bold text-primary hover:text-on-primary-fixed-variant transition-colors duration-300 ease-in-out group-hover:underline decoration-2 underline-offset-4">
+            View Details
+          </button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="scheme-card bg-surface-container-lowest rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-in-out relative group opacity-0 animate-fade-in-up delay-600">
+<div class="absolute top-6 left-6 z-10 flex items-center justify-center w-6 h-6 bg-surface-container-low border-2 border-outline-variant rounded focus-within:border-primary focus-within:ring-2 focus-within:ring-primary-container transition-colors duration-300 ease-in-out">
+<input aria-label="Select MSME Loan scheme" class="scheme-checkbox opacity-0 absolute inset-0 cursor-pointer w-full h-full" type="checkbox">
+<span class="material-symbols-outlined text-[18px] text-primary opacity-0 pointer-events-none transform scale-50 transition-all duration-300 ease-in-out" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex justify-between items-start pl-10 mb-4">
+<div class="px-2 py-1 bg-tertiary-container text-on-tertiary-container rounded-md font-status-badge text-status-badge">
+            NEW
+          </div>
+<button aria-label="Bookmark scheme" class="text-outline-variant hover:text-tertiary transition-colors duration-300 ease-in-out">
+<span class="material-symbols-outlined">star</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1 line-clamp-1">MUDRA Shishu Loan</h3>
+<p class="font-body-sm text-body-sm text-primary font-medium mb-4">Ministry of Finance</p>
+<div class="flex items-center gap-2 mb-6 p-3 bg-surface-container-low rounded-xl">
+<span class="material-symbols-outlined text-outline text-[20px]">account_balance</span>
+<div>
+<p class="font-label-bold text-label-bold text-on-surface">Up to ₹50,000</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-[12px]">Collateral-free credit</p>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-surface-container-highest pt-4">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">all_inclusive</span>
+<span class="font-label-bold text-label-bold text-[13px]">Always Open</span>
+</div>
+<button class="font-label-bold text-label-bold text-primary hover:text-on-primary-fixed-variant transition-colors duration-300 ease-in-out group-hover:underline decoration-2 underline-offset-4">
+            View Details
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Bottom Action Bar -->
+<div class="fixed bottom-0 left-64 right-0 p-4 z-40 transform translate-y-full transition-transform duration-500 ease-out" id="sticky-action-bar">
+<div class="max-w-xl mx-auto bg-surface-container-lowest/90 backdrop-blur-xl border border-surface-container-highest rounded-2xl p-2 flex items-center justify-between shadow-2xl">
+<div class="px-4 py-2">
+<span class="font-body-md text-body-md text-on-surface">
+<strong class="font-label-bold text-label-bold" id="selected-count">0</strong> schemes selected
+        </span>
+</div>
+<button class="px-6 py-3 bg-gradient-to-r from-primary-container to-primary text-on-primary font-label-bold text-label-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out flex items-center gap-2 relative overflow-hidden group">
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+<span class="relative z-10">Apply to Selected</span>
+<span class="material-symbols-outlined relative z-10 text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const checkboxes = document.querySelectorAll('.scheme-checkbox');
+      const stickyBar = document.getElementById('sticky-action-bar');
+      const countDisplay = document.getElementById('selected-count');
+      
+      let selectedCount = 0;
+
+      checkboxes.forEach(box => {
+        box.addEventListener('change', (e) => {
+          const card = e.target.closest('.scheme-card');
+          const checkIcon = e.target.nextElementSibling;
+          
+          if(e.target.checked) {
+            selectedCount++;
+            card.classList.add('ring-2', 'ring-primary', 'bg-primary/5');
+            e.target.parentElement.classList.add('border-primary', 'bg-primary/10');
+            checkIcon.classList.remove('opacity-0', 'scale-50');
+            checkIcon.classList.add('opacity-100', 'scale-100');
+          } else {
+            selectedCount--;
+            card.classList.remove('ring-2', 'ring-primary', 'bg-primary/5');
+            e.target.parentElement.classList.remove('border-primary', 'bg-primary/10');
+            checkIcon.classList.add('opacity-0', 'scale-50');
+            checkIcon.classList.remove('opacity-100', 'scale-100');
+          }
+
+          countDisplay.textContent = selectedCount;
+
+          if (selectedCount > 0) {
+            stickyBar.classList.remove('translate-y-full');
+            // Add pulse effect to button when first item selected
+            if(selectedCount === 1) {
+              const btn = stickyBar.querySelector('button');
+              btn.classList.add('animate-pulse');
+              setTimeout(() => btn.classList.remove('animate-pulse'), 1500);
+            }
+          } else {
+            stickyBar.classList.add('translate-y-full');
+          }
+        });
+      });
+    });
+  </script>
+</div></main></body></html>

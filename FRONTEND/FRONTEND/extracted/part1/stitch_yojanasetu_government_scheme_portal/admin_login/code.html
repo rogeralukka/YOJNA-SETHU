@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"on-tertiary-container":"#ffd6a8","error-container":"#ffdad6","on-primary":"#ffffff","surface":"#f7f9fb","tertiary-container":"#895600","surface-bright":"#f7f9fb","surface-container-high":"#e6e8ea","inverse-on-surface":"#eff1f3","secondary-fixed-dim":"#b9c7df","surface-container-low":"#f2f4f6","primary-fixed-dim":"#b5c4ff","tertiary":"#694100","on-surface-variant":"#434654","surface-dim":"#d8dadc","surface-tint":"#1353d8","surface-variant":"#e0e3e5","error":"#ba1a1a","on-primary-fixed":"#00174d","secondary-container":"#d5e3fc","primary-container":"#1a56db","tertiary-fixed":"#ffddb8","on-secondary":"#ffffff","on-secondary-container":"#57657a","on-surface":"#191c1e","on-secondary-fixed-variant":"#3a485b","on-background":"#191c1e","on-primary-fixed-variant":"#003dab","outline-variant":"#c3c5d7","tertiary-fixed-dim":"#ffb95f","outline":"#737686","surface-container-highest":"#e0e3e5","primary":"#003fb1","secondary":"#515f74","on-primary-container":"#d4dcff","on-error":"#ffffff","secondary-fixed":"#d5e3fc","on-secondary-fixed":"#0d1c2e","inverse-primary":"#b5c4ff","inverse-surface":"#2d3133","on-error-container":"#93000a","surface-container-lowest":"#ffffff","on-tertiary":"#ffffff","on-tertiary-fixed":"#2a1700","background":"#f7f9fb","surface-container":"#eceef0","on-tertiary-fixed-variant":"#653e00","primary-fixed":"#dbe1ff"}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"></head><body class="bg-surface font-body-md text-on-surface"><main class="flex items-center justify-center min-h-screen p-margin-mobile"><div class="flex flex-col w-full h-full items-center justify-center bg-surface relative overflow-hidden p-margin-mobile md:p-margin-desktop">
+<!-- Ambient Background Decorations -->
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-container/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-tertiary-container/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="w-full max-w-[420px] bg-surface-container-lowest rounded-xl shadow-xl flex flex-col relative z-10 transition-transform duration-300 ease-out transform hover:scale-[1.01]" style="animation: fadeUp 0.6s ease-out forwards; opacity: 0; transform: translateY(20px);">
+<div class="p-8 flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-md mb-6">
+<span class="material-symbols-outlined text-[32px]">shield_person</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Admin Login</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">Access the admin dashboard</p>
+<form class="w-full flex flex-col gap-5">
+<div class="flex flex-col gap-1 relative">
+<label class="font-label-bold text-label-bold text-on-surface text-left uppercase tracking-wider text-[12px]" for="adminId">Admin ID</label>
+<div class="relative flex items-center bg-surface-container-low rounded-lg transition-colors focus-within:bg-surface-container-highest">
+<span class="material-symbols-outlined absolute left-4 text-outline">person</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface py-4 pl-12 pr-4 outline-none placeholder:text-outline-variant" id="adminId" placeholder="Enter your Admin ID" type="text">
+</div>
+</div>
+<div class="flex flex-col gap-1 relative">
+<label class="font-label-bold text-label-bold text-on-surface text-left uppercase tracking-wider text-[12px]" for="password">Password</label>
+<div class="relative flex items-center bg-surface-container-low rounded-lg transition-colors focus-within:bg-surface-container-highest">
+<span class="material-symbols-outlined absolute left-4 text-outline">lock</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface py-4 pl-12 pr-12 outline-none placeholder:text-outline-variant" id="password" placeholder="Enter your password" type="password">
+<button aria-label="Toggle password visibility" class="absolute right-4 text-outline hover:text-on-surface transition-colors focus:outline-none flex items-center justify-center" id="togglePassword" type="button">
+<span class="material-symbols-outlined" id="visibilityIcon">visibility_off</span>
+</button>
+</div>
+</div>
+<button class="w-full mt-4 bg-gradient-to-r from-primary to-primary-container text-on-primary font-label-bold text-label-bold py-4 rounded-lg shadow-md hover:shadow-lg transform transition-all duration-150 ease-out hover:scale-[1.02] focus:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-container-lowest flex items-center justify-center gap-2" type="submit">
+                    Login
+                    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+</div>
+<div class="bg-surface-container-low p-6 rounded-b-xl flex justify-center mt-auto border-t border-surface-container">
+<a class="font-body-sm text-body-sm text-secondary hover:text-primary transition-colors flex items-center gap-2 group" href="#">
+<span class="material-symbols-outlined text-[16px] transform transition-transform group-hover:-translate-x-1">arrow_back</span>
+                Back to User Login
+            </a>
+</div>
+</div>
+</div>
+<style>
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const visibilityIcon = document.getElementById('visibilityIcon');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            visibilityIcon.textContent = type === 'password' ? 'visibility_off' : 'visibility';
+        });
+
+        const form = document.querySelector('form');
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Authenticating...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-80');
+
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-80');
+                
+                const card = document.querySelector('.max-w-\\[420px\\]');
+                card.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 150);
+                
+            }, 1500);
+        });
+    });
+</script></main></body></html>

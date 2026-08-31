@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"on-tertiary-container":"#ffd6a8","error-container":"#ffdad6","on-primary":"#ffffff","surface":"#f7f9fb","tertiary-container":"#895600","surface-bright":"#f7f9fb","surface-container-high":"#e6e8ea","inverse-on-surface":"#eff1f3","secondary-fixed-dim":"#b9c7df","surface-container-low":"#f2f4f6","primary-fixed-dim":"#b5c4ff","tertiary":"#694100","on-surface-variant":"#434654","surface-dim":"#d8dadc","surface-tint":"#1353d8","surface-variant":"#e0e3e5","error":"#ba1a1a","on-primary-fixed":"#00174d","secondary-container":"#d5e3fc","primary-container":"#1a56db","tertiary-fixed":"#ffddb8","on-secondary":"#ffffff","on-secondary-container":"#57657a","on-surface":"#191c1e","on-secondary-fixed-variant":"#3a485b","on-background":"#191c1e","on-primary-fixed-variant":"#003dab","outline-variant":"#c3c5d7","tertiary-fixed-dim":"#ffb95f","outline":"#737686","surface-container-highest":"#e0e3e5","primary":"#003fb1","secondary":"#515f74","on-primary-container":"#d4dcff","on-error":"#ffffff","secondary-fixed":"#d5e3fc","on-secondary-fixed":"#0d1c2e","inverse-primary":"#b5c4ff","inverse-surface":"#2d3133","on-error-container":"#93000a","surface-container-lowest":"#ffffff","on-tertiary":"#ffffff","on-tertiary-fixed":"#2a1700","background":"#f7f9fb","surface-container":"#eceef0","on-tertiary-fixed-variant":"#653e00","primary-fixed":"#dbe1ff"}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"></head><body class="bg-surface font-body-md text-on-surface"><main class="flex items-center justify-center min-h-screen p-margin-mobile"><div class="flex flex-col w-full h-full items-center justify-center p-margin-mobile relative overflow-hidden">
+<!-- Ambient Background Decorations -->
+<div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary-fixed rounded-full blur-[100px] opacity-40 mix-blend-multiply"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-tertiary-fixed rounded-full blur-[120px] opacity-30 mix-blend-multiply"></div>
+<div class="absolute top-[30%] right-[20%] w-[30%] h-[30%] bg-secondary-fixed rounded-full blur-[80px] opacity-40 mix-blend-multiply"></div>
+<svg class="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="40" id="grid" patternUnits="userSpaceOnUse" width="40">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--color-outline-variant)" stroke-width="0.5"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<!-- Modal Container -->
+<div class="relative z-10 w-full max-w-[480px] rounded-[24px] bg-surface/80 backdrop-blur-[24px] shadow-[0_20px_40px_-10px_rgba(26,86,219,0.1)] overflow-hidden flex flex-col transition-all duration-300 transform scale-100 opacity-100" id="authModal">
+<!-- Header Image Area -->
+<div class="h-32 w-full relative overflow-hidden bg-surface-container-highest" data-alt="Abstract architectural rendering with soft, diffused lighting. A blend of modern structural elements in pristine white and soft corporate blue tones. The composition is clean, trustworthy, and geometric, conveying a sense of secure institutional foundation. Subtle glass textures reflect a warm ambient glow, perfect for a secure login portal header." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_ktOViT4gjWbc1MaKjcCdunFsNpHiKTpGXnOK7IYltzUts0-lUkPS1hbRqlQLYv_lBqgDxvPx_9c-3lFQHCuBY6vI756qP2wNIW0XmmfpfT8OcCcNPhYl4azpGUTj6zxR--3vsAuLaRZy2hHEIax4XPq1_4XBqfQs9UApbv1VxsTTIh1_4pjHdOYYPx49lqUpWAdsBvL50OGiWZ7klaO1omtozoxIVLhUBJYB34Ax3IabBKvbihpVFQ')">
+<div class="absolute inset-0 bg-gradient-to-t from-surface/90 to-transparent"></div>
+<div class="absolute bottom-4 left-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[28px] font-variation-settings:'FILL'1">shield_person</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Secure Access</h2>
+</div>
+</div>
+</div>
+<!-- Tab Navigation -->
+<div class="flex w-full px-6 pt-4 relative">
+<button class="flex-1 pb-3 text-center font-label-bold text-label-bold text-primary transition-colors hover:text-primary-fixed-variant" id="tabLogin" onclick="switchTab('login')">
+                Login
+            </button>
+<button class="flex-1 pb-3 text-center font-label-bold text-label-bold text-on-surface-variant transition-colors hover:text-on-surface" id="tabRegister" onclick="switchTab('register')">
+                Register
+            </button>
+<!-- Active Tab Indicator -->
+<div class="absolute bottom-0 left-6 w-[calc(50%-24px)] h-1 bg-primary rounded-t-full transition-transform duration-300 ease-out" id="tabIndicator"></div>
+<div class="absolute bottom-0 left-6 right-6 h-[1px] bg-outline-variant/30"></div>
+</div>
+<!-- Content Area with Slider -->
+<div class="relative overflow-hidden w-full" id="formSliderContainer" style="height: 380px; transition: height 0.3s ease-out;">
+<div class="flex w-[200%] transition-transform duration-300 ease-in-out h-full" id="formSlider">
+<!-- Login Form (Left Panel) -->
+<div class="w-1/2 p-6 flex flex-col justify-between h-full">
+<form class="flex flex-col gap-4" onsubmit="event.preventDefault();">
+<div class="flex flex-col gap-1 relative">
+<label class="font-body-sm text-body-sm text-on-surface-variant">Email or Mobile Number</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">person</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-low rounded-xl text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface transition-all placeholder:text-outline/50 shadow-inner" placeholder="Enter your credentials" type="text">
+</div>
+</div>
+<div class="flex flex-col gap-1 relative">
+<div class="flex justify-between items-center">
+<label class="font-body-sm text-body-sm text-on-surface-variant">Password</label>
+<a class="font-body-sm text-[13px] text-primary hover:underline" href="#">Forgot password?</a>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+<input class="w-full pl-10 pr-12 py-3 bg-surface-container-low rounded-xl text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface transition-all placeholder:text-outline/50 shadow-inner" id="loginPassword" placeholder="Enter your password" type="password">
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface-variant p-1 rounded-full hover:bg-surface-variant/50 transition-colors" onclick="togglePassword('loginPassword', this)" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+</div>
+</div>
+<button class="mt-4 w-full py-3 bg-gradient-to-r from-primary-container to-[#1E3A5F] text-on-primary font-label-bold text-label-bold rounded-xl shadow-md hover:shadow-[0_10px_25px_-5px_rgba(26,86,219,0.25)] hover:scale-[1.02] transition-all duration-150 active:scale-[0.98] flex justify-center items-center gap-2" type="submit">
+                            Login <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</form>
+<div class="mt-auto flex flex-col items-center gap-3 pt-6">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                            New user? <a class="text-primary font-label-bold hover:underline" href="#" onclick="switchTab('register'); return false;">Register here</a>
+</p>
+<a class="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high transition-colors font-body-sm text-[13px] text-on-surface-variant group" href="#">
+<span class="material-symbols-outlined text-[16px] group-hover:text-primary transition-colors">admin_panel_settings</span>
+                            Login as Admin
+                        </a>
+</div>
+</div>
+<!-- Register Form (Right Panel) -->
+<div class="w-1/2 p-6 flex flex-col h-full overflow-y-auto">
+<form class="flex flex-col gap-4" onsubmit="event.preventDefault();">
+<div class="flex flex-col gap-1">
+<label class="font-body-sm text-body-sm text-on-surface-variant">Full Name</label>
+<input class="w-full px-4 py-3 bg-surface-container-low rounded-xl text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface transition-all placeholder:text-outline/50 shadow-inner" placeholder="As per official documents" type="text">
+</div>
+<div class="flex gap-4">
+<div class="flex flex-col gap-1 w-1/2">
+<label class="font-body-sm text-body-sm text-on-surface-variant">Email</label>
+<input class="w-full px-4 py-3 bg-surface-container-low rounded-xl text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface transition-all placeholder:text-outline/50 shadow-inner" placeholder="Email address" type="email">
+</div>
+<div class="flex flex-col gap-1 w-1/2">
+<label class="font-body-sm text-body-sm text-on-surface-variant">Mobile</label>
+<input class="w-full px-4 py-3 bg-surface-container-low rounded-xl text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface transition-all placeholder:text-outline/50 shadow-inner" placeholder="Mobile number" type="tel">
+</div>
+</div>
+<div class="flex flex-col gap-1 relative">
+<label class="font-body-sm text-body-sm text-on-surface-variant">Create Password</label>
+<div class="relative">
+<input class="w-full pl-4 pr-12 py-3 bg-surface-container-low rounded-xl text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface transition-all placeholder:text-outline/50 shadow-inner" id="regPassword" placeholder="Min 8 characters" type="password">
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface-variant p-1 rounded-full hover:bg-surface-variant/50 transition-colors" onclick="togglePassword('regPassword', this)" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+</div>
+</div>
+<div class="flex items-start gap-3 mt-2">
+<div class="flex items-center h-5">
+<input class="w-4 h-4 text-primary bg-surface-container border-outline rounded focus:ring-primary focus:ring-2 appearance-none checked:bg-primary checked:border-transparent checked:before:content-['✓'] checked:before:text-white checked:before:text-xs checked:before:flex checked:before:justify-center checked:before:items-center relative transition-colors cursor-pointer" id="terms" type="checkbox">
+</div>
+<label class="font-body-sm text-[13px] text-on-surface-variant leading-tight cursor-pointer" for="terms">
+                                I agree to the <a class="text-primary hover:underline" href="#">Terms of Service</a> and <a class="text-primary hover:underline" href="#">Privacy Policy</a>
+</label>
+</div>
+<button class="mt-4 w-full py-3 bg-gradient-to-r from-primary-container to-[#1E3A5F] text-on-primary font-label-bold text-label-bold rounded-xl shadow-md hover:shadow-[0_10px_25px_-5px_rgba(26,86,219,0.25)] hover:scale-[1.02] transition-all duration-150 active:scale-[0.98] flex justify-center items-center gap-2" type="submit">
+                            Create Account <span class="material-symbols-outlined text-[18px]">person_add</span>
+</button>
+<p class="mt-4 text-center font-body-sm text-body-sm text-on-surface-variant">
+                            Already have an account? <a class="text-primary font-label-bold hover:underline" href="#" onclick="switchTab('login'); return false;">Login here</a>
+</p>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+    // Tab switching logic
+    function switchTab(tab) {
+        const slider = document.getElementById('formSlider');
+        const indicator = document.getElementById('tabIndicator');
+        const btnLogin = document.getElementById('tabLogin');
+        const btnRegister = document.getElementById('tabRegister');
+        const container = document.getElementById('formSliderContainer');
+
+        if (tab === 'register') {
+            slider.style.transform = 'translateX(-50%)';
+            indicator.style.transform = 'translateX(calc(100% + 24px))';
+            
+            // Update styles
+            btnRegister.classList.remove('text-on-surface-variant');
+            btnRegister.classList.add('text-primary');
+            btnLogin.classList.remove('text-primary');
+            btnLogin.classList.add('text-on-surface-variant');
+            
+            // Adjust height for register form (taller)
+            container.style.height = '520px';
+        } else {
+            slider.style.transform = 'translateX(0)';
+            indicator.style.transform = 'translateX(0)';
+            
+            // Update styles
+            btnLogin.classList.remove('text-on-surface-variant');
+            btnLogin.classList.add('text-primary');
+            btnRegister.classList.remove('text-primary');
+            btnRegister.classList.add('text-on-surface-variant');
+            
+            // Revert height for login form
+            container.style.height = '380px';
+        }
+    }
+
+    // Password visibility toggle
+    function togglePassword(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const icon = btn.querySelector('.material-symbols-outlined');
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.textContent = 'visibility';
+            icon.classList.add('text-primary');
+        } else {
+            input.type = 'password';
+            icon.textContent = 'visibility_off';
+            icon.classList.remove('text-primary');
+        }
+    }
+</script></main></body></html>

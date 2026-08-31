@@ -1,0 +1,276 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>User Profile | Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface-variant": "#434654",
+                      "surface-container-highest": "#e0e3e5",
+                      "error": "#ba1a1a",
+                      "inverse-surface": "#2d3133",
+                      "inverse-on-surface": "#eff1f3",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-container": "#895600",
+                      "on-error": "#ffffff",
+                      "secondary-fixed": "#d5e3fc",
+                      "on-tertiary-container": "#ffd6a8",
+                      "secondary": "#515f74",
+                      "on-secondary": "#ffffff",
+                      "surface-container-high": "#e6e8ea",
+                      "surface-container": "#eceef0",
+                      "secondary-container": "#d5e3fc",
+                      "on-secondary-container": "#57657a",
+                      "surface": "#f7f9fb",
+                      "on-primary-container": "#d4dcff",
+                      "background": "#f7f9fb",
+                      "surface-bright": "#f7f9fb",
+                      "on-tertiary-fixed": "#2a1700",
+                      "tertiary": "#694100",
+                      "secondary-fixed-dim": "#b9c7df",
+                      "on-background": "#191c1e",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#0d1c2e",
+                      "surface-variant": "#e0e3e5",
+                      "primary-container": "#1a56db",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "on-secondary-fixed-variant": "#3a485b",
+                      "surface-tint": "#1353d8",
+                      "primary-fixed-dim": "#b5c4ff",
+                      "on-primary-fixed-variant": "#003dab",
+                      "on-error-container": "#93000a",
+                      "surface-dim": "#d8dadc",
+                      "surface-container-low": "#f2f4f6",
+                      "on-primary-fixed": "#00174d",
+                      "error-container": "#ffdad6",
+                      "on-primary": "#ffffff",
+                      "outline": "#737686",
+                      "on-surface": "#191c1e",
+                      "primary": "#003fb1",
+                      "primary-fixed": "#dbe1ff",
+                      "inverse-primary": "#b5c4ff",
+                      "outline-variant": "#c3c5d7",
+                      "tertiary-fixed": "#ffddb8"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Poppins"],
+                      "headline-md": ["Poppins"],
+                      "label-bold": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-sm": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #003fb1 0%, #1a56db 100%);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<header class="fixed top-0 left-0 right-0 h-16 bg-surface-container-lowest z-50 flex items-center justify-between px-6 md:px-12 shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+<div class="flex items-center gap-4">
+<div class="text-primary font-headline-md text-2xl font-bold">योजना सेतु</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">language</span>
+<span class="text-sm font-semibold">English</span>
+</div>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">dark_mode</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold text-on-surface">Ramesh Kumar</p>
+<p class="text-sm text-on-surface-variant">ramesh.k@example.com</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+</div>
+</div>
+</div>
+</header>
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-[#f8f9fc] group/design-root overflow-x-hidden pt-16">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 md:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<!-- Profile Header -->
+<div class="flex p-4 @container mt-6">
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="flex gap-6 flex-col items-center">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-24 w-24 border-4 border-surface-container shadow-sm" data-alt="A professional studio portrait of a friendly young professional individual with warm lighting against a neutral, high-key background. The shot is a clean headshot suitable for a corporate profile, emphasizing clarity, approachable expression, and modern aesthetic in line with a professional business application." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuChnRVdIRJXZPEe9YRJJM6Z1_3CyjXpXR7h4KSO5HyoUhZeBvKyqasewMW_jVm5BHvPISrZtq37NNO17mBDou_yefiYTRWQESLs6js0P_zGVOfRzMpZO64kjTA-G1sRkL7Uur3jmmnlO44lvLh4iOs4B_evlMfRBuZh-YKDhxs8cctCkZzTOYwxRIKhbazq40VaOs_OxvTd5VdBFFnCOXgrJA3vin2nzuTQbSwVlWBhR8Ah3MjpvHDA6Q&quot;);"></div>
+<div class="absolute bottom-0 right-0 bg-primary text-on-primary p-1.5 rounded-full border-2 border-surface flex items-center justify-center cursor-pointer shadow-md">
+<span class="material-symbols-outlined text-[16px]">photo_camera</span>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center">
+<h1 class="text-on-background font-headline-md text-2xl">Profile</h1>
+<p class="text-on-surface-variant font-body-md">Manage your personal information</p>
+</div>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-secondary-container text-on-secondary-container text-sm font-bold leading-normal tracking-[0.015em] hover:bg-opacity-80 transition-all">
+<span class="truncate">Upload Picture</span>
+</button>
+</div>
+</div>
+<!-- Main Content Sections -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4">
+<!-- Profile Details Section -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h3 class="text-on-background text-lg font-bold">Profile Details</h3>
+<button class="text-primary flex items-center gap-1 text-sm font-semibold">
+<span class="material-symbols-outlined text-[18px]">edit</span> Edit
+                            </button>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-1.5">
+<p class="text-on-surface-variant text-sm font-medium">Full Name</p>
+<div class="flex items-center justify-between p-3 bg-surface rounded-lg border border-outline-variant">
+<span class="text-on-surface font-medium">Alex Sterling</span>
+<span class="material-symbols-outlined text-outline text-[20px]">edit</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<p class="text-on-surface-variant text-sm font-medium">Email Address</p>
+<div class="flex items-center justify-between p-3 bg-surface rounded-lg border border-outline-variant">
+<span class="text-on-surface font-medium">alex.sterling@example.com</span>
+<span class="material-symbols-outlined text-outline text-[20px]">edit</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<p class="text-on-surface-variant text-sm font-medium">Phone Number</p>
+<div class="flex items-center justify-between p-3 bg-surface rounded-lg border border-outline-variant">
+<span class="text-on-surface font-medium">+91 98765 43210</span>
+<span class="material-symbols-outlined text-outline text-[20px]">edit</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Documents Section -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col gap-6">
+<h3 class="text-on-background text-lg font-bold">Verification Documents</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-4 bg-surface rounded-lg border border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">id_card</span>
+<span class="font-medium text-on-surface">Aadhaar Card</span>
+</div>
+<div class="flex items-center gap-2 text-[#059669]">
+<span class="text-xs font-bold uppercase tracking-wider">Verified</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface rounded-lg border border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+<span class="font-medium text-on-surface">PAN Card</span>
+</div>
+<div class="flex items-center gap-2 text-error">
+<span class="text-xs font-bold uppercase tracking-wider">Missing</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">cancel</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface rounded-lg border border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+<span class="font-medium text-on-surface">Address Proof</span>
+</div>
+<div class="flex items-center gap-2 text-tertiary">
+<span class="text-xs font-bold uppercase tracking-wider">Pending</span>
+<span class="material-symbols-outlined text-[20px]">pending</span>
+</div>
+</div>
+</div>
+<button class="text-primary text-sm font-bold flex items-center justify-center gap-2 py-2 border-2 border-dashed border-primary-fixed rounded-lg hover:bg-primary-fixed hover:bg-opacity-20 transition-all">
+<span class="material-symbols-outlined">add_circle</span> Upload New Document
+                        </button>
+</div>
+<!-- Bank Details Section -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col gap-6 lg:col-span-2">
+<h3 class="text-on-background text-lg font-bold">Bank Details</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="flex flex-col gap-1.5">
+<p class="text-on-surface-variant text-sm font-medium">Bank Name</p>
+<p class="text-on-surface font-semibold py-2 border-b border-outline-variant">HDFC Bank Ltd.</p>
+</div>
+<div class="flex flex-col gap-1.5">
+<p class="text-on-surface-variant text-sm font-medium">Account Number</p>
+<p class="text-on-surface font-semibold py-2 border-b border-outline-variant">•••• •••• 9012</p>
+</div>
+<div class="flex flex-col gap-1.5">
+<p class="text-on-surface-variant text-sm font-medium">IFSC Code</p>
+<p class="text-on-surface font-semibold py-2 border-b border-outline-variant">HDFC0001234</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="flex flex-col md:flex-row items-center justify-between gap-4 p-4 mt-4 mb-12">
+<div class="flex gap-4">
+<button class="text-primary text-sm font-bold hover:underline">Change Password</button>
+<span class="text-outline-variant">|</span>
+<button class="text-on-surface-variant text-sm font-bold hover:text-on-surface">Security Settings</button>
+</div>
+<div class="flex gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none px-6 py-3 rounded-xl text-error font-bold border border-error hover:bg-error hover:text-on-error transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">logout</span> Logout
+                        </button>
+<button class="flex-1 md:flex-none px-8 py-3 rounded-xl text-on-primary font-bold primary-gradient shadow-lg hover:shadow-primary/40 transition-all flex items-center justify-center gap-2">
+                            Complete Profile <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+    // Micro-interactions
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('mousedown', function() {
+            this.style.transform = 'scale(0.97)';
+        });
+        button.addEventListener('mouseup', function() {
+            this.style.transform = 'scale(1)';
+        });
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+
+    // Simple toast simulation for 'Edit' actions
+    document.querySelectorAll('.material-symbols-outlined').forEach(icon => {
+        if(icon.innerText === 'edit') {
+            icon.parentElement.addEventListener('click', () => {
+                console.log('Edit mode triggered');
+            });
+        }
+    });
+</script>
+</body></html>
