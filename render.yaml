@@ -1,0 +1,35 @@
+services:
+  # Web Application (Unified Express Backend + Frontend SPA)
+  - type: web
+    name: government-scheme-portal
+    runtime: node
+    plan: starter
+    region: singapore # Closest to India for lowest latency
+    buildCommand: npm install && npx prisma generate && npm test
+    startCommand: node prisma/seed.js && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gov-scheme-db
+          property: connectionString
+      - key: CLIENT_URL
+        value: https://government-scheme-portal.onrender.com
+      - key: UPLOAD_DIR
+        value: uploads
+
+# Managed PostgreSQL Database
+databases:
+  - name: gov-scheme-db
+    plan: free
+    region: singapore
+    databaseName: gov_schemes_prod
+    user: gov_admin
