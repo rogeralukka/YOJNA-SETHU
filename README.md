@@ -2,6 +2,9 @@
 
 > **Official National Entitlement & Welfare Gateway** — A full-stack, enterprise-grade portal connecting individual citizens, students, farmers, women, and enterprise owners with Central and State Government schemes with automated eligibility calculation, dynamic business profiles, multi-scheme batch applications, administrative review workflows, and real-time notifications.
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Frogeralukka%2FYOJNA-SETHU)
+[![CI/CD Pipeline](https://github.com/rogeralukka/YOJNA-SETHU/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rogeralukka/YOJNA-SETHU/actions)
+
 ---
 
 ## 🌟 Key Highlights & Features
