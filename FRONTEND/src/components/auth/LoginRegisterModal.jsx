@@ -10,10 +10,10 @@ export const LoginRegisterModal = () => {
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showRegPassword, setShowRegPassword] = useState(false);
 
-  // Form states
-  const [loginIdentifier, setLoginIdentifier] = useState('');
+  // Form states - Pre-filled for Reviewers
+  const [loginIdentifier, setLoginIdentifier] = useState('rahul@email.com');
   const [loading, setLoading] = useState(false);
-  const [loginPassword, setLoginPassword] = useState('');
+  const [loginPassword, setLoginPassword] = useState('password123');
 
   const [regFullName, setRegFullName] = useState('');
   const [regEmail, setRegEmail] = useState('');

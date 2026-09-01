@@ -8,8 +8,9 @@ export const AdminLoginModal = () => {
   const { navigateTo } = useData();
   const { t } = useLang();
 
-  const [adminId, setAdminId] = useState('');
-  const [password, setPassword] = useState('');
+  // Form states - Pre-filled for Reviewers
+  const [adminId, setAdminId] = useState('admin@gov.in');
+  const [password, setPassword] = useState('Admin@123');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
