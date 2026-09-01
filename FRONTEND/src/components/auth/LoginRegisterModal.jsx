@@ -26,17 +26,26 @@ export const LoginRegisterModal = () => {
     return null;
   }
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     if (!loginIdentifier.trim()) {
       setErrorMsg("Please enter your email or mobile number");
       return;
     }
+    if (!loginPassword.trim()) {
+      setErrorMsg("Please enter your password");
+      return;
+    }
     setErrorMsg('');
-    loginCitizen({ email: loginIdentifier, password: loginPassword });
+    setLoading(true);
+    const res = await loginCitizen({ identifier: loginIdentifier, password: loginPassword });
+    setLoading(false);
+    if (!res.success) {
+      setErrorMsg(res.error || "Invalid credentials. Please try again.");
+    }
   };
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     if (!regFullName.trim()) {
       setErrorMsg("Please enter your full name");
@@ -46,17 +55,26 @@ export const LoginRegisterModal = () => {
       setErrorMsg("Please provide both email and mobile number");
       return;
     }
+    if (!regPassword.trim() || regPassword.length < 6) {
+      setErrorMsg("Password must be at least 6 characters");
+      return;
+    }
     if (!regTerms) {
       setErrorMsg("Please accept the Terms of Service");
       return;
     }
     setErrorMsg('');
-    registerCitizen({
+    setLoading(true);
+    const res = await registerCitizen({
       fullName: regFullName,
       email: regEmail,
       mobile: regMobile,
       password: regPassword,
     });
+    setLoading(false);
+    if (!res.success) {
+      setErrorMsg(res.error || "Registration failed. Please try again.");
+    }
   };
 
   return (

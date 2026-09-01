@@ -3,9 +3,10 @@ import { createPortal } from 'react-dom';
 import { useData } from '../../context/DataContext';
 import { useLang } from '../../context/LangContext';
 import { AddEditSchemeModal } from './AddEditSchemeModal';
+import { getOccupationLabel, getSectorLabel, getLifeStatusLabel } from '../../data/taxonomy';
 
 export const SchemeManagement = () => {
-  const { schemes, deleteScheme } = useData();
+  const { schemes, deleteScheme, getAdminAuditLogs } = useData();
   const { t } = useLang();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,6 +15,11 @@ export const SchemeManagement = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingScheme, setEditingScheme] = useState(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+  const [auditModalOpen, setAuditModalOpen] = useState(false);
+
+  const auditLogs = useMemo(() => {
+    return getAdminAuditLogs ? getAdminAuditLogs() : [];
+  }, [auditModalOpen, getAdminAuditLogs, schemes]);
 
   const filteredSchemes = useMemo(() => {
     return schemes.filter((s) => {
@@ -54,13 +60,23 @@ export const SchemeManagement = () => {
           </p>
         </div>
 
-        <button
-          onClick={handleOpenAdd}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-label-bold text-xs sm:text-sm shadow-md hover:scale-105 transition-all"
-        >
-          <span className="material-symbols-outlined text-[20px]">add</span>
-          <span>{t('addNewScheme')}</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setAuditModalOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container dark:bg-slate-700 text-on-surface dark:text-white font-label-bold text-xs sm:text-sm border border-outline-variant/30 hover:bg-surface-container-high transition-colors"
+          >
+            <span className="material-symbols-outlined text-[18px]">history</span>
+            <span>Audit Trail</span>
+          </button>
+
+          <button
+            onClick={handleOpenAdd}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-label-bold text-xs sm:text-sm shadow-md hover:scale-105 transition-all"
+          >
+            <span className="material-symbols-outlined text-[20px]">add</span>
+            <span>{t('addNewScheme')}</span>
+          </button>
+        </div>
       </div>
 
       {/* Filter Toolbar */}
@@ -172,9 +188,28 @@ export const SchemeManagement = () => {
                 {t('dept_' + scheme.id, {}, scheme.department)}
               </p>
 
-              <p className="font-body-sm text-xs text-on-surface-variant dark:text-slate-400 line-clamp-2 mb-4">
+              <p className="font-body-sm text-xs text-on-surface-variant dark:text-slate-400 line-clamp-2 mb-3">
                 {t('desc_' + scheme.id, {}, scheme.description)}
               </p>
+
+              {/* Targeting Intelligence Tags */}
+              <div className="flex flex-wrap gap-1 mb-4">
+                {scheme.eligibleLifeStatuses && !scheme.eligibleLifeStatuses.includes('ALL') && (
+                  <span className="px-2 py-0.5 rounded bg-surface-container-lowest dark:bg-slate-900 text-on-surface-variant dark:text-slate-300 text-[10px] font-semibold">
+                    {scheme.eligibleLifeStatuses.map(getLifeStatusLabel).join(', ')}
+                  </span>
+                )}
+                {scheme.eligibleOccupations && !scheme.eligibleOccupations.includes('ALL') && (
+                  <span className="px-2 py-0.5 rounded bg-surface-container-lowest dark:bg-slate-900 text-on-surface-variant dark:text-slate-300 text-[10px] font-semibold">
+                    {scheme.eligibleOccupations.slice(0, 2).map(getOccupationLabel).join(', ')}
+                  </span>
+                )}
+                {scheme.eligibleSectors && !scheme.eligibleSectors.includes('ALL') && (
+                  <span className="px-2 py-0.5 rounded bg-surface-container-lowest dark:bg-slate-900 text-on-surface-variant dark:text-slate-300 text-[10px] font-semibold">
+                    {scheme.eligibleSectors.slice(0, 2).map(getSectorLabel).join(', ')}
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Footer Information */}
@@ -189,6 +224,66 @@ export const SchemeManagement = () => {
           </div>
         ))}
       </div>
+
+      {/* Audit Trail Modal */}
+      {auditModalOpen && createPortal(
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+          <div className="bg-surface-container-lowest dark:bg-slate-900 p-6 sm:p-8 rounded-3xl max-w-2xl w-full border border-outline-variant/30 shadow-2xl animate-fade-in-up my-auto max-h-[85vh] flex flex-col">
+            <div className="flex justify-between items-center pb-4 border-b border-outline-variant/30">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary text-[22px]">history</span>
+                <h3 className="font-headline-md text-lg font-bold text-on-surface dark:text-white">
+                  Admin Scheme Audit Trail
+                </h3>
+              </div>
+              <button
+                onClick={() => setAuditModalOpen(false)}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container"
+              >
+                <span className="material-symbols-outlined text-[20px]">close</span>
+              </button>
+            </div>
+
+            <div className="overflow-y-auto py-4 space-y-3 flex-1">
+              {auditLogs.length > 0 ? (
+                auditLogs.map((log) => (
+                  <div
+                    key={log.id}
+                    className="p-3 bg-surface-container-low dark:bg-slate-800 rounded-xl border border-outline-variant/20 text-xs space-y-1"
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-primary dark:text-primary-fixed">{log.schemeName}</span>
+                      <span className="text-[10px] text-on-surface-variant dark:text-slate-400">
+                        {new Date(log.timestamp).toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="text-on-surface dark:text-slate-200">
+                      Changed <span className="font-mono font-semibold bg-surface-container-high px-1 rounded">{log.fieldChanged}</span> by <span className="font-semibold">{log.adminId}</span>
+                    </div>
+                    <div className="text-[11px] text-on-surface-variant dark:text-slate-400 truncate">
+                      Old: <span className="font-mono">{log.oldValue}</span> → New: <span className="font-mono">{log.newValue}</span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-10 text-on-surface-variant dark:text-slate-400 text-xs">
+                  No modifications logged yet in this session.
+                </div>
+              )}
+            </div>
+
+            <div className="pt-4 border-t border-outline-variant/30 flex justify-end">
+              <button
+                onClick={() => setAuditModalOpen(false)}
+                className="px-4 py-2 bg-primary text-white rounded-xl text-xs font-semibold hover:bg-primary-container"
+              >
+                Close Audit Trail
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
 
       {/* Delete Confirmation Modal */}
       {deleteConfirmId && createPortal(

@@ -1,62 +1,93 @@
 import React from 'react';
 import { useData } from '../../context/DataContext';
 import { useLang } from '../../context/LangContext';
+import { getOccupationLabel, getSectorLabel, getLifeStatusLabel } from '../../data/taxonomy';
 
 export const SchemeDetail = () => {
-  const { schemes, selectedSchemeId, navigateTo, isBookmarked, toggleBookmark } = useData();
+  const { selectedSchemeId, schemes, isBookmarked, toggleBookmark, navigateTo, evaluateScheme, userProfile } = useData();
   const { t } = useLang();
 
   const scheme = schemes.find((s) => s.id === selectedSchemeId) || schemes[0];
-  const bookmarked = isBookmarked(scheme?.id);
+  const bookmarked = scheme ? isBookmarked(scheme.id) : false;
+  const evaluation = evaluateScheme(scheme);
 
   if (!scheme) {
     return (
-      <div className="p-8 text-center">
+      <div className="p-8 text-center text-on-surface dark:text-white">
         <p>{t('schemeNotFound')}</p>
-        <button
-          onClick={() => navigateTo('dashboard')}
-          className="mt-4 px-4 py-2 bg-primary text-white rounded-lg text-sm"
-        >
-          {t('backToResults')}
+        <button onClick={() => navigateTo('dashboard')} className="mt-4 px-4 py-2 bg-primary text-white rounded-lg">
+          {t('backToDashboard')}
         </button>
       </div>
     );
   }
 
-  return (
-    <div className="flex flex-col w-full relative pb-16 px-4 sm:px-8 lg:px-margin-desktop py-6">
-      {/* Back Button */}
-      <button
-        onClick={() => navigateTo('dashboard')}
-        className="inline-flex items-center gap-2 text-primary dark:text-primary-fixed font-label-bold text-xs sm:text-sm hover:text-on-primary-fixed-variant transition-colors group mb-6"
-      >
-        <span className="material-symbols-outlined text-[18px] transform group-hover:-translate-x-1 transition-transform">
-          arrow_back
-        </span>
-        <span>{t('backToResults')}</span>
-      </button>
+  const getStatusBadge = () => {
+    switch (evaluation.status) {
+      case 'HIGH_MATCH':
+        return {
+          label: 'High Match',
+          color: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30',
+          icon: 'verified'
+        };
+      case 'POTENTIAL_MATCH':
+        return {
+          label: 'Eligible',
+          color: 'bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/30',
+          icon: 'check_circle'
+        };
+      case 'NEEDS_INFO':
+        return {
+          label: 'Needs More Information',
+          color: 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30',
+          icon: 'help'
+        };
+      case 'NOT_ELIGIBLE':
+      default:
+        return {
+          label: 'Not Eligible for Your Profile',
+          color: 'bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/30',
+          icon: 'cancel'
+        };
+    }
+  };
 
-      {/* Main 2-Column Layout */}
-      <div className="flex flex-col lg:flex-row gap-8">
+  const badge = getStatusBadge();
+
+  return (
+    <div className="flex flex-col w-full relative min-h-screen pb-24">
+      {/* Back Button / Breadcrumb */}
+      <div className="px-4 sm:px-8 lg:px-margin-desktop py-4">
+        <button
+          onClick={() => navigateTo('dashboard')}
+          className="inline-flex items-center gap-2 text-xs font-semibold text-on-surface-variant dark:text-slate-400 hover:text-primary transition-colors"
+        >
+          <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+          <span>{t('backToDashboard')}</span>
+        </button>
+      </div>
+
+      {/* Main Content Layout */}
+      <div className="px-4 sm:px-8 lg:px-margin-desktop flex flex-col lg:flex-row gap-8 items-start">
         {/* Left Column - 2/3 width */}
         <div className="w-full lg:w-2/3 flex flex-col gap-6">
           {/* Header Card */}
-          <div className="bg-surface-container-lowest dark:bg-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm border border-outline-variant/30 dark:border-slate-700 flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center justify-between gap-4 flex-wrap">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="px-3 py-1 bg-surface-container dark:bg-slate-700 text-on-surface-variant dark:text-slate-300 rounded-full font-status-badge text-xs uppercase tracking-wider font-semibold">
+          <div className="bg-surface-container-lowest dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-outline-variant/30 dark:border-slate-700 flex flex-col gap-6">
+            <div>
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-body-sm text-xs font-bold text-primary dark:text-primary-fixed uppercase tracking-wider">
                     {t('dept_' + scheme.id, {}, scheme.department)}
                   </span>
                   {scheme.governmentLevel === 'state' ? (
                     <span className="px-3 py-1 bg-secondary-container/60 dark:bg-slate-700 text-on-secondary-container dark:text-slate-200 rounded-full font-status-badge text-xs font-semibold uppercase tracking-wider border border-outline-variant/30">
                       {scheme.applicableStates && scheme.applicableStates.length === 1
                         ? `${t('stateGov', {}, 'State Government')} — ${scheme.applicableStates[0]}`
-                        : `${t('stateGov', {}, 'State Government')} — ${t('applicableInStates', { count: scheme.applicableStates?.length || 1 }, `Applicable in ${scheme.applicableStates?.length || 1} States`)}`}
+                        : `${t('stateGov', {}, 'State Government')} — ${scheme.applicableStates?.length || 1} States`}
                     </span>
                   ) : (
                     <span className="px-3 py-1 bg-primary-fixed/40 dark:bg-primary/20 text-on-primary-fixed-variant dark:text-primary-fixed rounded-full font-status-badge text-xs font-semibold uppercase tracking-wider border border-primary/20">
-                      {t('centralGov', {}, 'Central Government')} · {t('allIndia', {}, 'All India')}
+                      {t('centralGov', {}, 'Central Government')} · All India
                     </span>
                   )}
                 </div>
@@ -89,7 +120,96 @@ export const SchemeDetail = () => {
             </div>
           </div>
 
-          {/* Grid of 2 Cards: Eligibility & Required Documents */}
+          {/* Explainable Eligibility Analysis Card */}
+          <div className="bg-surface-container-lowest dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-outline-variant/30 dark:border-slate-700 flex flex-col gap-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-outline-variant/30 dark:border-slate-700 pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-full bg-primary/10 text-primary dark:text-primary-fixed flex items-center justify-center">
+                  <span className="material-symbols-outlined text-[22px]">manage_search</span>
+                </div>
+                <div>
+                  <h2 className="font-headline-md text-base sm:text-lg font-bold text-on-surface dark:text-white">
+                    Personalized Eligibility Reasoning
+                  </h2>
+                  <p className="text-xs text-on-surface-variant dark:text-slate-400">
+                    Authoritative rule evaluation against your registered citizen profile
+                  </p>
+                </div>
+              </div>
+
+              <div className={`px-3 py-1.5 rounded-xl border font-bold text-xs flex items-center gap-1.5 self-start sm:self-auto ${badge.color}`}>
+                <span className="material-symbols-outlined text-[16px]">{badge.icon}</span>
+                <span>{badge.label}</span>
+              </div>
+            </div>
+
+            <p className="text-xs sm:text-sm text-on-surface dark:text-slate-200 font-medium">
+              {evaluation.summary}
+            </p>
+
+            {/* Criteria Evaluation Items */}
+            <div className="space-y-2.5">
+              {evaluation.criteriaResults.map((crit, idx) => (
+                <div
+                  key={idx}
+                  className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${
+                    crit.satisfied
+                      ? 'bg-emerald-500/5 dark:bg-emerald-950/20 border-emerald-500/20 text-on-surface dark:text-slate-200'
+                      : crit.isMissing
+                      ? 'bg-amber-500/5 dark:bg-amber-950/20 border-amber-500/20 text-on-surface dark:text-slate-200'
+                      : 'bg-rose-500/5 dark:bg-rose-950/20 border-rose-500/20 text-on-surface dark:text-slate-200'
+                  }`}
+                >
+                  <div className="flex items-start gap-2.5">
+                    <span
+                      className={`material-symbols-outlined text-[18px] shrink-0 mt-0.5 ${
+                        crit.satisfied
+                          ? 'text-emerald-600 dark:text-emerald-400'
+                          : crit.isMissing
+                          ? 'text-amber-600 dark:text-amber-400'
+                          : 'text-rose-600 dark:text-rose-400'
+                      }`}
+                    >
+                      {crit.satisfied ? 'check_circle' : crit.isMissing ? 'help' : 'cancel'}
+                    </span>
+                    <div>
+                      <span className="font-bold block">{crit.label}</span>
+                      <span className="text-[11px] text-on-surface-variant dark:text-slate-400">
+                        {crit.message}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="text-right shrink-0 pl-7 sm:pl-0">
+                    <span className="text-[10px] text-on-surface-variant dark:text-slate-400 block uppercase font-bold">
+                      Required / Your Profile
+                    </span>
+                    <span className="font-semibold text-xs text-on-surface dark:text-white">
+                      {crit.requiredValue} · <span className={crit.satisfied ? 'text-emerald-600 dark:text-emerald-400' : 'text-primary'}>{crit.userValue}</span>
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* If missing information */}
+            {evaluation.missingFields && evaluation.missingFields.length > 0 && (
+              <div className="p-3.5 bg-amber-500/10 dark:bg-amber-950/40 rounded-xl border border-amber-500/30 flex items-center justify-between gap-3 text-xs">
+                <div className="flex items-center gap-2 text-amber-800 dark:text-amber-300">
+                  <span className="material-symbols-outlined text-[18px]">info</span>
+                  <span>Missing profile fields: <strong>{evaluation.missingFields.join(', ')}</strong></span>
+                </div>
+                <button
+                  onClick={() => navigateTo('profile')}
+                  className="px-3 py-1 bg-amber-600 text-white rounded-lg font-bold hover:bg-amber-700 transition-colors whitespace-nowrap"
+                >
+                  Complete Profile
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Grid of 2 Cards: Scheme Eligibility & Required Documents */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Eligibility Criteria */}
             <div className="bg-surface-container-lowest dark:bg-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm border border-outline-variant/30 dark:border-slate-700 flex flex-col gap-5 relative overflow-hidden group">
@@ -97,7 +217,7 @@ export const SchemeDetail = () => {
 
               <h2 className="font-headline-md text-base sm:text-lg font-bold text-on-surface dark:text-white flex items-center gap-2 relative z-10">
                 <span className="material-symbols-outlined text-primary dark:text-primary-fixed">
-                  check_circle
+                  verified
                 </span>
                 <span>{t('eligibilityCriteria')}</span>
               </h2>
@@ -224,18 +344,31 @@ export const SchemeDetail = () => {
                 <span className="text-on-surface-variant dark:text-slate-400">
                   {t('approvalRate')}
                 </span>
-                <span className="font-label-bold font-bold text-primary dark:text-primary-fixed">
+                <span className="font-label-bold font-semibold text-primary dark:text-primary-fixed">
                   {scheme.approvalRate || "85%"}
                 </span>
               </div>
 
-              <div className="w-full bg-surface-container-highest dark:bg-slate-700 rounded-full h-2 mt-1 overflow-hidden">
-                <div
-                  className="bg-primary h-2 rounded-full relative overflow-hidden"
-                  style={{ width: scheme.approvalRate || '85%' }}
-                >
-                  <div className="absolute inset-0 bg-white/30 animate-[shimmer_2s_infinite]" />
-                </div>
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-on-surface-variant dark:text-slate-400">
+                  Target Occupations
+                </span>
+                <span className="font-semibold text-on-surface dark:text-white text-right">
+                  {scheme.eligibleOccupations && !scheme.eligibleOccupations.includes('ALL')
+                    ? scheme.eligibleOccupations.map(getOccupationLabel).join(', ')
+                    : 'Open to All Occupations'}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-on-surface-variant dark:text-slate-400">
+                  Target Sectors
+                </span>
+                <span className="font-semibold text-on-surface dark:text-white text-right">
+                  {scheme.eligibleSectors && !scheme.eligibleSectors.includes('ALL')
+                    ? scheme.eligibleSectors.map(getSectorLabel).join(', ')
+                    : 'Open to All Sectors'}
+                </span>
               </div>
             </div>
           </div>

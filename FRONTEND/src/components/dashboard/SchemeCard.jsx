@@ -1,12 +1,56 @@
 import React from 'react';
 import { useData } from '../../context/DataContext';
 import { useLang } from '../../context/LangContext';
+import { getOccupationLabel, getSectorLabel, getLifeStatusLabel } from '../../data/taxonomy';
 
 export const SchemeCard = ({ scheme, isSelected, onToggleSelect }) => {
-  const { isBookmarked, toggleBookmark, navigateTo } = useData();
+  const { isBookmarked, toggleBookmark, navigateTo, evaluateScheme } = useData();
   const { t } = useLang();
 
   const bookmarked = isBookmarked(scheme.id);
+  const evaluation = evaluateScheme(scheme);
+
+  const getStatusBadge = () => {
+    switch (evaluation.status) {
+      case 'HIGH_MATCH':
+        return (
+          <span
+            className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 text-[10px] font-bold flex items-center gap-1"
+            title={evaluation.summary}
+          >
+            <span className="material-symbols-outlined text-[12px]">verified</span> High Match
+          </span>
+        );
+      case 'POTENTIAL_MATCH':
+        return (
+          <span
+            className="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20 text-[10px] font-bold flex items-center gap-1"
+            title={evaluation.summary}
+          >
+            <span className="material-symbols-outlined text-[12px]">check_circle</span> Eligible
+          </span>
+        );
+      case 'NEEDS_INFO':
+        return (
+          <span
+            className="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 text-[10px] font-bold flex items-center gap-1"
+            title={evaluation.summary}
+          >
+            <span className="material-symbols-outlined text-[12px]">help</span> Needs Info
+          </span>
+        );
+      case 'NOT_ELIGIBLE':
+      default:
+        return (
+          <span
+            className="px-2 py-0.5 rounded-full bg-slate-500/10 text-slate-500 dark:text-slate-400 border border-slate-500/20 text-[10px] font-medium flex items-center gap-1"
+            title={evaluation.summary}
+          >
+            <span className="material-symbols-outlined text-[12px]">info</span> Criteria Check
+          </span>
+        );
+    }
+  };
 
   return (
     <div
@@ -16,8 +60,8 @@ export const SchemeCard = ({ scheme, isSelected, onToggleSelect }) => {
     >
       <div>
         {/* Top Header Row with Checkbox, Badge & Star */}
-        <div className="flex justify-between items-start mb-4">
-          <div className="flex items-center gap-3">
+        <div className="flex justify-between items-start mb-3">
+          <div className="flex flex-wrap items-center gap-2">
             {/* Multi-select Checkbox */}
             <label className="relative flex items-center justify-center w-6 h-6 rounded border-2 border-outline-variant dark:border-slate-600 bg-surface-container-low dark:bg-slate-700 cursor-pointer transition-colors hover:border-primary">
               <input
@@ -34,17 +78,6 @@ export const SchemeCard = ({ scheme, isSelected, onToggleSelect }) => {
               )}
             </label>
 
-            {/* NEW / Category Tag */}
-            {scheme.isNew ? (
-              <span className="px-2.5 py-1 bg-tertiary-container text-on-tertiary-container rounded-md font-status-badge text-[11px] font-bold uppercase tracking-wider">
-                {t('newBadge')}
-              </span>
-            ) : (
-              <span className="px-2.5 py-1 bg-surface-container-high dark:bg-slate-700 text-on-surface-variant dark:text-slate-300 rounded-md font-status-badge text-[11px] font-semibold uppercase tracking-wider">
-                {t('category_' + scheme.category.replace(/ /g, '_')) || scheme.category}
-              </span>
-            )}
-
             {/* Government Level Badge */}
             {scheme.governmentLevel === 'state' ? (
               <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-secondary-container/60 dark:bg-slate-700 text-on-secondary-container dark:text-slate-200 border border-outline-variant/30">
@@ -57,6 +90,9 @@ export const SchemeCard = ({ scheme, isSelected, onToggleSelect }) => {
                 {t('centralGovBadge', {}, 'CENTRAL')}
               </span>
             )}
+
+            {/* Server Evaluation Match Status */}
+            {getStatusBadge()}
           </div>
 
           {/* Bookmark Button */}
@@ -83,15 +119,33 @@ export const SchemeCard = ({ scheme, isSelected, onToggleSelect }) => {
         </div>
 
         {/* Scheme Title & Ministry */}
-        <h3 className="font-headline-md text-lg text-on-surface dark:text-white font-bold mb-1 line-clamp-1 group-hover:text-primary transition-colors">
+        <h3 className="font-headline-md text-base sm:text-lg text-on-surface dark:text-white font-bold mb-1 line-clamp-2 group-hover:text-primary transition-colors">
           {t('scheme_' + scheme.id, {}, scheme.name)}
         </h3>
-        <p className="font-body-sm text-xs text-primary dark:text-primary-fixed font-medium mb-4">
+        <p className="font-body-sm text-xs text-primary dark:text-primary-fixed font-medium mb-3">
           {t('dept_' + scheme.id, {}, scheme.department)}
         </p>
 
+        {/* Intelligence Targeting Chips */}
+        <div className="flex flex-wrap items-center gap-1.5 mb-3">
+          {scheme.eligibleOccupations && !scheme.eligibleOccupations.includes('ALL') && (
+            <span className="px-2 py-0.5 rounded bg-surface-container-high dark:bg-slate-700 text-on-surface-variant dark:text-slate-300 text-[10px] font-semibold flex items-center gap-1">
+              <span className="material-symbols-outlined text-[12px]">work</span>
+              {scheme.eligibleOccupations.slice(0, 2).map(getOccupationLabel).join(', ')}
+              {scheme.eligibleOccupations.length > 2 && ` +${scheme.eligibleOccupations.length - 2}`}
+            </span>
+          )}
+          {scheme.eligibleSectors && !scheme.eligibleSectors.includes('ALL') && (
+            <span className="px-2 py-0.5 rounded bg-surface-container-high dark:bg-slate-700 text-on-surface-variant dark:text-slate-300 text-[10px] font-semibold flex items-center gap-1">
+              <span className="material-symbols-outlined text-[12px]">domain</span>
+              {scheme.eligibleSectors.slice(0, 2).map(getSectorLabel).join(', ')}
+              {scheme.eligibleSectors.length > 2 && ` +${scheme.eligibleSectors.length - 2}`}
+            </span>
+          )}
+        </div>
+
         {/* Benefits Container */}
-        <div className="flex items-center gap-3 mb-5 p-3 bg-surface-container-low dark:bg-slate-700/60 rounded-xl">
+        <div className="flex items-center gap-3 mb-4 p-3 bg-surface-container-low dark:bg-slate-700/60 rounded-xl">
           <span className="material-symbols-outlined text-outline dark:text-slate-400 text-[22px]">
             {scheme.category === 'Agriculture' ? 'payments' : scheme.category === 'Healthcare' ? 'health_and_safety' : 'account_balance'}
           </span>

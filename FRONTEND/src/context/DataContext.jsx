@@ -5,6 +5,9 @@ import { initialBusinesses } from '../data/initialBusinesses';
 import { initialApplications } from '../data/initialApplications';
 import { initialNotifications } from '../data/initialNotifications';
 import { initialUser } from '../data/initialUser';
+import { apiService } from '../services/apiService';
+import { evaluateSchemeEligibility, rankSchemesForUser } from '../services/eligibilityEngine';
+import { calculateAge, validateDob } from '../data/taxonomy';
 
 export const CITIZEN_VIEWS = [
   'dashboard',
@@ -43,8 +46,15 @@ export const DataProvider = ({ children }) => {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length >= 10 && parsed.some(s => s.governmentLevel)) {
+        if (Array.isArray(parsed) && parsed.length >= 10 && parsed.some(s => s.eligibleLifeStatuses)) {
           return parsed;
+        }
+        // If existing schemes lack new occupation/sector taxonomy, merge with updated initialSchemes
+        if (Array.isArray(parsed)) {
+          return initialSchemes.map(initS => {
+            const existing = parsed.find(p => p.id === initS.id);
+            return existing ? { ...initS, ...existing, eligibleLifeStatuses: initS.eligibleLifeStatuses, eligibleOccupations: initS.eligibleOccupations, eligibleSectors: initS.eligibleSectors } : initS;
+          });
         }
       } catch (e) {}
     }
@@ -79,10 +89,19 @@ export const DataProvider = ({ children }) => {
       try {
         const parsed = JSON.parse(saved);
         if (parsed) {
-          if (!parsed.avatarUrl || parsed.avatarUrl.includes('AB6AXuChnRVdIRJXZPEe9YR') || parsed.avatarUrl.includes('unsplash.com') || parsed.avatarUrl.includes('1539571696357') || parsed.avatarUrl.includes('1566492031773')) {
-            parsed.avatarUrl = initialUser.avatarUrl;
+          // Ensure DOB and new intelligence fields exist on cached profile
+          const merged = {
+            ...initialUser,
+            ...parsed,
+            dob: parsed.dob || initialUser.dob,
+            life_status: parsed.life_status || initialUser.life_status,
+            occupation: parsed.occupation || initialUser.occupation,
+            sector: parsed.sector || initialUser.sector,
+          };
+          if (!merged.avatarUrl || merged.avatarUrl.includes('AB6AXuChnRVdIRJXZPEe9YR') || merged.avatarUrl.includes('unsplash.com') || merged.avatarUrl.includes('1539571696357') || merged.avatarUrl.includes('1566492031773')) {
+            merged.avatarUrl = initialUser.avatarUrl;
           }
-          return parsed;
+          return merged;
         }
       } catch (e) {}
     }
@@ -387,12 +406,34 @@ export const DataProvider = ({ children }) => {
       };
       setNotifications(prev => [notif, ...prev]);
     }
+
+    // Audit log
+    apiService.logAdminAudit('admin_001', newScheme.id, newScheme.name, [
+      { field: 'SCHEME_CREATED', oldValue: null, newValue: newScheme }
+    ]);
+
     showToast(`Scheme "${newScheme.name}" created and published!`);
     return newScheme;
   };
 
   const updateScheme = (id, updatedFields) => {
     let schemeName = "";
+    const existingScheme = schemes.find(s => s.id === id);
+
+    // Identify changed fields for audit trail
+    const changes = [];
+    if (existingScheme) {
+      Object.keys(updatedFields).forEach(key => {
+        if (JSON.stringify(existingScheme[key]) !== JSON.stringify(updatedFields[key])) {
+          changes.push({
+            field: key,
+            oldValue: existingScheme[key],
+            newValue: updatedFields[key]
+          });
+        }
+      });
+    }
+
     setSchemes(prev => prev.map(s => {
       if (s.id === id) {
         schemeName = updatedFields.name || s.name;
@@ -400,6 +441,10 @@ export const DataProvider = ({ children }) => {
       }
       return s;
     }));
+
+    if (changes.length > 0) {
+      apiService.logAdminAudit('admin_001', id, schemeName || existingScheme?.name, changes);
+    }
 
     const notif = {
       id: `notif-${Date.now()}`,
@@ -419,6 +464,12 @@ export const DataProvider = ({ children }) => {
   };
 
   const deleteScheme = (id) => {
+    const existingScheme = schemes.find(s => s.id === id);
+    if (existingScheme) {
+      apiService.logAdminAudit('admin_001', id, existingScheme.name, [
+        { field: 'SCHEME_DELETED', oldValue: existingScheme, newValue: null }
+      ]);
+    }
     setSchemes(prev => prev.filter(s => s.id !== id));
     showToast("Scheme removed from active directory", "info");
   };
@@ -433,10 +484,37 @@ export const DataProvider = ({ children }) => {
     showToast("All notifications marked as read", "info");
   };
 
-  // Profile Management
+  // Profile Management with Validation
   const updateProfile = (updatedFields) => {
+    const validation = apiService.validateProfileData(updatedFields);
+    if (!validation.isValid) {
+      const firstError = Object.values(validation.errors)[0];
+      showToast(firstError, "error");
+      return false;
+    }
+
     setUserProfile(prev => ({ ...prev, ...updatedFields }));
     showToast("Profile details updated successfully!");
+    return true;
+  };
+
+  // Student Institution Email OTP Verification
+  const sendInstitutionEmailOtp = async (email) => {
+    return await apiService.sendInstitutionOtp(email);
+  };
+
+  const verifyInstitutionEmailOtp = async (email, otp) => {
+    const result = await apiService.verifyInstitutionOtp(email, otp);
+    if (result.success) {
+      setUserProfile(prev => ({
+        ...prev,
+        institution_email: email.trim().toLowerCase(),
+        institution_email_verified: true,
+        institution_verified_at: result.verifiedAt
+      }));
+      showToast("Institutional email verified successfully!");
+    }
+    return result;
   };
 
   const uploadDocumentMock = (docKey, docName = "Document_Scan.pdf", docSize = "1.5 MB") => {
@@ -455,23 +533,53 @@ export const DataProvider = ({ children }) => {
     showToast(`Document uploaded successfully!`);
   };
 
-  // Profile Completion Percentage Calculation
+  // Context-Aware Profile Completion Percentage Calculation
   const calculateProfileCompletion = () => {
     let score = 0;
-    const total = 12; // Profile Details (7) + Bank (1) + Verification Documents (5)
+    let total = 8; // Base fields: name, dob, phone, email, state, category, income, life_status
     if (userProfile.name) score++;
+    if (userProfile.dob && calculateAge(userProfile.dob) !== null) score++;
     if (userProfile.phone) score++;
     if (userProfile.email) score++;
     if (userProfile.state) score++;
     if (userProfile.category) score++;
-    if (userProfile.income) score++;
+    if (userProfile.income !== undefined && userProfile.income !== null && userProfile.income !== '') score++;
+    if (userProfile.life_status) score++;
+
+    // Contextual fields based on life_status
+    const status = userProfile.life_status;
+    if (['student_school', 'student_college', 'student_vocational'].includes(status)) {
+      total += 2;
+      if (userProfile.institution_name) score++;
+      if (userProfile.education_level) score++;
+    } else if (['employed', 'self_employed', 'farmer'].includes(status)) {
+      total += 2;
+      if (userProfile.occupation) score++;
+      if (userProfile.sector) score++;
+    } else if (status === 'business_owner') {
+      total += 2;
+      if (userProfile.sector) score++;
+      if (userProfile.business_activity || userProfile.business_sector) score++;
+    }
+
+    // Bank Details
+    total += 1;
     if (userProfile.bankDetails?.accountNumber) score++;
+
+    // Verification Documents
+    total += 5;
     if (userProfile.documents?.aadhaar?.status === 'Uploaded') score++;
     if (userProfile.documents?.pan?.status === 'Uploaded') score++;
     if (userProfile.documents?.income?.status === 'Uploaded') score++;
     if (userProfile.documents?.caste?.status === 'Uploaded') score++;
     if (userProfile.documents?.voterId?.status === 'Uploaded') score++;
+
     return Math.round((score / total) * 100);
+  };
+
+  // Server-authoritative scheme evaluation helper
+  const evaluateScheme = (scheme) => {
+    return apiService.evaluateEligibility(scheme, userProfile);
   };
 
   // Navigation Helpers
@@ -510,6 +618,7 @@ export const DataProvider = ({ children }) => {
         addScheme,
         updateScheme,
         deleteScheme,
+        evaluateScheme,
         businesses,
         addBusiness,
         updateBusiness,
@@ -530,7 +639,10 @@ export const DataProvider = ({ children }) => {
         userProfile,
         updateProfile,
         uploadDocumentMock,
+        sendInstitutionEmailOtp,
+        verifyInstitutionEmailOtp,
         profileCompletion: calculateProfileCompletion(),
+        getAdminAuditLogs: apiService.getAdminAuditLogs,
 
         // Toast
         toast,

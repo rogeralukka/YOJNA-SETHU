@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useData } from '../../context/DataContext';
 import { useLang } from '../../context/LangContext';
 import { INDIAN_STATES } from '../../data/states';
+import { LIFE_STATUSES, OCCUPATIONS, SECTORS } from '../../data/taxonomy';
 
 export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) => {
   const { addScheme, updateScheme } = useData();
@@ -22,6 +23,20 @@ export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) =>
   const [maxIncome, setMaxIncome] = useState(500000);
   const [deadline, setDeadline] = useState('');
   const [isBusinessScheme, setIsBusinessScheme] = useState(false);
+
+  // Life Status, Occupation & Sector Eligibility Intelligence State
+  const [allLifeStatuses, setAllLifeStatuses] = useState(true);
+  const [eligibleLifeStatuses, setEligibleLifeStatuses] = useState([]);
+
+  const [allOccupations, setAllOccupations] = useState(true);
+  const [eligibleOccupations, setEligibleOccupations] = useState([]);
+  const [eligibleOccupationRequirement, setEligibleOccupationRequirement] = useState('none'); // 'required', 'optional', 'none'
+  const [occupationSearch, setOccupationSearch] = useState('');
+
+  const [allSectors, setAllSectors] = useState(true);
+  const [eligibleSectors, setEligibleSectors] = useState([]);
+  const [eligibleSectorRequirement, setEligibleSectorRequirement] = useState('none'); // 'required', 'optional', 'none'
+
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -40,11 +55,42 @@ export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) =>
       setDescription(editingScheme.description || '');
       setBenefit(editingScheme.benefit || '');
       setBenefitDetail(editingScheme.benefitDetail || '');
-      setMinAge(editingScheme.minAge || 18);
-      setMaxAge(editingScheme.maxAge || 70);
-      setMaxIncome(editingScheme.maxIncome || 500000);
+      setMinAge(editingScheme.minAge !== undefined ? editingScheme.minAge : 18);
+      setMaxAge(editingScheme.maxAge !== undefined ? editingScheme.maxAge : 70);
+      setMaxIncome(editingScheme.maxIncome !== undefined ? editingScheme.maxIncome : 500000);
       setDeadline(editingScheme.deadline || '');
       setIsBusinessScheme(Boolean(editingScheme.isBusinessScheme));
+
+      // Life Status eligibility
+      if (editingScheme.eligibleLifeStatuses && !editingScheme.eligibleLifeStatuses.includes('ALL') && editingScheme.eligibleLifeStatuses.length > 0) {
+        setAllLifeStatuses(false);
+        setEligibleLifeStatuses(editingScheme.eligibleLifeStatuses);
+      } else {
+        setAllLifeStatuses(true);
+        setEligibleLifeStatuses([]);
+      }
+
+      // Occupation eligibility
+      if (editingScheme.eligibleOccupations && !editingScheme.eligibleOccupations.includes('ALL') && editingScheme.eligibleOccupations.length > 0) {
+        setAllOccupations(false);
+        setEligibleOccupations(editingScheme.eligibleOccupations);
+        setEligibleOccupationRequirement(editingScheme.eligibleOccupationRequirement || 'required');
+      } else {
+        setAllOccupations(true);
+        setEligibleOccupations([]);
+        setEligibleOccupationRequirement('none');
+      }
+
+      // Sector eligibility
+      if (editingScheme.eligibleSectors && !editingScheme.eligibleSectors.includes('ALL') && editingScheme.eligibleSectors.length > 0) {
+        setAllSectors(false);
+        setEligibleSectors(editingScheme.eligibleSectors);
+        setEligibleSectorRequirement(editingScheme.eligibleSectorRequirement || 'required');
+      } else {
+        setAllSectors(true);
+        setEligibleSectors([]);
+        setEligibleSectorRequirement('none');
+      }
     } else {
       setName('');
       setDepartment('Ministry of Agriculture & Farmers Welfare');
@@ -59,8 +105,17 @@ export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) =>
       setMaxIncome(500000);
       setDeadline('');
       setIsBusinessScheme(false);
+      setAllLifeStatuses(true);
+      setEligibleLifeStatuses([]);
+      setAllOccupations(true);
+      setEligibleOccupations([]);
+      setEligibleOccupationRequirement('none');
+      setAllSectors(true);
+      setEligibleSectors([]);
+      setEligibleSectorRequirement('none');
     }
     setStateSearch('');
+    setOccupationSearch('');
     setError('');
   }, [editingScheme, isOpen]);
 
@@ -92,14 +147,30 @@ export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) =>
   const handleGovLevelChange = (level) => {
     setGovernmentLevel(level);
     if (level === 'central') {
-      // Clear state selections and set to All India
       setApplicableStates(['ALL']);
     } else {
-      // Switch to State - initialize with default if currently ALL or empty
       if (applicableStates.includes('ALL') || applicableStates.length === 0) {
         setApplicableStates(['Uttar Pradesh']);
       }
     }
+  };
+
+  const handleToggleLifeStatus = (id) => {
+    setEligibleLifeStatuses(prev =>
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleToggleOccupation = (id) => {
+    setEligibleOccupations(prev =>
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleToggleSector = (id) => {
+    setEligibleSectors(prev =>
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
   };
 
   const handleSubmit = (e) => {
@@ -112,6 +183,21 @@ export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) =>
     const cleanStates = applicableStates.filter(s => s !== 'ALL' && s !== 'All States');
     if (governmentLevel === 'state' && cleanStates.length === 0) {
       setError("Please select at least one applicable state for a State Government scheme");
+      return;
+    }
+
+    if (!allLifeStatuses && eligibleLifeStatuses.length === 0) {
+      setError("Please select at least one specific Life Status, or choose 'All Life Statuses'");
+      return;
+    }
+
+    if (!allOccupations && eligibleOccupations.length === 0) {
+      setError("Please select at least one specific Occupation, or choose 'All Occupations'");
+      return;
+    }
+
+    if (!allSectors && eligibleSectors.length === 0) {
+      setError("Please select at least one specific Sector, or choose 'All Sectors'");
       return;
     }
 
@@ -130,6 +216,11 @@ export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) =>
       deadline: deadline || "",
       deadlineText: deadline ? `Closes ${deadline}` : "Always Open",
       isBusinessScheme,
+      eligibleLifeStatuses: allLifeStatuses ? ['ALL'] : eligibleLifeStatuses,
+      eligibleOccupations: allOccupations ? ['ALL'] : eligibleOccupations,
+      eligibleOccupationRequirement: allOccupations ? 'none' : eligibleOccupationRequirement,
+      eligibleSectors: allSectors ? ['ALL'] : eligibleSectors,
+      eligibleSectorRequirement: allSectors ? 'none' : eligibleSectorRequirement,
       targetBusinessTypes: isBusinessScheme ? ["Proprietorship", "Partnership", "Private Limited"] : [],
       targetIndustries: isBusinessScheme ? [category] : []
     };
@@ -143,14 +234,16 @@ export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) =>
   };
 
   const cleanSelectedStates = applicableStates.filter(s => s !== 'ALL' && s !== 'All States');
-
   const filteredStatesList = INDIAN_STATES.filter(st =>
     st.toLowerCase().includes(stateSearch.toLowerCase())
+  );
+  const filteredOccupationsList = OCCUPATIONS.filter(o =>
+    o.name.toLowerCase().includes(occupationSearch.toLowerCase()) || o.category.toLowerCase().includes(occupationSearch.toLowerCase())
   );
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto">
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-3xl max-w-3xl w-full border border-outline-variant/30 dark:border-slate-700 shadow-2xl overflow-hidden flex flex-col max-h-[88vh] my-auto animate-fade-in-up">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-3xl max-w-3xl w-full border border-outline-variant/30 dark:border-slate-700 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] my-auto animate-fade-in-up">
         {/* Header */}
         <div className="px-6 sm:px-8 py-5 bg-surface-container-low/70 dark:bg-slate-800/70 border-b border-surface-container dark:border-slate-800 flex items-center justify-between sticky top-0 z-20 backdrop-blur-sm">
           <div className="flex items-center gap-3">
@@ -290,7 +383,6 @@ export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) =>
                       </div>
                     </div>
 
-                    {/* Selected State Chips with Remove Buttons */}
                     {cleanSelectedStates.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 p-2 bg-surface-container-lowest dark:bg-slate-900/60 rounded-xl border border-outline-variant/20 max-h-24 overflow-y-auto">
                         {cleanSelectedStates.map((st) => (
@@ -312,7 +404,6 @@ export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) =>
                       </div>
                     )}
 
-                    {/* State Search & Grid Picker */}
                     <div className="flex flex-col gap-2">
                       <div className="relative">
                         <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[16px]">
@@ -410,7 +501,217 @@ export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) =>
             </div>
           </div>
 
-          {/* Eligibility & Constraints */}
+          {/* Life Status, Occupation & Sector Intelligence Controls */}
+          <div className="p-4 bg-surface-container-low dark:bg-slate-800/80 rounded-2xl border border-outline-variant/30 space-y-4">
+            <span className="font-label-bold uppercase tracking-wider text-primary dark:text-primary-fixed block">
+              Occupation, Sector & Life Status Eligibility
+            </span>
+
+            {/* 1. Life Status Eligibility */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <label className="font-semibold text-on-surface dark:text-slate-200">
+                  Target Life Status
+                </label>
+                <div className="flex items-center gap-3">
+                  <label className="flex items-center gap-1.5 cursor-pointer">
+                    <input
+                      type="radio"
+                      checked={allLifeStatuses}
+                      onChange={() => {
+                        setAllLifeStatuses(true);
+                        setEligibleLifeStatuses([]);
+                      }}
+                      className="text-primary focus:ring-primary"
+                    />
+                    <span className="text-on-surface dark:text-slate-300">Open to All</span>
+                  </label>
+                  <label className="flex items-center gap-1.5 cursor-pointer">
+                    <input
+                      type="radio"
+                      checked={!allLifeStatuses}
+                      onChange={() => setAllLifeStatuses(false)}
+                      className="text-primary focus:ring-primary"
+                    />
+                    <span className="text-on-surface dark:text-slate-300">Specific Statuses</span>
+                  </label>
+                </div>
+              </div>
+
+              {!allLifeStatuses && (
+                <div className="p-3 bg-surface-container-lowest dark:bg-slate-900 rounded-xl border border-outline-variant/20 flex flex-wrap gap-1.5 max-h-36 overflow-y-auto">
+                  {LIFE_STATUSES.map((ls) => {
+                    const isSelected = eligibleLifeStatuses.includes(ls.id);
+                    return (
+                      <button
+                        type="button"
+                        key={ls.id}
+                        onClick={() => handleToggleLifeStatus(ls.id)}
+                        className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-colors border ${
+                          isSelected
+                            ? 'bg-primary/10 border-primary text-primary dark:text-primary-fixed font-bold'
+                            : 'border-outline-variant/30 hover:bg-surface-container text-on-surface-variant dark:text-slate-400'
+                        }`}
+                      >
+                        {ls.name} {isSelected && '✓'}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* 2. Occupation Eligibility */}
+            <div className="space-y-2 pt-3 border-t border-outline-variant/20">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <label className="font-semibold text-on-surface dark:text-slate-200">
+                  Target Occupations
+                </label>
+                <div className="flex items-center gap-3">
+                  <label className="flex items-center gap-1.5 cursor-pointer">
+                    <input
+                      type="radio"
+                      checked={allOccupations}
+                      onChange={() => {
+                        setAllOccupations(true);
+                        setEligibleOccupations([]);
+                        setEligibleOccupationRequirement('none');
+                      }}
+                      className="text-primary focus:ring-primary"
+                    />
+                    <span className="text-on-surface dark:text-slate-300">Open to All</span>
+                  </label>
+                  <label className="flex items-center gap-1.5 cursor-pointer">
+                    <input
+                      type="radio"
+                      checked={!allOccupations}
+                      onChange={() => {
+                        setAllOccupations(false);
+                        setEligibleOccupationRequirement('required');
+                      }}
+                      className="text-primary focus:ring-primary"
+                    />
+                    <span className="text-on-surface dark:text-slate-300">Specific Occupations</span>
+                  </label>
+                </div>
+              </div>
+
+              {!allOccupations && (
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <input
+                      type="text"
+                      value={occupationSearch}
+                      onChange={(e) => setOccupationSearch(e.target.value)}
+                      placeholder="Search occupations (e.g. Farmer, Artisan, Electrician)..."
+                      className="w-full px-3 py-1.5 text-xs bg-surface-container-lowest dark:bg-slate-900 rounded-lg border border-outline-variant/40 text-on-surface dark:text-white"
+                    />
+                    <select
+                      value={eligibleOccupationRequirement}
+                      onChange={(e) => setEligibleOccupationRequirement(e.target.value)}
+                      className="px-2 py-1.5 bg-surface-container-lowest dark:bg-slate-900 rounded-lg border border-outline-variant/40 text-on-surface dark:text-white text-xs whitespace-nowrap"
+                    >
+                      <option value="required">Mandatory Requirement</option>
+                      <option value="optional">Optional / Higher Priority</option>
+                    </select>
+                  </div>
+
+                  <div className="p-3 bg-surface-container-lowest dark:bg-slate-900 rounded-xl border border-outline-variant/20 flex flex-wrap gap-1.5 max-h-36 overflow-y-auto">
+                    {filteredOccupationsList.map((o) => {
+                      const isSelected = eligibleOccupations.includes(o.id);
+                      return (
+                        <button
+                          type="button"
+                          key={o.id}
+                          onClick={() => handleToggleOccupation(o.id)}
+                          className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-colors border ${
+                            isSelected
+                              ? 'bg-primary/10 border-primary text-primary dark:text-primary-fixed font-bold'
+                              : 'border-outline-variant/30 hover:bg-surface-container text-on-surface-variant dark:text-slate-400'
+                          }`}
+                        >
+                          {o.name} {isSelected && '✓'}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 3. Sector Eligibility */}
+            <div className="space-y-2 pt-3 border-t border-outline-variant/20">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <label className="font-semibold text-on-surface dark:text-slate-200">
+                  Target Industry Sectors
+                </label>
+                <div className="flex items-center gap-3">
+                  <label className="flex items-center gap-1.5 cursor-pointer">
+                    <input
+                      type="radio"
+                      checked={allSectors}
+                      onChange={() => {
+                        setAllSectors(true);
+                        setEligibleSectors([]);
+                        setEligibleSectorRequirement('none');
+                      }}
+                      className="text-primary focus:ring-primary"
+                    />
+                    <span className="text-on-surface dark:text-slate-300">Open to All</span>
+                  </label>
+                  <label className="flex items-center gap-1.5 cursor-pointer">
+                    <input
+                      type="radio"
+                      checked={!allSectors}
+                      onChange={() => {
+                        setAllSectors(false);
+                        setEligibleSectorRequirement('required');
+                      }}
+                      className="text-primary focus:ring-primary"
+                    />
+                    <span className="text-on-surface dark:text-slate-300">Specific Sectors</span>
+                  </label>
+                </div>
+              </div>
+
+              {!allSectors && (
+                <div className="space-y-2">
+                  <div className="flex justify-end">
+                    <select
+                      value={eligibleSectorRequirement}
+                      onChange={(e) => setEligibleSectorRequirement(e.target.value)}
+                      className="px-2 py-1.5 bg-surface-container-lowest dark:bg-slate-900 rounded-lg border border-outline-variant/40 text-on-surface dark:text-white text-xs"
+                    >
+                      <option value="required">Mandatory Requirement</option>
+                      <option value="optional">Optional / Higher Priority</option>
+                    </select>
+                  </div>
+
+                  <div className="p-3 bg-surface-container-lowest dark:bg-slate-900 rounded-xl border border-outline-variant/20 flex flex-wrap gap-1.5 max-h-36 overflow-y-auto">
+                    {SECTORS.map((s) => {
+                      const isSelected = eligibleSectors.includes(s.id);
+                      return (
+                        <button
+                          type="button"
+                          key={s.id}
+                          onClick={() => handleToggleSector(s.id)}
+                          className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-colors border ${
+                            isSelected
+                              ? 'bg-primary/10 border-primary text-primary dark:text-primary-fixed font-bold'
+                              : 'border-outline-variant/30 hover:bg-surface-container text-on-surface-variant dark:text-slate-400'
+                          }`}
+                        >
+                          {s.name} {isSelected && '✓'}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Demographic & Financial Constraints */}
           <div>
             <span className="font-label-bold uppercase tracking-wider text-primary dark:text-primary-fixed block mb-3">
               {t('eligibilityOperations')}

@@ -5,6 +5,7 @@ import { useLang } from '../../context/LangContext';
 import { SchemeCard } from './SchemeCard';
 import { MultiSelectBar } from './MultiSelectBar';
 import { isSchemeGeographicallyEligible } from '../../data/states';
+import { LIFE_STATUSES, SECTORS, getLifeStatusLabel, getOccupationLabel, getSectorLabel } from '../../data/taxonomy';
 
 export const Dashboard = () => {
   const {
@@ -15,6 +16,7 @@ export const Dashboard = () => {
     profileCompletion,
     navigateTo,
     userProfile,
+    evaluateScheme
   } = useData();
   const { user } = useAuth();
   const { t } = useLang();
@@ -22,7 +24,10 @@ export const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [govLevelFilter, setGovLevelFilter] = useState('all'); // 'all', 'central', 'state'
-  const [sortBy, setSortBy] = useState('latest');
+  const [lifeStatusFilter, setLifeStatusFilter] = useState('all');
+  const [sectorFilter, setSectorFilter] = useState('all');
+  const [matchFilter, setMatchFilter] = useState('all'); // 'all', 'high_match', 'eligible'
+  const [sortBy, setSortBy] = useState('relevance'); // 'relevance', 'latest', 'deadline'
   const [selectedSchemeIds, setSelectedSchemeIds] = useState([]);
   const [contextDropdownOpen, setContextDropdownOpen] = useState(false);
 
@@ -33,9 +38,17 @@ export const Dashboard = () => {
   const activeBusiness = businesses.find((b) => b.id === activeContext);
   const contextLabel = activeContext === 'personal' ? t('personalContextTitle', { name: user.name.split(' ')[0] }) : activeBusiness?.businessName || t('business');
 
-  // Filter schemes based on active context, geographic eligibility, government level filter, search query, category, and sorting
+  // Evaluated Schemes with server-authoritative engine
+  const evaluatedSchemes = useMemo(() => {
+    return schemes.map((s) => ({
+      ...s,
+      evaluation: evaluateScheme(s)
+    }));
+  }, [schemes, userProfile]);
+
+  // Filter schemes based on active context, geographic eligibility, filters, and intelligence
   const filteredSchemes = useMemo(() => {
-    return schemes.filter((scheme) => {
+    return evaluatedSchemes.filter((scheme) => {
       // 1. Context Filter
       if (activeContext === 'personal') {
         if (scheme.isBusinessScheme) return false;
@@ -55,7 +68,30 @@ export const Dashboard = () => {
         if (scheme.governmentLevel !== 'state') return false;
       }
 
-      // 4. Search Query
+      // 4. Life Status Filter
+      if (lifeStatusFilter !== 'all') {
+        const eligibleStatuses = scheme.eligibleLifeStatuses || ['ALL'];
+        if (!eligibleStatuses.includes('ALL') && !eligibleStatuses.includes(lifeStatusFilter)) {
+          return false;
+        }
+      }
+
+      // 5. Sector Filter
+      if (sectorFilter !== 'all') {
+        const eligibleSectors = scheme.eligibleSectors || ['ALL'];
+        if (!eligibleSectors.includes('ALL') && !eligibleSectors.includes(sectorFilter)) {
+          return false;
+        }
+      }
+
+      // 6. Match Status Filter
+      if (matchFilter === 'high_match') {
+        if (scheme.evaluation.status !== 'HIGH_MATCH') return false;
+      } else if (matchFilter === 'eligible') {
+        if (!['HIGH_MATCH', 'POTENTIAL_MATCH'].includes(scheme.evaluation.status)) return false;
+      }
+
+      // 7. Search Query
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         const matchName = scheme.name.toLowerCase().includes(q);
@@ -64,25 +100,41 @@ export const Dashboard = () => {
         const matchDesc = scheme.description.toLowerCase().includes(q);
         const matchGov = scheme.governmentLevel ? (scheme.governmentLevel.toLowerCase().includes(q) || (scheme.governmentLevel === 'central' ? 'central' : 'state').includes(q)) : false;
         const matchStates = scheme.applicableStates ? scheme.applicableStates.some(s => s.toLowerCase().includes(q)) : false;
-        if (!matchName && !matchDept && !matchCat && !matchDesc && !matchGov && !matchStates) return false;
+        const matchOcc = scheme.eligibleOccupations ? scheme.eligibleOccupations.some(o => getOccupationLabel(o).toLowerCase().includes(q)) : false;
+        const matchSec = scheme.eligibleSectors ? scheme.eligibleSectors.some(s => getSectorLabel(s).toLowerCase().includes(q)) : false;
+
+        if (!matchName && !matchDept && !matchCat && !matchDesc && !matchGov && !matchStates && !matchOcc && !matchSec) {
+          return false;
+        }
       }
 
-      // 5. Category Filter
+      // 8. Category Filter
       if (selectedCategory !== 'all') {
         if (scheme.category.toLowerCase() !== selectedCategory.toLowerCase()) return false;
       }
 
       return true;
     }).sort((a, b) => {
+      if (sortBy === 'relevance') {
+        const statusWeight = {
+          HIGH_MATCH: 400,
+          POTENTIAL_MATCH: 300,
+          NEEDS_INFO: 200,
+          NOT_ELIGIBLE: 0
+        };
+        const weightA = (statusWeight[a.evaluation.status] || 0) + a.evaluation.matchScore;
+        const weightB = (statusWeight[b.evaluation.status] || 0) + b.evaluation.matchScore;
+        return weightB - weightA;
+      }
       if (sortBy === 'deadline') {
         if (!a.deadline) return 1;
         if (!b.deadline) return -1;
         return new Date(a.deadline) - new Date(b.deadline);
       }
-      // default: latest (isNew first, then active)
+      // latest (isNew first, then active)
       return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
     });
-  }, [schemes, activeContext, userState, govLevelFilter, searchQuery, selectedCategory, sortBy]);
+  }, [evaluatedSchemes, activeContext, userState, govLevelFilter, lifeStatusFilter, sectorFilter, matchFilter, searchQuery, selectedCategory, sortBy]);
 
   // Categories list derived from current context
   const categories = useMemo(() => {
@@ -96,6 +148,11 @@ export const Dashboard = () => {
     });
     return Array.from(list);
   }, [schemes, activeContext]);
+
+  // Count high matches for banner
+  const highMatchCount = useMemo(() => {
+    return filteredSchemes.filter(s => s.evaluation.status === 'HIGH_MATCH').length;
+  }, [filteredSchemes]);
 
   // Multi-select toggle
   const handleToggleSelect = (id) => {
@@ -204,7 +261,7 @@ export const Dashboard = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-surface-container-low dark:bg-slate-800 text-on-surface dark:text-white font-body-md text-sm py-2.5 pl-11 pr-4 rounded-xl outline-none focus:ring-2 focus:ring-primary transition-all placeholder:text-outline/60 dark:placeholder:text-slate-400"
-            placeholder={t('searchPlaceholder')}
+            placeholder="Search schemes by name, ministry, occupation, sector, or state..."
             type="text"
           />
           {searchQuery && (
@@ -217,15 +274,15 @@ export const Dashboard = () => {
           )}
         </div>
 
-        {/* Scheme Type, Category & Sort Controls */}
+        {/* Filter Controls */}
         <div className="flex flex-wrap items-center gap-2">
-          {/* Government Level / Scheme Type Selector */}
+          {/* Government Level Selector */}
           <div className="relative">
             <select
               value={govLevelFilter}
               onChange={(e) => setGovLevelFilter(e.target.value)}
               className="appearance-none bg-surface-container-low dark:bg-slate-800 hover:bg-surface-container-high dark:hover:bg-slate-700 text-on-surface dark:text-white font-label-bold text-xs py-2.5 pl-4 pr-9 rounded-full outline-none focus:ring-2 focus:ring-primary cursor-pointer border border-outline-variant/30 dark:border-slate-700 transition-colors"
-              aria-label={t('schemeType', {}, 'Scheme Type')}
+              aria-label="Government Level"
             >
               <option value="all">{t('allSchemes', {}, 'All Schemes')}</option>
               <option value="central">{t('centralGov', {}, 'Central Government')}</option>
@@ -236,19 +293,54 @@ export const Dashboard = () => {
             </span>
           </div>
 
-          {/* Category Selector */}
+          {/* Life Status Filter */}
           <div className="relative">
             <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              value={lifeStatusFilter}
+              onChange={(e) => setLifeStatusFilter(e.target.value)}
               className="appearance-none bg-surface-container-low dark:bg-slate-800 hover:bg-surface-container-high dark:hover:bg-slate-700 text-on-surface dark:text-white font-label-bold text-xs py-2.5 pl-4 pr-9 rounded-full outline-none focus:ring-2 focus:ring-primary cursor-pointer border border-outline-variant/30 dark:border-slate-700 transition-colors"
             >
-              <option value="all">{t('allCategories')}</option>
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {t('category_' + cat.replace(/ /g, '_')) || cat}
+              <option value="all">All Life Statuses</option>
+              {LIFE_STATUSES.map((ls) => (
+                <option key={ls.id} value={ls.id}>
+                  {ls.name}
                 </option>
               ))}
+            </select>
+            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant dark:text-slate-400 pointer-events-none">
+              expand_more
+            </span>
+          </div>
+
+          {/* Sector Filter */}
+          <div className="relative">
+            <select
+              value={sectorFilter}
+              onChange={(e) => setSectorFilter(e.target.value)}
+              className="appearance-none bg-surface-container-low dark:bg-slate-800 hover:bg-surface-container-high dark:hover:bg-slate-700 text-on-surface dark:text-white font-label-bold text-xs py-2.5 pl-4 pr-9 rounded-full outline-none focus:ring-2 focus:ring-primary cursor-pointer border border-outline-variant/30 dark:border-slate-700 transition-colors"
+            >
+              <option value="all">All Sectors</option>
+              {SECTORS.map((sec) => (
+                <option key={sec.id} value={sec.id}>
+                  {sec.name}
+                </option>
+              ))}
+            </select>
+            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant dark:text-slate-400 pointer-events-none">
+              expand_more
+            </span>
+          </div>
+
+          {/* Match Filter */}
+          <div className="relative">
+            <select
+              value={matchFilter}
+              onChange={(e) => setMatchFilter(e.target.value)}
+              className="appearance-none bg-surface-container-low dark:bg-slate-800 hover:bg-surface-container-high dark:hover:bg-slate-700 text-on-surface dark:text-white font-label-bold text-xs py-2.5 pl-4 pr-9 rounded-full outline-none focus:ring-2 focus:ring-primary cursor-pointer border border-outline-variant/30 dark:border-slate-700 transition-colors"
+            >
+              <option value="all">All Match Levels</option>
+              <option value="high_match">High Match Only</option>
+              <option value="eligible">Eligible Only</option>
             </select>
             <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant dark:text-slate-400 pointer-events-none">
               expand_more
@@ -262,6 +354,7 @@ export const Dashboard = () => {
               onChange={(e) => setSortBy(e.target.value)}
               className="appearance-none bg-surface-container-low dark:bg-slate-800 hover:bg-surface-container-high dark:hover:bg-slate-700 text-on-surface dark:text-white font-label-bold text-xs py-2.5 pl-4 pr-9 rounded-full outline-none focus:ring-2 focus:ring-primary cursor-pointer border border-outline-variant/30 dark:border-slate-700 transition-colors"
             >
+              <option value="relevance">Sort: Recommended</option>
               <option value="latest">{t('latest')}</option>
               <option value="deadline">{t('deadline')}</option>
             </select>
@@ -274,7 +367,6 @@ export const Dashboard = () => {
 
       {/* Hero / Greeting Section */}
       <div className="px-4 sm:px-8 lg:px-margin-desktop pt-8 pb-10 relative overflow-hidden">
-        {/* Background glow elements */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-primary-container/20 via-tertiary-container/10 to-transparent rounded-full blur-3xl opacity-50 pointer-events-none" />
 
         <div className="relative z-10 flex flex-col lg:flex-row gap-8 items-start justify-between">
@@ -297,83 +389,75 @@ export const Dashboard = () => {
                 ? t('personalDashboardDesc')
                 : t('businessDashboardDesc', { businessName: activeBusiness?.businessName || t('yourEnterprise') })}
             </p>
+
+            {/* Personalized Intelligence Profile Banner */}
+            {activeContext === 'personal' && (
+              <div className="mt-4 inline-flex flex-wrap items-center gap-2 p-3 bg-surface-container-lowest/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl border border-outline-variant/30 text-xs text-on-surface dark:text-slate-200">
+                <span className="font-bold flex items-center gap-1 text-primary dark:text-primary-fixed">
+                  <span className="material-symbols-outlined text-[16px]">tune</span> Your Profile Context:
+                </span>
+                <span className="px-2 py-0.5 rounded bg-surface-container-high dark:bg-slate-700 font-semibold">
+                  {getLifeStatusLabel(userProfile.life_status)}
+                </span>
+                {userProfile.occupation && (
+                  <span className="px-2 py-0.5 rounded bg-surface-container-high dark:bg-slate-700 font-semibold">
+                    {getOccupationLabel(userProfile.occupation)}
+                  </span>
+                )}
+                {userProfile.sector && (
+                  <span className="px-2 py-0.5 rounded bg-surface-container-high dark:bg-slate-700 font-semibold">
+                    {getSectorLabel(userProfile.sector)}
+                  </span>
+                )}
+                <span className="px-2 py-0.5 rounded bg-surface-container-high dark:bg-slate-700 font-semibold">
+                  {userProfile.state}
+                </span>
+                <button
+                  onClick={() => navigateTo('profile')}
+                  className="text-primary dark:text-primary-fixed font-bold hover:underline ml-1"
+                >
+                  Update Profile →
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* Profile Completion Action Banner */}
-          {activeContext === 'personal' && profileCompletion < 100 && (
-            <div className="w-full lg:w-auto min-w-[300px] sm:min-w-[340px] p-[2px] rounded-2xl bg-gradient-to-br from-primary to-tertiary-fixed shadow-xl transform hover:scale-[1.02] transition-all duration-300 animate-fade-in-up">
-              <div className="bg-surface-container-lowest dark:bg-slate-900 p-6 rounded-[14px] h-full flex flex-col justify-between">
-                <div>
-                  <div className="w-10 h-10 bg-primary-container rounded-full flex items-center justify-center mb-3 text-on-primary-container">
-                    <span className="material-symbols-outlined text-[20px]">assignment_ind</span>
-                  </div>
-                  <h3 className="font-headline-md text-base font-bold text-on-surface dark:text-white mb-1">
-                    {t('profileCompletionBannerTitle')}
-                  </h3>
-                  <p className="font-body-sm text-xs text-on-surface-variant dark:text-slate-400 mb-4">
-                    {t('profileCompletionBannerDesc', { percent: profileCompletion })}
-                  </p>
-                </div>
+          {/* Quick Stats Widget */}
+          <div className="w-full lg:w-80 bg-surface-container-lowest dark:bg-slate-800 p-6 rounded-2xl border border-outline-variant/30 dark:border-slate-700 shadow-sm flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant dark:text-slate-400">
+                Recommendation Engine
+              </span>
+              <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold">
+                Server Verified
+              </span>
+            </div>
 
-                <div>
-                  <div className="relative w-full h-2 bg-surface-container-high dark:bg-slate-800 rounded-full overflow-hidden mb-4">
-                    <div
-                      className="absolute top-0 left-0 h-full bg-primary rounded-full transition-all duration-500"
-                      style={{ width: `${profileCompletion}%` }}
-                    />
-                  </div>
-
-                  <button
-                    onClick={() => navigateTo('profile')}
-                    className="w-full py-2.5 bg-on-surface text-surface-container-lowest dark:bg-white dark:text-slate-900 font-label-bold text-xs rounded-lg hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2"
-                  >
-                    <span>{t('updateProfile')}</span>
-                    <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-                  </button>
-                </div>
+            <div className="grid grid-cols-2 gap-3 text-center">
+              <div className="p-3 bg-surface-container-low dark:bg-slate-900 rounded-xl">
+                <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 block">
+                  {highMatchCount}
+                </span>
+                <span className="text-[11px] text-on-surface-variant dark:text-slate-400 font-medium">
+                  High Matches
+                </span>
+              </div>
+              <div className="p-3 bg-surface-container-low dark:bg-slate-900 rounded-xl">
+                <span className="text-2xl font-bold text-primary dark:text-primary-fixed block">
+                  {filteredSchemes.length}
+                </span>
+                <span className="text-[11px] text-on-surface-variant dark:text-slate-400 font-medium">
+                  Available in {userState}
+                </span>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
 
-      {/* Scheme Cards Grid */}
+      {/* Schemes Grid */}
       <div className="px-4 sm:px-8 lg:px-margin-desktop">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="font-headline-lg text-xl sm:text-2xl font-bold text-on-surface dark:text-white">
-            {t('recommendedSchemes')}
-          </h2>
-          <div className="flex items-center gap-2 text-on-surface-variant dark:text-slate-400 text-xs font-semibold">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span>
-              {t('showingMatches', { shown: filteredSchemes.length, total: filteredSchemes.length })}
-            </span>
-          </div>
-        </div>
-
-        {filteredSchemes.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 bg-surface-container-low dark:bg-slate-800/40 rounded-2xl text-center px-4">
-            <div className="w-16 h-16 rounded-full bg-surface-container dark:bg-slate-700 flex items-center justify-center text-outline dark:text-slate-400 mb-4">
-              <span className="material-symbols-outlined text-[32px]">search_off</span>
-            </div>
-            <h3 className="font-headline-md text-lg text-on-surface dark:text-white font-bold mb-1">
-              {t('noMatchingSchemesFound')}
-            </h3>
-            <p className="font-body-md text-xs text-on-surface-variant dark:text-slate-400 max-w-sm mb-4">
-              {t('noSchemesFoundDesc')}
-            </p>
-            <button
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory('all');
-                setGovLevelFilter('all');
-              }}
-              className="px-4 py-2 bg-primary text-on-primary font-label-bold text-xs rounded-lg hover:bg-primary-container transition-colors"
-            >
-              {t('resetFilters')}
-            </button>
-          </div>
-        ) : (
+        {filteredSchemes.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredSchemes.map((scheme) => (
               <SchemeCard
@@ -384,14 +468,39 @@ export const Dashboard = () => {
               />
             ))}
           </div>
+        ) : (
+          <div className="text-center py-16 bg-surface-container-lowest dark:bg-slate-800 rounded-3xl border border-outline-variant/30 dark:border-slate-700 p-8 max-w-lg mx-auto">
+            <span className="material-symbols-outlined text-[48px] text-outline-variant dark:text-slate-600 mb-3 block">
+              filter_alt_off
+            </span>
+            <h3 className="font-headline-md text-base font-bold text-on-surface dark:text-white mb-1">
+              No matching schemes found
+            </h3>
+            <p className="text-xs text-on-surface-variant dark:text-slate-400 mb-4">
+              Try adjusting your search criteria or resetting some of the filters.
+            </p>
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedCategory('all');
+                setGovLevelFilter('all');
+                setLifeStatusFilter('all');
+                setSectorFilter('all');
+                setMatchFilter('all');
+              }}
+              className="px-4 py-2 bg-primary text-white rounded-xl text-xs font-semibold hover:bg-primary-container transition-colors"
+            >
+              Reset All Filters
+            </button>
+          </div>
         )}
       </div>
 
-      {/* Sticky Bottom Action Bar for Multi-Select */}
+      {/* Multi-Select Action Bar */}
       <MultiSelectBar
         selectedCount={selectedSchemeIds.length}
-        onApplySelected={handleApplySelected}
-        onClearSelection={() => setSelectedSchemeIds([])}
+        onApply={handleApplySelected}
+        onClear={() => setSelectedSchemeIds([])}
       />
     </div>
   );
