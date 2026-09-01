@@ -7,6 +7,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY prisma ./prisma/
 
+ENV DATABASE_URL="file:./dev.db"
+
 RUN npm ci
 
 # Generate Prisma Client
