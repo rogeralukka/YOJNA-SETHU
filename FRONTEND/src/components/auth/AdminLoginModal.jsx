@@ -8,8 +8,8 @@ export const AdminLoginModal = () => {
   const { navigateTo } = useData();
   const { t } = useLang();
 
-  const [adminId, setAdminId] = useState('admin_001');
-  const [password, setPassword] = useState('admin123');
+  const [adminId, setAdminId] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

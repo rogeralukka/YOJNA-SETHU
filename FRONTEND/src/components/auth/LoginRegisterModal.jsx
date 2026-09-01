@@ -11,8 +11,9 @@ export const LoginRegisterModal = () => {
   const [showRegPassword, setShowRegPassword] = useState(false);
 
   // Form states
-  const [loginIdentifier, setLoginIdentifier] = useState('rahul@email.com');
-  const [loginPassword, setLoginPassword] = useState('password123');
+  const [loginIdentifier, setLoginIdentifier] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [loginPassword, setLoginPassword] = useState('');
 
   const [regFullName, setRegFullName] = useState('');
   const [regEmail, setRegEmail] = useState('');

@@ -1,3 +1,4 @@
+import { api } from '../services/api';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { initialSchemes } from '../data/initialSchemes';
 import { initialBusinesses } from '../data/initialBusinesses';
@@ -137,6 +138,7 @@ export const DataProvider = ({ children }) => {
 
   // Business Management
   const addBusiness = (bizData) => {
+    api.createBusiness(bizData).catch(() => {});
     const newBiz = {
       ...bizData,
       id: `biz-${Date.now()}`,
@@ -212,6 +214,12 @@ export const DataProvider = ({ children }) => {
     };
 
     setApplications(prev => [newApp, ...prev]);
+    // Synchronize with backend API
+    api.applySchemes({
+      schemeIds: schemeList.map(s => s.id),
+      entity: entityType,
+      businessCardId: businessId
+    }).catch(() => {});
 
     // Create Notification
     const newNotif = {
@@ -235,6 +243,7 @@ export const DataProvider = ({ children }) => {
 
   // Admin Actions
   const approveApplication = (applicationId) => {
+    api.updateApplicationStatus(applicationId, 'approved').catch(() => {});
     const todayStr = new Date().toISOString().split('T')[0];
     let appTitle = "";
 
