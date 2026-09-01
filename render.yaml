@@ -5,8 +5,8 @@ services:
     runtime: node
     plan: starter
     region: singapore # Closest to India for lowest latency
-    buildCommand: npm install && npx prisma generate && npm test
-    startCommand: node prisma/seed.js && npm start
+    buildCommand: cd backend && npm install && npx prisma generate && npm test
+    startCommand: cd backend && node prisma/seed.js && npm start
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV

@@ -1,35 +1,14 @@
 {
-  "name": "government-scheme-portal-backend",
+  "name": "yojanasetu-monorepo",
   "version": "1.0.0",
-  "description": "Comprehensive backend for Government Scheme Portal with multi-role RBAC, dynamic business cards, eligibility calculation engine, multi-scheme applications, notifications, and admin analytics.",
-  "main": "src/server.js",
-  "type": "module",
+  "private": true,
+  "description": "YojnaSetu (योजनासेतु) - Official National Entitlement & Welfare Gateway Monorepo",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "prisma:generate": "prisma generate",
-    "prisma:push": "prisma db push",
-    "seed": "node prisma/seed.js",
-    "test": "node test/run-tests.js"
-  },
-  "dependencies": {
-    "@aws-sdk/client-s3": "^3.1121.0",
-    "@prisma/client": "^5.22.0",
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "helmet": "^8.0.0",
-    "ioredis": "^6.0.0",
-    "jsonwebtoken": "^9.0.2",
-    "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1",
-    "nodemailer": "^9.1.0",
-    "pdfkit": "^0.15.0",
-    "web-push": "^3.6.7"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.7",
-    "prisma": "^5.22.0"
+    "backend:install": "cd backend && npm install",
+    "backend:dev": "cd backend && npm run dev",
+    "backend:test": "cd backend && npm test",
+    "frontend:install": "cd FRONTEND && npm install",
+    "frontend:dev": "cd FRONTEND && npm run dev",
+    "frontend:build": "cd FRONTEND && npm run build"
   }
 }

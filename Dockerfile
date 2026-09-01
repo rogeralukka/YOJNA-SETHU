@@ -1,11 +1,11 @@
-# Multi-Stage Production Dockerfile for Government Scheme Portal Backend
+# Multi-Stage Production Dockerfile for YojnaSetu Backend
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Install dependencies and native build tools if required
-COPY package*.json ./
-COPY prisma ./prisma/
+# Install dependencies and generate Prisma client
+COPY backend/package*.json ./
+COPY backend/prisma ./prisma/
 
 ENV DATABASE_URL="file:./dev.db"
 
@@ -21,13 +21,13 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV PORT=5000
+ENV DATABASE_URL="file:./dev.db"
 
-# Copy node modules and built assets
+# Copy node modules and backend assets
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
-COPY package*.json ./
-COPY src ./src
-COPY public ./public
+COPY backend/package*.json ./
+COPY backend/src ./src
 
 # Ensure uploads directory exists with write permissions
 RUN mkdir -p uploads && chown -R node:node /app

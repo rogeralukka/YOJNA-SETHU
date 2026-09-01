@@ -1,419 +1,157 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
-enum Role {
-  USER
-  ADMIN
-  SUPER_ADMIN
-}
-
-enum ApplicationStatus {
-  PENDING
-  APPROVED
-  REJECTED
-}
-
-enum EntityType {
-  PERSONAL
-  BUSINESS
-}
-
-enum NotificationType {
-  APPLICATION_SUBMITTED
-  APPLICATION_APPROVED
-  APPLICATION_REJECTED
-  SCHEME_ADDED
-  SCHEME_UPDATED
-}
-
-enum SchemeType {
-  PERSONAL
-  BUSINESS
-  BOTH
-}
-
-enum VerificationStatus {
-  VERIFIED
-  UNVERIFIED
-  OUTDATED
-  ARCHIVED
-}
-
-enum SchemeStatus {
-  DRAFT
-  ACTIVE
-  INACTIVE
-  EXPIRED
-  ARCHIVED
-}
-
-enum FieldType {
-  TEXT
-  NUMBER
-  DATE
-  BOOLEAN
-  SELECT
-  MULTI_SELECT
-}
-
-enum DocumentType {
-  AADHAAR
-  PAN
-  INCOME_CERTIFICATE
-  CASTE_CERTIFICATE
-  LAND_DOCUMENT
-  BANK_ACCOUNT
-  BUSINESS_REGISTRATION
-  UDYAM_CERTIFICATE
-  OTHER
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id                String         @id @default(cuid())
-  userId            String         @unique @default(cuid())
-  name              String
+  id                String         @id @default(uuid())
+  fullName          String
   email             String         @unique
-  phone             String         @unique
-  passwordHash      String
-  role              Role           @default(USER)
-  age               Int?
+  mobile            String         @unique
+  password          String
+  role              String         @default("user") // "user" | "admin" | "super_admin"
+  
+  // Profile Fields
+  category          String?        // General, OBC, SC, ST, EWS
   state             String?
-  category          String?
   annualIncome      Float?
-  profileComplete   Boolean        @default(false)
-  profilePictureUrl String?
-  aadhaarLast4      String?
-  aadhaarVerified   Boolean        @default(false)
-  panLast4          String?
-  panVerified       Boolean        @default(false)
+  age               Int?
+  gender            String?        @default("All") // Male, Female, Other, All
+  
+  // Bank Details
+  accountHolderName String?
+  accountNumber     String?
+  ifscCode          String?
   bankName          String?
-  bankAccountLast4  String?
-  bankIfsc          String?
+  
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
-  lastLoginAt       DateTime?
-  isActive          Boolean        @default(true)
 
-  refreshTokens     RefreshToken[]
+  // Relations
+  documents         Document[]
   businessCards     BusinessCard[]
   applications      Application[]
-  notifications     Notification[]
   bookmarks         Bookmark[]
-
-  @@index([email])
-  @@index([phone])
+  notifications     Notification[]
 }
 
-model RefreshToken {
-  id              String   @id @default(cuid())
-  token           String   @unique
-  userId          String
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  expiresAt       DateTime
-  isRevoked       Boolean  @default(false)
-  replacedByToken String?
-  createdAt       DateTime @default(now())
+model Document {
+  id         String   @id @default(uuid())
+  userId     String
+  docType    String   // aadhaar, pan, voter_id, income_cert, caste_cert, other
+  fileName   String
+  fileUrl    String
+  mimeType   String
+  fileSize   Int
+  uploadedAt DateTime @default(now())
 
-  @@index([userId])
-  @@index([token])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model BusinessCard {
-  id                      String        @id @default(cuid())
-  cardId                  String        @unique @default(cuid())
-  userId                  String
-  user                    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  businessName            String
-  businessType            String
-  gstNumberMasked         String?
-  panLast4                String?
-  address                 String
-  phone                   String
-  email                   String
-  annualTurnover          Float
-  employeeCount           Int
-  industryCategory        String
-  yearsInOperation        Int
-  udyamRegistrationMasked String?
-  createdAt               DateTime      @default(now())
-  updatedAt               DateTime      @updatedAt
+  id               String        @id @default(uuid())
+  userId           String
+  name             String
+  type             String        // Manufacturing, Services, Retail, Agriculture, etc.
+  gstNumber        String?
+  panNumber        String?
+  address          String
+  phone            String
+  email            String
+  turnover         String        // <1L, 1L-10L, 10L-50L, 50L-1Cr, >1Cr
+  employeeCount    String        // 1-10, 11-50, 51-200, >200
+  industryCategory String        // Textiles, IT, Food Processing, etc.
+  yearsInOperation String        // <1, 1-3, 3-5, 5-10, >10
+  udyamNumber      String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
 
-  applications            Application[]
-
-  @@index([userId])
-}
-
-model Department {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  slug        String   @unique
-  description String?
-  ministry    String?
-  officialUrl String?
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  schemes     Scheme[]
-
-  @@index([slug])
-  @@index([name])
-}
-
-model SchemeCategory {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  slug        String   @unique
-  description String?
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  schemes     Scheme[]
-
-  @@index([slug])
-  @@index([name])
-}
-
-model State {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  code      String   @unique
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  schemeStates SchemeState[]
-
-  @@index([code])
-}
-
-model EligibilityCategory {
-  id          String   @id @default(cuid())
-  code        String   @unique
-  name        String
-  description String?
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  schemeEligibilities SchemeCategoryEligibility[]
-
-  @@index([code])
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications     Application[]
 }
 
 model Scheme {
-  id                     String                      @id @default(cuid())
-  schemeId               String                      @unique
-  name                   String
-  slug                   String                      @unique
-  shortDescription       String
-  description            String
-  departmentId           String
-  department             Department                  @relation(fields: [departmentId], references: [id])
-  categoryId             String
-  category               SchemeCategory              @relation(fields: [categoryId], references: [id])
-  schemeType             SchemeType                  @default(PERSONAL)
-  isBusinessScheme       Boolean                     @default(false)
-  eligibilityDescription String?
-  minAge                 Int?
-  maxAge                 Int?
-  minIncome              Float?
-  maxIncome              Float?
-  rulesJson              Json?
-  deadline               DateTime?
-  isActive               Boolean                     @default(true)
-  isNew                  Boolean                     @default(true)
-  status                 SchemeStatus                @default(ACTIVE)
-  sourceName             String?
-  sourceUrl              String?
-  sourceIdentifier       String?
-  lastVerifiedAt         DateTime?
-  verificationStatus     VerificationStatus          @default(UNVERIFIED)
-  versionNumber          Int                         @default(1)
-  createdAt              DateTime                    @default(now())
-  updatedAt              DateTime                    @updatedAt
+  id                String        @id @default(uuid())
+  name              String
+  department        String
+  category          String        // Education, Health, Finance, Agriculture, Women & Child, MSME, Entrepreneurship, etc.
+  description       String
+  
+  // Eligibility criteria
+  minAge            Int?          @default(0)
+  maxAge            Int?          @default(100)
+  states            String        @default("[\"All\"]") // JSON array string
+  categories        String        @default("[\"All\"]") // JSON array string
+  maxIncome         Float?
+  targetGender      String?       @default("All") // All, Female, Male
+  businessTypes     String?       @default("[\"All\"]") // JSON array string
+  isBusinessScheme  Boolean       @default(false)
+  
+  deadline          DateTime?
+  documentsRequired String        @default("[]") // JSON array string
+  benefits          String?
+  officialUrl       String?
+  isActive          Boolean       @default(true)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
 
-  states                 SchemeState[]
-  eligibilityCategories  SchemeCategoryEligibility[]
-  documentRequirements   SchemeDocumentRequirement[]
-  additionalFields       SchemeAdditionalField[]
-  translations           SchemeTranslation[]
-  versions               SchemeVersion[]
-  bookmarks              Bookmark[]
-
-  @@index([name])
-  @@index([slug])
-  @@index([categoryId])
-  @@index([departmentId])
-  @@index([schemeType])
-  @@index([status])
-  @@index([deadline])
-  @@index([isNew])
-  @@index([createdAt])
-  @@index([updatedAt])
-}
-
-model SchemeState {
-  id        String   @id @default(cuid())
-  schemeId  String
-  scheme    Scheme   @relation(fields: [schemeId], references: [id], onDelete: Cascade)
-  stateId   String
-  state     State    @relation(fields: [stateId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-
-  @@unique([schemeId, stateId])
-  @@index([schemeId])
-  @@index([stateId])
-}
-
-model SchemeCategoryEligibility {
-  id         String              @id @default(cuid())
-  schemeId   String
-  scheme     Scheme              @relation(fields: [schemeId], references: [id], onDelete: Cascade)
-  categoryId String
-  category   EligibilityCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  createdAt  DateTime            @default(now())
-
-  @@unique([schemeId, categoryId])
-  @@index([schemeId])
-  @@index([categoryId])
-}
-
-model SchemeDocumentRequirement {
-  id              String       @id @default(cuid())
-  schemeId        String
-  scheme          Scheme       @relation(fields: [schemeId], references: [id], onDelete: Cascade)
-  documentType    DocumentType
-  documentName    String
-  description     String?
-  isMandatory     Boolean      @default(true)
-  acceptedFormats Json?
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-
-  @@index([schemeId])
-  @@index([documentType])
-}
-
-model SchemeAdditionalField {
-  id              String    @id @default(cuid())
-  schemeId        String
-  scheme          Scheme    @relation(fields: [schemeId], references: [id], onDelete: Cascade)
-  fieldKey        String
-  label           String
-  description     String?
-  fieldType       FieldType
-  isRequired      Boolean   @default(false)
-  validationRules Json?
-  options         Json?
-  displayOrder    Int       @default(0)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-
-  @@index([schemeId])
-  @@index([fieldKey])
-}
-
-model SchemeTranslation {
-  id                     String   @id @default(cuid())
-  schemeId               String
-  scheme                 Scheme   @relation(fields: [schemeId], references: [id], onDelete: Cascade)
-  languageCode           String
-  name                   String
-  shortDescription       String
-  description            String
-  eligibilityDescription String?
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
-
-  @@unique([schemeId, languageCode])
-  @@index([schemeId])
-  @@index([languageCode])
-}
-
-model SchemeVersion {
-  id            String   @id @default(cuid())
-  schemeId      String
-  scheme        Scheme   @relation(fields: [schemeId], references: [id], onDelete: Cascade)
-  versionNumber Int
-  snapshot      Json
-  changedBy     String?
-  changeReason  String?
-  createdAt     DateTime @default(now())
-
-  @@index([schemeId])
-  @@index([versionNumber])
+  applications      Application[]
+  bookmarks         Bookmark[]
 }
 
 model Application {
-  id                String            @id @default(cuid())
-  applicationId     String            @unique @default(cuid())
-  userId            String
-  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  businessCardId    String?
-  businessCard      BusinessCard?     @relation(fields: [businessCardId], references: [id], onDelete: SetNull)
-  schemeIds         Json
-  entityType        EntityType
-  status            ApplicationStatus @default(PENDING)
-  additionalDetails Json?
-  adminComment      String?
-  appliedAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  approvedAt        DateTime?
-  rejectedAt        DateTime?
-
-  @@index([userId])
-  @@index([status])
-  @@index([businessCardId])
-}
-
-model Notification {
-  id             String           @id @default(cuid())
-  notificationId String           @unique @default(cuid())
+  id             String        @id @default(uuid())
   userId         String
-  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type           NotificationType
-  title          String
-  message        String
-  isRead         Boolean          @default(false)
-  createdAt      DateTime         @default(now())
+  schemeId       String
+  entity         String        @default("personal") // "personal" | "business"
+  businessCardId String?
+  status         String        @default("pending") // "pending" | "approved" | "rejected"
+  adminComment   String?
+  snapshotData   String        // JSON string frozen at application time
+  appliedAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 
-  @@index([userId])
-  @@index([isRead])
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scheme         Scheme        @relation(fields: [schemeId], references: [id], onDelete: Cascade)
+  businessCard   BusinessCard? @relation(fields: [businessCardId], references: [id], onDelete: SetNull)
 }
 
 model Bookmark {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   schemeId  String
-  scheme    Scheme   @relation(fields: [schemeId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scheme    Scheme   @relation(fields: [schemeId], references: [id], onDelete: Cascade)
+
   @@unique([userId, schemeId])
-  @@index([userId])
-  @@index([schemeId])
+}
+
+model Notification {
+  id                   String   @id @default(uuid())
+  userId               String
+  title                String
+  message              String
+  type                 String   // "application_submitted" | "application_approved" | "application_rejected" | "scheme_added" | "scheme_updated" | "system"
+  relatedSchemeId      String?
+  relatedApplicationId String?
+  isRead               Boolean  @default(false)
+  createdAt            DateTime @default(now())
+
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model AuditLog {
-  id           String   @id @default(cuid())
-  actorUserId  String?
-  action       String
-  resourceType String
-  resourceId   String?
-  ipAddress    String?
-  userAgent    String?
-  metadata     Json?
-  createdAt    DateTime @default(now())
-
-  @@index([actorUserId])
-  @@index([action])
-  @@index([createdAt])
+  id        String   @id @default(uuid())
+  userId    String?
+  action    String   // "USER_LOGIN" | "ADMIN_LOGIN" | "APPLICATION_APPROVED" | "APPLICATION_REJECTED" | "SCHEME_CREATED" | "SCHEME_UPDATED" | "SCHEME_DELETED"
+  details   String?  // JSON or summary description
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
 }

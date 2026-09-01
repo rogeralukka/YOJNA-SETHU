@@ -38,30 +38,54 @@
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Monorepo Architecture
 
-| Layer | Technologies |
-|---|---|
-| **Frontend** | Vanilla ES Modules, CSS Custom Properties (Theme Tokens), SVG / Canvas Visual Analytics, Glassmorphism UI |
-| **Backend Framework** | Node.js (v20+ LTS), Express.js |
-| **Database & ORM** | Prisma ORM, SQLite (Dev), PostgreSQL (Production) |
-| **Authentication & Security** | JWT (JSON Web Tokens), bcryptjs, Helmet, Express Rate Limiter, CORS |
-| **External Gateways** | Nodemailer (SMTP/SendGrid), Twilio & Fast2SMS, AWS S3 SDK, DigiLocker Partner API, Web-Push (VAPID) |
-| **Container & CI/CD** | Docker (Multi-stage build), Docker Compose, GitHub Actions, Nginx Reverse Proxy, Render Blueprint |
+```
+YOJNA-SETHU/
+├── FRONTEND/                      # 🌐 React 19 + Vite 6 + Tailwind CSS Frontend (Vercel Live)
+│   ├── src/                       # Components, DataContext, AuthContext, 13-Language Translations
+│   └── package.json
+│
+├── BACKEND/                       # ⚙️ Unified Production Express Backend & API Engine
+│   ├── src/
+│   │   ├── controllers/           # Auth, Admin, Applications, Schemes, Business, DigiLocker
+│   │   ├── services/              # Eligibility Engine, SSE, Web Push, PDFKit, Nodemailer, SMS
+│   │   ├── middleware/            # JWT RBAC, Rate Limiting, File Uploads
+│   │   └── config/swagger.js      # 🌟 Interactive Swagger OpenAPI Documentation (/api-docs)
+│   ├── prisma/                    # Dual SQLite & PostgreSQL Schema + Seeder
+│   ├── test/                      # 50 Passing Automated E2E Tests (21 Suites)
+│   └── package.json
+│
+├── .github/workflows/ci-cd.yml    # 🚀 Production CI/CD Pipeline (Tests & Builds)
+├── docker-compose.yml             # 🐳 Multi-service Docker Orchestration
+├── Dockerfile                     # 📦 Multi-stage Production Container Build
+└── README.md
+```
 
 ---
 
 ## 🚀 Quick Start (Local Setup)
 
 ### 1. Prerequisites
-- Node.js 18+ or 20+ LTS installed
+- Node.js 20+ LTS installed
 - Git installed
 
-### 2. Clone and Install
+### 2. Backend Setup & Run Tests
 ```bash
-git clone https://github.com/rogeralukka/YOJNA-SETHU.git
-cd YOJNA-SETHU
+cd backend
 npm install
+npx prisma generate
+npx prisma db push
+npm run seed
+npm test          # Runs 21 test suites (50 passing assertions)
+npm start         # Starts backend API on http://localhost:5000 (Swagger docs at /api-docs)
+```
+
+### 3. Frontend Setup
+```bash
+cd FRONTEND
+npm install
+npm run dev       # Starts Vite development server on http://localhost:5173
 ```
 
 ### 3. Setup Database & Seed Initial Schemes
