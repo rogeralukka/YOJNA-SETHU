@@ -1,3 +1,4 @@
+import { api } from '../../services/api';
 import React from 'react';
 import { useData } from '../../context/DataContext';
 import { useAuth } from '../../context/AuthContext';
