@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
+import fs from 'fs';
 import apiRoutes from './routes/index.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { config } from './config/index.js';
@@ -15,8 +16,13 @@ app.use(helmet({
   contentSecurityPolicy: false, // Allow Swagger UI and inline scripts
   crossOriginResourcePolicy: false // Allow documents/PDFs to be loaded across origins
 }));
+
+const allowedOrigins = config.nodeEnv === 'production' && config.clientUrl
+  ? [config.clientUrl, 'https://tempfe2.vercel.app']
+  : '*';
+
 app.use(cors({
-  origin: '*', // Allow frontend client
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
