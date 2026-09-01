@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from './context/AuthContext';
-import { useData } from './context/DataContext';
+import { useData, CITIZEN_VIEWS, ADMIN_VIEWS } from './context/DataContext';
 
 // Common
 import { Topbar } from './components/common/Topbar';
@@ -49,6 +49,8 @@ export const App = () => {
 
   // Citizen Application Experience
   if (isCitizen) {
+    const activeCitizenView = CITIZEN_VIEWS.includes(currentView) ? currentView : 'dashboard';
+
     return (
       <div className="min-h-screen bg-surface dark:bg-slate-950 text-on-surface dark:text-slate-100 flex flex-col font-body-lg">
         <Topbar />
@@ -59,15 +61,15 @@ export const App = () => {
             isSidebarCollapsed ? 'lg:ml-20' : 'lg:ml-64'
           }`}
         >
-          {currentView === 'dashboard' && <Dashboard />}
-          {currentView === 'scheme-detail' && <SchemeDetail />}
-          {currentView === 'application-form' && <ApplicationForm />}
-          {currentView === 'my-business' && <MyBusiness />}
-          {currentView === 'my-applications' && <MyApplications />}
-          {currentView === 'bookmarks' && <Bookmarks />}
-          {currentView === 'notifications' && <Notifications />}
-          {currentView === 'share-eligibility' && <ShareEligibility />}
-          {currentView === 'profile' && <Profile />}
+          {activeCitizenView === 'dashboard' && <Dashboard />}
+          {activeCitizenView === 'scheme-detail' && <SchemeDetail />}
+          {activeCitizenView === 'application-form' && <ApplicationForm />}
+          {activeCitizenView === 'my-business' && <MyBusiness />}
+          {activeCitizenView === 'my-applications' && <MyApplications />}
+          {activeCitizenView === 'bookmarks' && <Bookmarks />}
+          {activeCitizenView === 'notifications' && <Notifications />}
+          {activeCitizenView === 'share-eligibility' && <ShareEligibility />}
+          {activeCitizenView === 'profile' && <Profile />}
         </main>
 
         <Toast />
@@ -77,6 +79,8 @@ export const App = () => {
 
   // Admin Administration Experience
   if (isAdmin) {
+    const activeAdminView = ADMIN_VIEWS.includes(currentView) ? currentView : 'admin-overview';
+
     return (
       <div className="min-h-screen bg-surface dark:bg-slate-950 text-on-surface dark:text-slate-100 flex flex-col font-body-lg">
         <Topbar />
@@ -87,11 +91,11 @@ export const App = () => {
             isSidebarCollapsed ? 'lg:ml-20' : 'lg:ml-64'
           }`}
         >
-          {currentView === 'admin-overview' && <AdminOverview />}
-          {currentView === 'admin-all-applications' && <AllApplications />}
-          {currentView === 'admin-review-application' && <ReviewApplication />}
-          {currentView === 'admin-review-later' && <ReviewLater />}
-          {currentView === 'admin-scheme-management' && <SchemeManagement />}
+          {activeAdminView === 'admin-overview' && <AdminOverview />}
+          {activeAdminView === 'admin-all-applications' && <AllApplications />}
+          {activeAdminView === 'admin-review-application' && <ReviewApplication />}
+          {activeAdminView === 'admin-review-later' && <ReviewLater />}
+          {activeAdminView === 'admin-scheme-management' && <SchemeManagement />}
         </main>
 
         <Toast />

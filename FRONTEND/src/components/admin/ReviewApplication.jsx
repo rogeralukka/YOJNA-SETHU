@@ -161,10 +161,19 @@ export const ReviewApplication = () => {
 
               <div>
                 <span className="text-on-surface-variant dark:text-slate-400 block mb-1 font-semibold">
-                  {t('stateCategory')}
+                  {t('state')}
                 </span>
                 <p className="font-medium text-on-surface dark:text-white">
-                  {application.userState} ({application.userCategory})
+                  {application.userState}
+                </p>
+              </div>
+
+              <div>
+                <span className="text-on-surface-variant dark:text-slate-400 block mb-1 font-semibold">
+                  {t('category')}
+                </span>
+                <p className="font-medium text-on-surface dark:text-white">
+                  {application.userCategory}
                 </p>
               </div>
 

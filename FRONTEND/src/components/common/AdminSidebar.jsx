@@ -1,10 +1,12 @@
 import React from 'react';
-import { useData } from '../../context/DataContext';
+import { useData, ADMIN_VIEWS } from '../../context/DataContext';
 import { useLang } from '../../context/LangContext';
 
 export const AdminSidebar = () => {
   const { currentView, navigateTo, isSidebarCollapsed, setIsSidebarCollapsed } = useData();
   const { t } = useLang();
+
+  const activeView = ADMIN_VIEWS.includes(currentView) ? currentView : 'admin-overview';
 
   const navItems = [
     { key: 'overview', label: t('overview'), icon: 'dashboard', path: 'admin-overview' },
@@ -31,7 +33,7 @@ export const AdminSidebar = () => {
       >
         <nav className="flex flex-col gap-1.5 p-3 sm:p-4">
           {navItems.map((item) => {
-            const isActive = currentView === item.path;
+            const isActive = activeView === item.path;
             return (
               <button
                 key={item.key}

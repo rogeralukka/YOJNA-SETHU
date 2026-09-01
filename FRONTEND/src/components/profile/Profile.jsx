@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
 import { useLang } from '../../context/LangContext';
+import { INDIAN_STATES } from '../../data/states';
 
 export const Profile = () => {
   const { userProfile, updateProfile, uploadDocumentMock, profileCompletion } = useData();
@@ -156,12 +157,17 @@ export const Profile = () => {
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="font-semibold text-on-surface dark:text-slate-300">{t('state')}</label>
-                  <input
+                  <select
                     value={state}
                     onChange={(e) => setState(e.target.value)}
                     className="px-3 py-2 bg-surface-container-low dark:bg-slate-900 rounded-lg text-on-surface dark:text-white border border-outline-variant/40"
-                    type="text"
-                  />
+                  >
+                    {INDIAN_STATES.map((st) => (
+                      <option key={st} value={st}>
+                        {st}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="font-semibold text-on-surface dark:text-slate-300">{t('category')}</label>
@@ -213,8 +219,12 @@ export const Profile = () => {
                 </span>
               </div>
               <div className="flex justify-between items-center p-3 bg-surface-container-low dark:bg-slate-900 rounded-xl">
-                <span className="text-on-surface-variant dark:text-slate-400">{t('stateCategory')}</span>
-                <span className="font-semibold text-on-surface dark:text-white">{userProfile.state} ({userProfile.category})</span>
+                <span className="text-on-surface-variant dark:text-slate-400">{t('state')}</span>
+                <span className="font-semibold text-on-surface dark:text-white">{userProfile.state}</span>
+              </div>
+              <div className="flex justify-between items-center p-3 bg-surface-container-low dark:bg-slate-900 rounded-xl">
+                <span className="text-on-surface-variant dark:text-slate-400">{t('category')}</span>
+                <span className="font-semibold text-on-surface dark:text-white">{userProfile.category}</span>
               </div>
               <div className="flex justify-between items-center p-3 bg-surface-container-low dark:bg-slate-900 rounded-xl">
                 <span className="text-on-surface-variant dark:text-slate-400">{t('annualIncome')}</span>

@@ -5,6 +5,26 @@ import { initialApplications } from '../data/initialApplications';
 import { initialNotifications } from '../data/initialNotifications';
 import { initialUser } from '../data/initialUser';
 
+export const CITIZEN_VIEWS = [
+  'dashboard',
+  'scheme-detail',
+  'application-form',
+  'my-business',
+  'my-applications',
+  'bookmarks',
+  'notifications',
+  'share-eligibility',
+  'profile'
+];
+
+export const ADMIN_VIEWS = [
+  'admin-overview',
+  'admin-all-applications',
+  'admin-review-application',
+  'admin-review-later',
+  'admin-scheme-management'
+];
+
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
@@ -19,7 +39,15 @@ export const DataProvider = ({ children }) => {
   // Core Datasets
   const [schemes, setSchemes] = useState(() => {
     const saved = localStorage.getItem('yojanasetu_schemes');
-    return saved ? JSON.parse(saved) : initialSchemes;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length >= 10 && parsed.some(s => s.governmentLevel)) {
+          return parsed;
+        }
+      } catch (e) {}
+    }
+    return initialSchemes;
   });
 
   const [businesses, setBusinesses] = useState(() => {
@@ -46,7 +74,18 @@ export const DataProvider = ({ children }) => {
 
   const [userProfile, setUserProfile] = useState(() => {
     const saved = localStorage.getItem('yojanasetu_profile');
-    return saved ? JSON.parse(saved) : initialUser;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed) {
+          if (!parsed.avatarUrl || parsed.avatarUrl.includes('AB6AXuChnRVdIRJXZPEe9YR') || parsed.avatarUrl.includes('unsplash.com') || parsed.avatarUrl.includes('1539571696357') || parsed.avatarUrl.includes('1566492031773')) {
+            parsed.avatarUrl = initialUser.avatarUrl;
+          }
+          return parsed;
+        }
+      } catch (e) {}
+    }
+    return initialUser;
   });
 
   // Global Toast State
@@ -164,9 +203,12 @@ export const DataProvider = ({ children }) => {
         { title: "Decision", date: "Pending", completed: false }
       ],
       bankDetails: bankDetails || userProfile.bankDetails,
-      documents: Object.entries(userProfile.documents)
-        .filter(([_, doc]) => doc.status === 'Uploaded')
-        .map(([_, doc]) => ({ name: doc.name, size: doc.size, date: doc.date || "Today" }))
+      documents: [
+        ...Object.entries(userProfile.documents)
+          .filter(([_, doc]) => doc.status === 'Uploaded')
+          .map(([_, doc]) => ({ name: doc.name, size: doc.size, date: doc.date || "Today" })),
+        ...(Array.isArray(additionalInputs?.customDocs) ? additionalInputs.customDocs : [])
+      ]
     };
 
     setApplications(prev => [newApp, ...prev]);
@@ -300,6 +342,8 @@ export const DataProvider = ({ children }) => {
     const newScheme = {
       ...schemeData,
       id: `scheme-${Date.now()}`,
+      governmentLevel: schemeData.governmentLevel || 'central',
+      applicableStates: schemeData.governmentLevel === 'state' ? (schemeData.applicableStates || []) : ['ALL'],
       isNew: true,
       active: true,
       approvalRate: "85%",
@@ -312,21 +356,28 @@ export const DataProvider = ({ children }) => {
 
     setSchemes(prev => [newScheme, ...prev]);
 
-    // Simulated Notification for matching users
-    const notif = {
-      id: `notif-${Date.now()}`,
-      type: "scheme_added",
-      title: `New Scheme Match: ${newScheme.name}`,
-      message: `A new government initiative "${newScheme.name}" has been published by ${newScheme.department}. You may be eligible!`,
-      timestamp: "Just now",
-      dateGroup: "today",
-      read: false,
-      actionType: "apply_scheme",
-      actionTarget: newScheme.id,
-      badge: "New Scheme",
-      badgeColor: "bg-[#FFF8E1] text-[#F57C00]"
-    };
-    setNotifications(prev => [notif, ...prev]);
+    // Simulated Notification for matching users based on geographic eligibility
+    const userState = userProfile.state;
+    const isMatching = newScheme.governmentLevel === 'central' || 
+                       newScheme.applicableStates.includes('ALL') || 
+                       newScheme.applicableStates.includes(userState);
+
+    if (isMatching) {
+      const notif = {
+        id: `notif-${Date.now()}`,
+        type: "scheme_added",
+        title: `New Scheme Match: ${newScheme.name}`,
+        message: `A new government initiative "${newScheme.name}" has been published by ${newScheme.department}. You may be eligible!`,
+        timestamp: "Just now",
+        dateGroup: "today",
+        read: false,
+        actionType: "apply_scheme",
+        actionTarget: newScheme.id,
+        badge: "New Scheme",
+        badgeColor: "bg-[#FFF8E1] text-[#F57C00]"
+      };
+      setNotifications(prev => [notif, ...prev]);
+    }
     showToast(`Scheme "${newScheme.name}" created and published!`);
     return newScheme;
   };
@@ -398,14 +449,19 @@ export const DataProvider = ({ children }) => {
   // Profile Completion Percentage Calculation
   const calculateProfileCompletion = () => {
     let score = 0;
-    const total = 7; // Name, Phone, Email, State, Category, Aadhaar, Bank Details
+    const total = 12; // Profile Details (7) + Bank (1) + Verification Documents (5)
     if (userProfile.name) score++;
     if (userProfile.phone) score++;
     if (userProfile.email) score++;
     if (userProfile.state) score++;
     if (userProfile.category) score++;
-    if (userProfile.documents?.aadhaar?.status === 'Uploaded') score++;
+    if (userProfile.income) score++;
     if (userProfile.bankDetails?.accountNumber) score++;
+    if (userProfile.documents?.aadhaar?.status === 'Uploaded') score++;
+    if (userProfile.documents?.pan?.status === 'Uploaded') score++;
+    if (userProfile.documents?.income?.status === 'Uploaded') score++;
+    if (userProfile.documents?.caste?.status === 'Uploaded') score++;
+    if (userProfile.documents?.voterId?.status === 'Uploaded') score++;
     return Math.round((score / total) * 100);
   };
 

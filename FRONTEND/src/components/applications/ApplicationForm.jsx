@@ -9,8 +9,10 @@ export const ApplicationForm = () => {
     schemes,
     businesses,
     userProfile,
+    uploadDocumentMock,
     createApplication,
     navigateTo,
+    showToast,
   } = useData();
   const { user } = useAuth();
   const { t } = useLang();
@@ -31,14 +33,123 @@ export const ApplicationForm = () => {
   const [loanAmount, setLoanAmount] = useState('50000');
   const [projectSummary, setProjectSummary] = useState('');
   const [uploadedDocName, setUploadedDocName] = useState('Supporting_Documents.pdf');
+  const [customUploadedDocs, setCustomUploadedDocs] = useState({});
 
   // Success state
   const [submittedApp, setSubmittedApp] = useState(null);
 
   const selectedBusiness = businesses.find((b) => b.id === selectedBusinessId) || businesses[0];
 
+  // Aggregate all unique required documents across the applied schemes
+  const rawRequiredDocs = Array.from(
+    new Set(appliedSchemes.flatMap((s) => s.documentsRequired || []))
+  );
+  const requiredDocs = rawRequiredDocs.length > 0
+    ? rawRequiredDocs
+    : ['Aadhaar Card', 'Bank Account Details'];
+
+  // Map scheme required document string to user profile document slot
+  const getDocMeta = (docName) => {
+    const lower = docName.toLowerCase();
+    if (lower.includes('income')) {
+      return {
+        key: 'income',
+        label: 'Income Certificate',
+        icon: 'payments',
+        isProfileDoc: true,
+        fileName: 'Income_Certificate_Verified.pdf'
+      };
+    }
+    if (lower.includes('caste')) {
+      return {
+        key: 'caste',
+        label: 'Caste Certificate',
+        icon: 'badge',
+        isProfileDoc: true,
+        fileName: 'Caste_Certificate_Verified.pdf'
+      };
+    }
+    if (lower.includes('aadhaar')) {
+      return {
+        key: 'aadhaar',
+        label: 'Aadhaar Card',
+        icon: 'fingerprint',
+        isProfileDoc: true,
+        fileName: 'Aadhaar_Card_Verified.pdf'
+      };
+    }
+    if (lower.includes('pan')) {
+      return {
+        key: 'pan',
+        label: 'PAN Card',
+        icon: 'credit_card',
+        isProfileDoc: true,
+        fileName: 'PAN_Card.pdf'
+      };
+    }
+    if (lower.includes('voter')) {
+      return {
+        key: 'voterId',
+        label: 'Voter ID',
+        icon: 'how_to_vote',
+        isProfileDoc: true,
+        fileName: 'Voter_ID_Scan.pdf'
+      };
+    }
+    if (lower.includes('bank') || lower.includes('passbook')) {
+      return {
+        key: 'bank',
+        label: 'Bank Account / Passbook',
+        icon: 'account_balance',
+        isProfileDoc: true,
+        fileName: 'Bank_Passbook_Verified.pdf'
+      };
+    }
+    return {
+      key: `custom_${docName.replace(/[^a-zA-Z0-9]/g, '_')}`,
+      label: docName,
+      icon: 'description',
+      isProfileDoc: false,
+      fileName: `${docName.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`
+    };
+  };
+
+  const handleUploadDoc = (meta) => {
+    if (meta.isProfileDoc && meta.key !== 'bank') {
+      uploadDocumentMock(meta.key, meta.fileName, '1.4 MB');
+      showToast(`${meta.label} uploaded and auto-attached from profile!`);
+    } else {
+      setCustomUploadedDocs(prev => ({
+        ...prev,
+        [meta.key]: {
+          status: 'Uploaded',
+          name: meta.fileName,
+          size: '1.2 MB',
+          date: 'Today'
+        }
+      }));
+      showToast(`${meta.label} attached successfully!`);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Check for mandatory missing documents (skip "(if applicable)")
+    const missingDocs = requiredDocs.filter(docName => {
+      if (docName.toLowerCase().includes('if applicable')) return false;
+      const meta = getDocMeta(docName);
+      if (meta.key === 'bank') return false; // Handled by bank details
+      if (meta.isProfileDoc) {
+        return userProfile.documents?.[meta.key]?.status !== 'Uploaded';
+      }
+      return customUploadedDocs[meta.key]?.status !== 'Uploaded';
+    });
+
+    if (missingDocs.length > 0) {
+      showToast(`Please upload required document: "${missingDocs[0]}" to proceed`, 'error');
+      return;
+    }
 
     const created = createApplication({
       schemeList: appliedSchemes,
@@ -48,7 +159,8 @@ export const ApplicationForm = () => {
       additionalInputs: {
         landHolding,
         loanAmount,
-        projectSummary
+        projectSummary,
+        customDocs: Object.values(customUploadedDocs)
       }
     });
 
@@ -159,8 +271,12 @@ export const ApplicationForm = () => {
                   <span className="font-semibold text-on-surface dark:text-white">{userProfile.age} Yrs / {userProfile.gender}</span>
                 </div>
                 <div className="flex justify-between border-b border-surface-container dark:border-slate-700 pb-1.5">
-                  <span className="text-on-surface-variant dark:text-slate-400">{t('stateCategory')}</span>
-                  <span className="font-semibold text-on-surface dark:text-white">{userProfile.state} ({userProfile.category})</span>
+                  <span className="text-on-surface-variant dark:text-slate-400">{t('state')}</span>
+                  <span className="font-semibold text-on-surface dark:text-white">{userProfile.state}</span>
+                </div>
+                <div className="flex justify-between border-b border-surface-container dark:border-slate-700 pb-1.5">
+                  <span className="text-on-surface-variant dark:text-slate-400">{t('category')}</span>
+                  <span className="font-semibold text-on-surface dark:text-white">{userProfile.category}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-on-surface-variant dark:text-slate-400">{t('annualIncome')}</span>
@@ -233,6 +349,97 @@ export const ApplicationForm = () => {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Required Verification Documents Section */}
+          <div className="bg-surface-container-low/60 dark:bg-slate-800/80 p-5 rounded-2xl border border-outline-variant/30 dark:border-slate-700 space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-tertiary dark:text-tertiary-fixed text-[20px]">
+                  folder_open
+                </span>
+                <h3 className="text-xs font-label-bold uppercase tracking-wider text-on-surface dark:text-white">
+                  {t('requiredDocuments')}
+                </h3>
+              </div>
+              <span className="text-[11px] text-on-surface-variant dark:text-slate-400">
+                {t('autoFilled')} &amp; verified from profile
+              </span>
+            </div>
+
+            <div className="space-y-2.5">
+              {requiredDocs.map((docName, idx) => {
+                const meta = getDocMeta(docName);
+                if (meta.key === 'bank') return null; // Already shown in Bank Details card
+
+                const isProfile = meta.isProfileDoc;
+                const docState = isProfile
+                  ? userProfile.documents?.[meta.key]
+                  : customUploadedDocs[meta.key];
+                const isUploaded = docState?.status === 'Uploaded';
+
+                return (
+                  <div
+                    key={idx}
+                    className={`flex items-center justify-between p-3.5 rounded-xl border transition-all ${
+                      isUploaded
+                        ? 'bg-surface-container-lowest/90 dark:bg-slate-900 border-outline-variant/30 dark:border-slate-700/80'
+                        : 'bg-amber-500/10 dark:bg-amber-950/20 border-amber-500/30 dark:border-amber-600/40'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 min-w-0 pr-3">
+                      <div
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+                          isUploaded
+                            ? 'bg-primary/10 text-primary dark:text-primary-fixed'
+                            : 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300'
+                        }`}
+                      >
+                        <span className="material-symbols-outlined text-[18px]">
+                          {meta.icon}
+                        </span>
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-semibold text-xs text-on-surface dark:text-white truncate">
+                            {docName}
+                          </span>
+                          {isUploaded && isProfile && (
+                            <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold inline-flex items-center gap-1 border border-emerald-200 dark:border-emerald-800/60">
+                              <span className="material-symbols-outlined text-[11px]">verified</span>
+                              {t('autoAttachedFromProfile')}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[11px] text-on-surface-variant dark:text-slate-400 block truncate mt-0.5">
+                          {isUploaded
+                            ? `${docState.name} • ${docState.size || '1.4 MB'}`
+                            : t('missingRequired')}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="shrink-0">
+                      {isUploaded ? (
+                        <span className="px-2.5 py-1 rounded-full bg-[#E8F5E9] dark:bg-emerald-950 text-[#1B5E20] dark:text-emerald-400 font-bold text-[10px] flex items-center gap-1">
+                          <span className="material-symbols-outlined text-[13px]">check_circle</span>
+                          {t('uploaded')}
+                        </span>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => handleUploadDoc(meta)}
+                          className="px-3.5 py-1.5 bg-primary hover:bg-primary-container text-white rounded-lg font-label-bold text-xs transition-all hover:scale-105 active:scale-95 shadow-sm flex items-center gap-1.5"
+                        >
+                          <span className="material-symbols-outlined text-[14px]">cloud_upload</span>
+                          <span>{t('uploadAndAttach')}</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Scheme Specific Inputs */}

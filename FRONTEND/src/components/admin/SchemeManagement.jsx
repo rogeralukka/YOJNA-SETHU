@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { useData } from '../../context/DataContext';
 import { useLang } from '../../context/LangContext';
 import { AddEditSchemeModal } from './AddEditSchemeModal';
@@ -9,6 +10,7 @@ export const SchemeManagement = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
+  const [govLevelFilter, setGovLevelFilter] = useState('All');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingScheme, setEditingScheme] = useState(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
@@ -16,15 +18,18 @@ export const SchemeManagement = () => {
   const filteredSchemes = useMemo(() => {
     return schemes.filter((s) => {
       if (categoryFilter !== 'All' && s.category !== categoryFilter) return false;
+      if (govLevelFilter === 'Central' && s.governmentLevel !== 'central') return false;
+      if (govLevelFilter === 'State' && s.governmentLevel !== 'state') return false;
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         const matchName = s.name.toLowerCase().includes(q);
         const matchDept = s.department.toLowerCase().includes(q);
-        if (!matchName && !matchDept) return false;
+        const matchState = s.applicableStates ? s.applicableStates.some(st => st.toLowerCase().includes(q)) : false;
+        if (!matchName && !matchDept && !matchState) return false;
       }
       return true;
     });
-  }, [schemes, categoryFilter, searchQuery]);
+  }, [schemes, categoryFilter, govLevelFilter, searchQuery]);
 
   const handleOpenAdd = () => {
     setEditingScheme(null);
@@ -74,6 +79,22 @@ export const SchemeManagement = () => {
           />
         </div>
 
+        {/* Government Level Dropdown */}
+        <div className="relative w-full sm:w-48">
+          <select
+            value={govLevelFilter}
+            onChange={(e) => setGovLevelFilter(e.target.value)}
+            className="w-full bg-surface-container-lowest dark:bg-slate-900 py-2.5 pl-4 pr-10 rounded-xl text-xs sm:text-sm text-on-surface dark:text-white outline-none focus:ring-2 focus:ring-primary border border-outline-variant/30 dark:border-slate-700 appearance-none cursor-pointer"
+          >
+            <option value="All">{t('allLevels', {}, 'All Levels')}</option>
+            <option value="Central">{t('centralGov', {}, 'Central Government')}</option>
+            <option value="State">{t('stateGov', {}, 'State Government')}</option>
+          </select>
+          <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant dark:text-slate-400 pointer-events-none text-[18px]">
+            expand_more
+          </span>
+        </div>
+
         {/* Category Dropdown */}
         <div className="relative w-full sm:w-48">
           <select
@@ -104,13 +125,24 @@ export const SchemeManagement = () => {
             <div>
               {/* Badges & Actions */}
               <div className="flex justify-between items-start mb-4">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E8F5E9] dark:bg-emerald-950/60 text-[#1B5E20] dark:text-emerald-400 text-[11px] font-bold">
                     <span className="w-1.5 h-1.5 rounded-full bg-current" /> {t('active')}
                   </span>
                   <span className="px-2 py-0.5 rounded-full bg-surface-variant dark:bg-slate-700 text-on-surface-variant dark:text-slate-300 text-[10px] font-bold uppercase">
                     {t('category_' + scheme.category.replace(/ /g, '_')) || scheme.category}
                   </span>
+                  {scheme.governmentLevel === 'state' ? (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-secondary-container/60 dark:bg-slate-700 text-on-secondary-container dark:text-slate-200 border border-outline-variant/30">
+                      {scheme.applicableStates && scheme.applicableStates.length === 1
+                        ? `STATE · ${scheme.applicableStates[0].toUpperCase()}`
+                        : `STATE · ${scheme.applicableStates?.length || 1} STATES`}
+                    </span>
+                  ) : (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-primary-fixed/40 dark:bg-primary/20 text-on-primary-fixed-variant dark:text-primary-fixed border border-primary/20">
+                      {t('centralGovBadge', {}, 'CENTRAL')}
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-1">
@@ -159,9 +191,9 @@ export const SchemeManagement = () => {
       </div>
 
       {/* Delete Confirmation Modal */}
-      {deleteConfirmId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in-up">
-          <div className="bg-surface-container-lowest dark:bg-slate-900 p-6 rounded-2xl max-w-sm w-full border border-outline-variant/30 shadow-2xl">
+      {deleteConfirmId && createPortal(
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+          <div className="bg-surface-container-lowest dark:bg-slate-900 p-6 rounded-2xl max-w-sm w-full border border-outline-variant/30 shadow-2xl animate-fade-in-up my-auto">
             <h3 className="font-headline-md text-base font-bold text-on-surface dark:text-white mb-2">
               {t('confirmDeleteScheme')}
             </h3>
@@ -186,7 +218,8 @@ export const SchemeManagement = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Add/Edit Modal */}

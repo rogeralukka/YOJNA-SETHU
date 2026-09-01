@@ -10,7 +10,7 @@ export const initialUser = {
   category: "OBC",
   income: 350000,
   occupation: "Self Employed / Agriculture",
-  avatarUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuChnRVdIRJXZPEe9YRJJM6Z1_3CyjXpXR7h4KSO5HyoUhZeBvKyqasewMW_jVm5BHvPISrZtq37NNO17mBDou_yefiYTRWQESLs6js0P_zGVOfRzMpZO64kjTA-G1sRkL7Uur3jmmnlO44lvLh4iOs4B_evlMfRBuZh-YKDhxs8cctCkZzTOYwxRIKhbazq40VaOs_OxvTd5VdBFFnCOXgrJA3vin2nzuTQbSwVlWBhR8Ah3MjpvHDA6Q",
+  avatarUrl: "/assets/rahul_sharma.jpg",
   documents: {
     aadhaar: { status: "Uploaded", name: "Aadhaar_Card_Verified.pdf", size: "1.8 MB", date: "15 Jan 2026" },
     pan: { status: "Uploaded", name: "PAN_Card.pdf", size: "1.2 MB", date: "15 Jan 2026" },

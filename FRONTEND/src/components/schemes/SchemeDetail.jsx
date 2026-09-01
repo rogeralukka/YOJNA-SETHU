@@ -44,9 +44,22 @@ export const SchemeDetail = () => {
           <div className="bg-surface-container-lowest dark:bg-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm border border-outline-variant/30 dark:border-slate-700 flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between gap-4 flex-wrap">
-                <span className="px-3 py-1 bg-surface-container dark:bg-slate-700 text-on-surface-variant dark:text-slate-300 rounded-full font-status-badge text-xs uppercase tracking-wider font-semibold">
-                  {t('dept_' + scheme.id, {}, scheme.department)}
-                </span>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="px-3 py-1 bg-surface-container dark:bg-slate-700 text-on-surface-variant dark:text-slate-300 rounded-full font-status-badge text-xs uppercase tracking-wider font-semibold">
+                    {t('dept_' + scheme.id, {}, scheme.department)}
+                  </span>
+                  {scheme.governmentLevel === 'state' ? (
+                    <span className="px-3 py-1 bg-secondary-container/60 dark:bg-slate-700 text-on-secondary-container dark:text-slate-200 rounded-full font-status-badge text-xs font-semibold uppercase tracking-wider border border-outline-variant/30">
+                      {scheme.applicableStates && scheme.applicableStates.length === 1
+                        ? `${t('stateGov', {}, 'State Government')} — ${scheme.applicableStates[0]}`
+                        : `${t('stateGov', {}, 'State Government')} — ${t('applicableInStates', { count: scheme.applicableStates?.length || 1 }, `Applicable in ${scheme.applicableStates?.length || 1} States`)}`}
+                    </span>
+                  ) : (
+                    <span className="px-3 py-1 bg-primary-fixed/40 dark:bg-primary/20 text-on-primary-fixed-variant dark:text-primary-fixed rounded-full font-status-badge text-xs font-semibold uppercase tracking-wider border border-primary/20">
+                      {t('centralGov', {}, 'Central Government')} · {t('allIndia', {}, 'All India')}
+                    </span>
+                  )}
+                </div>
                 <span className="px-3 py-1 bg-secondary-container dark:bg-slate-700 text-on-secondary-container dark:text-slate-200 rounded-full font-status-badge text-xs font-semibold uppercase tracking-wider">
                   {t('category_' + scheme.category.replace(/ /g, '_'), {}, scheme.category)}
                 </span>

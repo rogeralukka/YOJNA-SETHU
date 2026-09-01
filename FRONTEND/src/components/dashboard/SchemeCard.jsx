@@ -44,6 +44,19 @@ export const SchemeCard = ({ scheme, isSelected, onToggleSelect }) => {
                 {t('category_' + scheme.category.replace(/ /g, '_')) || scheme.category}
               </span>
             )}
+
+            {/* Government Level Badge */}
+            {scheme.governmentLevel === 'state' ? (
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-secondary-container/60 dark:bg-slate-700 text-on-secondary-container dark:text-slate-200 border border-outline-variant/30">
+                {scheme.applicableStates && scheme.applicableStates.length === 1
+                  ? scheme.applicableStates[0]
+                  : `STATE · ${scheme.applicableStates?.length || 1} STATES`}
+              </span>
+            ) : (
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-primary-fixed/40 dark:bg-primary/20 text-on-primary-fixed-variant dark:text-primary-fixed border border-primary/20">
+                {t('centralGovBadge', {}, 'CENTRAL')}
+              </span>
+            )}
           </div>
 
           {/* Bookmark Button */}

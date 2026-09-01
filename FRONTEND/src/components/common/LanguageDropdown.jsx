@@ -71,7 +71,7 @@ export const LanguageDropdown = ({ className = '', isLanding = false }) => {
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all text-xs font-label-bold focus:outline-none focus:ring-2 focus:ring-primary/40 ${
           isLanding
-            ? 'hover:bg-surface-container-low dark:hover:bg-slate-800 text-on-surface-variant dark:text-slate-200 bg-white/10 dark:bg-black/30 backdrop-blur-md border border-white/20'
+            ? 'bg-surface-container-low/80 dark:bg-slate-800/80 hover:bg-surface-container-high dark:hover:bg-slate-700 text-on-surface dark:text-slate-200 backdrop-blur-md border border-outline-variant/30 dark:border-white/10 shadow-sm'
             : 'bg-surface-container-low dark:bg-slate-800 text-on-surface-variant dark:text-slate-200 hover:bg-surface-container-high dark:hover:bg-slate-700'
         }`}
         title={`Language: ${currentLanguageMeta.nativeName} (${currentLanguageMeta.englishName})`}
@@ -92,11 +92,7 @@ export const LanguageDropdown = ({ className = '', isLanding = false }) => {
       {/* Popover Dropdown Panel */}
       {isOpen && (
         <div
-          className={`absolute right-0 mt-2 w-64 sm:w-72 rounded-2xl shadow-2xl border z-50 overflow-hidden animate-fade-in-up origin-top-right ${
-            isLanding
-              ? 'bg-slate-900/95 text-white border-white/20 backdrop-blur-2xl'
-              : 'bg-surface-container-lowest dark:bg-slate-900 text-on-surface dark:text-slate-100 border-outline-variant/30 dark:border-slate-800 backdrop-blur-2xl'
-          }`}
+          className="absolute right-0 mt-2 w-64 sm:w-72 rounded-2xl shadow-2xl border z-50 overflow-hidden animate-fade-in-up origin-top-right bg-surface-container-lowest dark:bg-slate-900 text-on-surface dark:text-slate-100 border-outline-variant/30 dark:border-slate-800 backdrop-blur-2xl"
         >
           {/* Header & Search */}
           <div className="p-3 border-b border-outline-variant/20 dark:border-slate-800">
@@ -110,7 +106,7 @@ export const LanguageDropdown = ({ className = '', isLanding = false }) => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('searchLanguage') || 'Search language...'}
-                className="w-full pl-8 pr-3 py-1.5 bg-surface-container-low dark:bg-slate-800 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-outline/60 dark:placeholder:text-slate-500"
+                className="w-full pl-8 pr-3 py-1.5 bg-surface-container-low dark:bg-slate-800 rounded-xl text-xs text-on-surface dark:text-white focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-outline/60 dark:placeholder:text-slate-500 border border-outline-variant/30 dark:border-slate-700"
               />
               {searchQuery && (
                 <button
@@ -143,10 +139,10 @@ export const LanguageDropdown = ({ className = '', isLanding = false }) => {
                     }`}
                   >
                     <div className="flex flex-col">
-                      <span className="font-semibold text-sm leading-tight">
+                      <span className="font-semibold text-sm leading-tight text-on-surface dark:text-white">
                         {item.nativeName}
                       </span>
-                      <span className="text-[11px] text-on-surface-variant/70 dark:text-slate-400 font-normal">
+                      <span className="text-[11px] text-on-surface-variant dark:text-slate-400 font-normal">
                         {item.englishName}
                       </span>
                     </div>

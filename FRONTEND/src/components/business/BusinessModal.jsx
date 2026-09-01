@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useData } from '../../context/DataContext';
 import { useLang } from '../../context/LangContext';
 
@@ -87,9 +88,9 @@ export const BusinessModal = ({ isOpen, onClose, editingBusiness = null }) => {
     onClose();
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fade-in-up">
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl relative w-full max-w-2xl border border-outline-variant/30 dark:border-slate-700 flex flex-col max-h-[90vh]">
+  return createPortal(
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl relative w-full max-w-2xl border border-outline-variant/30 dark:border-slate-700 flex flex-col max-h-[88vh] my-auto animate-fade-in-up">
         {/* Header */}
         <div className="px-6 sm:px-8 py-5 bg-surface-container-low/70 dark:bg-slate-800/70 border-b border-surface-container dark:border-slate-800 flex items-center justify-between sticky top-0 z-20 backdrop-blur-sm">
           <div className="flex items-center gap-3">
@@ -316,6 +317,7 @@ export const BusinessModal = ({ isOpen, onClose, editingBusiness = null }) => {
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

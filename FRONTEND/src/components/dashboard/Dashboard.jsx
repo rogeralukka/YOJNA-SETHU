@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useLang } from '../../context/LangContext';
 import { SchemeCard } from './SchemeCard';
 import { MultiSelectBar } from './MultiSelectBar';
+import { isSchemeGeographicallyEligible } from '../../data/states';
 
 export const Dashboard = () => {
   const {
@@ -13,21 +14,26 @@ export const Dashboard = () => {
     setActiveContext,
     profileCompletion,
     navigateTo,
+    userProfile,
   } = useData();
   const { user } = useAuth();
   const { t } = useLang();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [govLevelFilter, setGovLevelFilter] = useState('all'); // 'all', 'central', 'state'
   const [sortBy, setSortBy] = useState('latest');
   const [selectedSchemeIds, setSelectedSchemeIds] = useState([]);
   const [contextDropdownOpen, setContextDropdownOpen] = useState(false);
+
+  // Active User State
+  const userState = userProfile?.state || user?.state || 'Uttar Pradesh';
 
   // Active Context Label
   const activeBusiness = businesses.find((b) => b.id === activeContext);
   const contextLabel = activeContext === 'personal' ? t('personalContextTitle', { name: user.name.split(' ')[0] }) : activeBusiness?.businessName || t('business');
 
-  // Filter schemes based on active context, search query, category, and sorting
+  // Filter schemes based on active context, geographic eligibility, government level filter, search query, category, and sorting
   const filteredSchemes = useMemo(() => {
     return schemes.filter((scheme) => {
       // 1. Context Filter
@@ -37,17 +43,31 @@ export const Dashboard = () => {
         if (!scheme.isBusinessScheme) return false;
       }
 
-      // 2. Search Query
+      // 2. Geographic State Eligibility (Central + user's state only)
+      if (!isSchemeGeographicallyEligible(scheme, userState)) {
+        return false;
+      }
+
+      // 3. Government Level Filter (Browsing filter)
+      if (govLevelFilter === 'central') {
+        if (scheme.governmentLevel !== 'central') return false;
+      } else if (govLevelFilter === 'state') {
+        if (scheme.governmentLevel !== 'state') return false;
+      }
+
+      // 4. Search Query
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         const matchName = scheme.name.toLowerCase().includes(q);
         const matchDept = scheme.department.toLowerCase().includes(q);
         const matchCat = scheme.category.toLowerCase().includes(q);
         const matchDesc = scheme.description.toLowerCase().includes(q);
-        if (!matchName && !matchDept && !matchCat && !matchDesc) return false;
+        const matchGov = scheme.governmentLevel ? (scheme.governmentLevel.toLowerCase().includes(q) || (scheme.governmentLevel === 'central' ? 'central' : 'state').includes(q)) : false;
+        const matchStates = scheme.applicableStates ? scheme.applicableStates.some(s => s.toLowerCase().includes(q)) : false;
+        if (!matchName && !matchDept && !matchCat && !matchDesc && !matchGov && !matchStates) return false;
       }
 
-      // 3. Category Filter
+      // 5. Category Filter
       if (selectedCategory !== 'all') {
         if (scheme.category.toLowerCase() !== selectedCategory.toLowerCase()) return false;
       }
@@ -62,7 +82,7 @@ export const Dashboard = () => {
       // default: latest (isNew first, then active)
       return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
     });
-  }, [schemes, activeContext, searchQuery, selectedCategory, sortBy]);
+  }, [schemes, activeContext, userState, govLevelFilter, searchQuery, selectedCategory, sortBy]);
 
   // Categories list derived from current context
   const categories = useMemo(() => {
@@ -197,8 +217,25 @@ export const Dashboard = () => {
           )}
         </div>
 
-        {/* Category & Sort Controls */}
-        <div className="flex items-center gap-2">
+        {/* Scheme Type, Category & Sort Controls */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Government Level / Scheme Type Selector */}
+          <div className="relative">
+            <select
+              value={govLevelFilter}
+              onChange={(e) => setGovLevelFilter(e.target.value)}
+              className="appearance-none bg-surface-container-low dark:bg-slate-800 hover:bg-surface-container-high dark:hover:bg-slate-700 text-on-surface dark:text-white font-label-bold text-xs py-2.5 pl-4 pr-9 rounded-full outline-none focus:ring-2 focus:ring-primary cursor-pointer border border-outline-variant/30 dark:border-slate-700 transition-colors"
+              aria-label={t('schemeType', {}, 'Scheme Type')}
+            >
+              <option value="all">{t('allSchemes', {}, 'All Schemes')}</option>
+              <option value="central">{t('centralGov', {}, 'Central Government')}</option>
+              <option value="state">{t('myStateGov', { state: userState }, `${userState} Government`)}</option>
+            </select>
+            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant dark:text-slate-400 pointer-events-none">
+              expand_more
+            </span>
+          </div>
+
           {/* Category Selector */}
           <div className="relative">
             <select
@@ -329,6 +366,7 @@ export const Dashboard = () => {
               onClick={() => {
                 setSearchQuery('');
                 setSelectedCategory('all');
+                setGovLevelFilter('all');
               }}
               className="px-4 py-2 bg-primary text-on-primary font-label-bold text-xs rounded-lg hover:bg-primary-container transition-colors"
             >

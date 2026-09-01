@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { useLang } from '../../context/LangContext';
 
 export const ApplicationDetailModal = ({ application, isOpen, onClose }) => {
@@ -13,9 +14,9 @@ export const ApplicationDetailModal = ({ application, isOpen, onClose }) => {
     Rejected: 'bg-[#FCE8E6] text-[#C5221F] border-red-200',
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fade-in-up">
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-3xl max-w-2xl w-full border border-outline-variant/30 dark:border-slate-700 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+  return createPortal(
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-3xl max-w-2xl w-full border border-outline-variant/30 dark:border-slate-700 shadow-2xl overflow-hidden flex flex-col max-h-[88vh] my-auto animate-fade-in-up">
         {/* Header */}
         <div className="px-6 sm:px-8 py-5 border-b border-surface-variant dark:border-slate-800 flex justify-between items-center bg-surface-container-low/70 dark:bg-slate-800/70">
           <div className="flex items-center gap-3">
@@ -151,6 +152,7 @@ export const ApplicationDetailModal = ({ application, isOpen, onClose }) => {
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

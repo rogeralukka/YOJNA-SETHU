@@ -57,11 +57,25 @@ export const Bookmarks = () => {
 
               <div>
                 <div className="flex justify-between items-start mb-4 relative z-10">
-                  <div className="bg-surface-container-high dark:bg-slate-700 rounded-full px-3 py-1 flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-primary" />
-                    <span className="font-status-badge text-[10px] font-bold text-on-surface-variant dark:text-slate-300 uppercase tracking-wider">
-                      {t('category_' + scheme.category.replace(/ /g, '_'), {}, scheme.category)}
-                    </span>
+                  <div className="flex items-center gap-2">
+                    <div className="bg-surface-container-high dark:bg-slate-700 rounded-full px-3 py-1 flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-primary" />
+                      <span className="font-status-badge text-[10px] font-bold text-on-surface-variant dark:text-slate-300 uppercase tracking-wider">
+                        {t('category_' + scheme.category.replace(/ /g, '_'), {}, scheme.category)}
+                      </span>
+                    </div>
+
+                    {scheme.governmentLevel === 'state' ? (
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-secondary-container/60 dark:bg-slate-700 text-on-secondary-container dark:text-slate-200 border border-outline-variant/30">
+                        {scheme.applicableStates && scheme.applicableStates.length === 1
+                          ? scheme.applicableStates[0]
+                          : `STATE · ${scheme.applicableStates?.length || 1} STATES`}
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-primary-fixed/40 dark:bg-primary/20 text-on-primary-fixed-variant dark:text-primary-fixed border border-primary/20">
+                        {t('centralGovBadge', {}, 'CENTRAL')}
+                      </span>
+                    )}
                   </div>
 
                   <button

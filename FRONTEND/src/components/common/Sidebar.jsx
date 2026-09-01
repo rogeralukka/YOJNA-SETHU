@@ -1,10 +1,12 @@
 import React from 'react';
-import { useData } from '../../context/DataContext';
+import { useData, CITIZEN_VIEWS } from '../../context/DataContext';
 import { useLang } from '../../context/LangContext';
 
 export const Sidebar = () => {
   const { currentView, navigateTo, isSidebarCollapsed, setIsSidebarCollapsed } = useData();
   const { t } = useLang();
+
+  const activeView = CITIZEN_VIEWS.includes(currentView) ? currentView : 'dashboard';
 
   const navItems = [
     { key: 'dashboard', label: t('dashboard'), icon: 'dashboard', path: 'dashboard' },
@@ -32,7 +34,7 @@ export const Sidebar = () => {
       >
         <nav className="flex flex-col gap-1.5 p-3 sm:p-4">
           {navItems.map((item) => {
-            const isActive = currentView === item.path;
+            const isActive = activeView === item.path;
             return (
               <button
                 key={item.key}
