@@ -1,0 +1,284 @@
+{
+  "title": "National Macroeconomic & DPI Pulse",
+  "provenance": "Figures compiled from official public releases FY21–FY26 (RBI, MoSPI, GSTN, NPCI, MoRTH) • Client-side verification",
+  "indicators": [
+    {
+      "id": "inr-usd-rate",
+      "title": "INR Purchasing Power (USD / ₹1)",
+      "unit": "/ USD",
+      "source": "RBI Financial Markets / Market Benchmark",
+      "citationRef": "REF: RBI-WSS-SEP-2026",
+      "category": "Macroeconomics",
+      "chartType": "area",
+      "direction": "lower-is-better",
+      "currentHeadline": "₹95.94",
+      "color": "#f43f5e",
+      "weeklyTimeline": [
+        { "date": "14 Sep", "day": "Mon", "val": 95.78, "inrVal": 95.78 },
+        { "date": "15 Sep", "day": "Tue", "val": 95.81, "inrVal": 95.81 },
+        { "date": "16 Sep", "day": "Wed", "val": 95.85, "inrVal": 95.85 },
+        { "date": "17 Sep", "day": "Thu", "val": 95.72, "inrVal": 95.72 },
+        { "date": "18 Sep", "day": "Fri", "val": 95.90, "inrVal": 95.90 },
+        { "date": "19 Sep", "day": "Sat", "val": 95.92, "inrVal": 95.92 },
+        { "date": "20 Sep", "day": "Sun", "val": 95.94, "inrVal": 95.94 }
+      ],
+      "monthlyTimeline": [
+        { "date": "22 Aug", "val": 95.05, "inrVal": 95.05 },
+        { "date": "23 Aug", "val": 95.12, "inrVal": 95.12 },
+        { "date": "24 Aug", "val": 95.20, "inrVal": 95.20 },
+        { "date": "25 Aug", "val": 94.95, "inrVal": 94.95 },
+        { "date": "26 Aug", "val": 94.80, "inrVal": 94.80 },
+        { "date": "27 Aug", "val": 94.90, "inrVal": 94.90 },
+        { "date": "28 Aug", "val": 95.10, "inrVal": 95.10 },
+        { "date": "29 Aug", "val": 95.25, "inrVal": 95.25 },
+        { "date": "30 Aug", "val": 95.35, "inrVal": 95.35 },
+        { "date": "31 Aug", "val": 95.40, "inrVal": 95.40 },
+        { "date": "01 Sep", "val": 95.20, "inrVal": 95.20 },
+        { "date": "02 Sep", "val": 94.88, "inrVal": 94.88 },
+        { "date": "03 Sep", "val": 94.70, "inrVal": 94.70 },
+        { "date": "04 Sep", "val": 94.62, "inrVal": 94.62 },
+        { "date": "05 Sep", "val": 94.80, "inrVal": 94.80 },
+        { "date": "06 Sep", "val": 95.00, "inrVal": 95.00 },
+        { "date": "07 Sep", "val": 95.10, "inrVal": 95.10 },
+        { "date": "08 Sep", "val": 95.25, "inrVal": 95.25 },
+        { "date": "09 Sep", "val": 95.68, "inrVal": 95.68 },
+        { "date": "10 Sep", "val": 95.88, "inrVal": 95.88 },
+        { "date": "11 Sep", "val": 96.02, "inrVal": 96.02 },
+        { "date": "12 Sep", "val": 95.90, "inrVal": 95.90 },
+        { "date": "13 Sep", "val": 95.85, "inrVal": 95.85 },
+        { "date": "14 Sep", "val": 95.78, "inrVal": 95.78 },
+        { "date": "15 Sep", "val": 95.81, "inrVal": 95.81 },
+        { "date": "16 Sep", "val": 95.85, "inrVal": 95.85 },
+        { "date": "17 Sep", "val": 95.72, "inrVal": 95.72 },
+        { "date": "18 Sep", "val": 95.90, "inrVal": 95.90 },
+        { "date": "19 Sep", "val": 95.92, "inrVal": 95.92 },
+        { "date": "20 Sep", "val": 95.94, "inrVal": 95.94 }
+      ],
+      "annualTimeline": [
+        { "fy": "FY21", "val": 74.2, "inrVal": 74.2 },
+        { "fy": "FY22", "val": 77.8, "inrVal": 77.8 },
+        { "fy": "FY23", "val": 82.2, "inrVal": 82.2 },
+        { "fy": "FY24", "val": 83.3, "inrVal": 83.3 },
+        { "fy": "FY25", "val": 88.2, "inrVal": 88.2 },
+        { "fy": "FY26", "val": 95.94, "inrVal": 95.94 }
+      ],
+      "timeline": [
+        { "fy": "FY21", "val": 74.2, "inrVal": 74.2 },
+        { "fy": "FY22", "val": 77.8, "inrVal": 77.8 },
+        { "fy": "FY23", "val": 82.2, "inrVal": 82.2 },
+        { "fy": "FY24", "val": 83.3, "inrVal": 83.3 },
+        { "fy": "FY25", "val": 88.2, "inrVal": 88.2 },
+        { "fy": "FY26", "val": 95.94, "inrVal": 95.94 }
+      ]
+    },
+    {
+      "id": "gst-collections",
+      "title": "Monthly Gross GST Collections",
+      "unit": "₹ Cr / mo",
+      "source": "GST Council & Ministry of Finance",
+      "citationRef": "REF: GSTN-PORTAL",
+      "category": "Fiscal & Revenue",
+      "chartType": "composed",
+      "direction": "higher-is-better",
+      "color": "#10b981",
+      "timeline": [
+        { "fy": "FY21", "val": 94800, "yoy": 7.2 },
+        { "fy": "FY22", "val": 123600, "yoy": 30.4 },
+        { "fy": "FY23", "val": 150800, "yoy": 22.0 },
+        { "fy": "FY24", "val": 168400, "yoy": 11.7 },
+        { "fy": "FY25", "val": 189200, "yoy": 12.3 },
+        { "fy": "FY26", "val": 212400, "yoy": 12.2 }
+      ]
+    },
+    {
+      "id": "upi-volume",
+      "title": "UPI Monthly Transaction Volume",
+      "unit": "Billion Txns",
+      "source": "NPCI Monthly Ecosystem Telemetry",
+      "citationRef": "REF: NPCI-UPI-2026",
+      "category": "Digital Public Infra",
+      "chartType": "area",
+      "direction": "higher-is-better",
+      "color": "#6366f1",
+      "timeline": [
+        { "fy": "FY21", "val": 2.3 },
+        { "fy": "FY22", "val": 5.4 },
+        { "fy": "FY23", "val": 8.7 },
+        { "fy": "FY24", "val": 13.4 },
+        { "fy": "FY25", "val": 16.8 },
+        { "fy": "FY26", "val": 20.4 }
+      ]
+    },
+    {
+      "id": "forex-reserves",
+      "title": "Foreign Exchange Reserves",
+      "unit": "USD Bn",
+      "source": "Reserve Bank of India (DBIE)",
+      "citationRef": "REF: RBI-DBIE-2026",
+      "category": "Macroeconomics",
+      "chartType": "area",
+      "direction": "higher-is-better",
+      "color": "#10b981",
+      "timeline": [
+        { "fy": "FY21", "val": 579 },
+        { "fy": "FY22", "val": 607 },
+        { "fy": "FY23", "val": 578 },
+        { "fy": "FY24", "val": 645 },
+        { "fy": "FY25", "val": 682 },
+        { "fy": "FY26", "val": 708 }
+      ]
+    },
+    {
+      "id": "cpi-inflation",
+      "title": "Retail CPI Inflation",
+      "unit": "% YoY",
+      "source": "MoSPI National Statistical Office",
+      "citationRef": "REF: MOSPI-CPI-2026",
+      "category": "Macroeconomics",
+      "chartType": "line",
+      "direction": "lower-is-better",
+      "color": "#f59e0b",
+      "timeline": [
+        { "fy": "FY21", "val": 6.2 },
+        { "fy": "FY22", "val": 5.5 },
+        { "fy": "FY23", "val": 6.7 },
+        { "fy": "FY24", "val": 5.4 },
+        { "fy": "FY25", "val": 4.9 },
+        { "fy": "FY26", "val": 4.6 }
+      ]
+    },
+    {
+      "id": "renewable-capacity",
+      "title": "Renewable Energy Installed Capacity",
+      "unit": "GW",
+      "source": "Ministry of New & Renewable Energy",
+      "citationRef": "REF: MNRE-CAPACITY",
+      "category": "Energy & Climate",
+      "chartType": "area",
+      "direction": "higher-is-better",
+      "color": "#10b981",
+      "timeline": [
+        { "fy": "FY21", "val": 94.4 },
+        { "fy": "FY22", "val": 110.2 },
+        { "fy": "FY23", "val": 125.1 },
+        { "fy": "FY24", "val": 143.6 },
+        { "fy": "FY25", "val": 172.0 },
+        { "fy": "FY26", "val": 203.2 }
+      ]
+    },
+    {
+      "id": "dbt-transfers",
+      "title": "Cumulative DBT Direct Welfare Outlay",
+      "unit": "₹ Lakh Cr",
+      "source": "DBT Mission / PFMS Portal",
+      "citationRef": "REF: DBT-BHARAT-2026",
+      "category": "Social Welfare",
+      "chartType": "area",
+      "direction": "higher-is-better",
+      "color": "#8b5cf6",
+      "timeline": [
+        { "fy": "FY21", "val": 3.82 },
+        { "fy": "FY22", "val": 4.41 },
+        { "fy": "FY23", "val": 5.67 },
+        { "fy": "FY24", "val": 6.12 },
+        { "fy": "FY25", "val": 6.84 },
+        { "fy": "FY26", "val": 7.42 }
+      ]
+    },
+    {
+      "id": "ayushman-cards",
+      "title": "Ayushman Bharat PM-JAY Active Cards",
+      "unit": "Crore Cards",
+      "source": "National Health Authority (NHA)",
+      "citationRef": "REF: NHA-PMJAY-2026",
+      "category": "Healthcare",
+      "chartType": "area",
+      "direction": "higher-is-better",
+      "color": "#ec4899",
+      "timeline": [
+        { "fy": "FY21", "val": 14.8 },
+        { "fy": "FY22", "val": 18.2 },
+        { "fy": "FY23", "val": 22.9 },
+        { "fy": "FY24", "val": 28.4 },
+        { "fy": "FY25", "val": 32.1 },
+        { "fy": "FY26", "val": 35.4 }
+      ]
+    },
+    {
+      "id": "jjm-coverage",
+      "title": "Jal Jeevan Mission Rural Tap Coverage",
+      "unit": "% Coverage",
+      "source": "Ministry of Jal Shakti (JJM Dashboard)",
+      "citationRef": "REF: MOJS-JJM-2026",
+      "category": "Public Infrastructure",
+      "chartType": "line",
+      "direction": "higher-is-better",
+      "color": "#06b6d4",
+      "timeline": [
+        { "fy": "FY21", "val": 38.4 },
+        { "fy": "FY22", "val": 48.9 },
+        { "fy": "FY23", "val": 59.8 },
+        { "fy": "FY24", "val": 72.4 },
+        { "fy": "FY25", "val": 76.2 },
+        { "fy": "FY26", "val": 78.6 }
+      ]
+    },
+    {
+      "id": "digilocker-docs",
+      "title": "DigiLocker Issued Documents",
+      "unit": "Billion Docs",
+      "source": "Digital India Corporation (MeitY)",
+      "citationRef": "REF: MEITY-DIGILOCKER",
+      "category": "Digital Public Infra",
+      "chartType": "area",
+      "direction": "higher-is-better",
+      "color": "#3b82f6",
+      "timeline": [
+        { "fy": "FY21", "val": 4.2 },
+        { "fy": "FY22", "val": 5.1 },
+        { "fy": "FY23", "val": 5.8 },
+        { "fy": "FY24", "val": 6.3 },
+        { "fy": "FY25", "val": 6.7 },
+        { "fy": "FY26", "val": 7.1 }
+      ]
+    },
+    {
+      "id": "nh-length",
+      "title": "National Highway Network Cumulative Length",
+      "unit": "Thousand Km",
+      "source": "Ministry of Road Transport & Highways",
+      "citationRef": "REF: MORTH-ANNUAL",
+      "category": "Public Infrastructure",
+      "chartType": "area",
+      "direction": "higher-is-better",
+      "color": "#f97316",
+      "timeline": [
+        { "fy": "FY21", "val": 136.4 },
+        { "fy": "FY22", "val": 140.9 },
+        { "fy": "FY23", "val": 144.6 },
+        { "fy": "FY24", "val": 146.1 },
+        { "fy": "FY25", "val": 149.8 },
+        { "fy": "FY26", "val": 153.2 }
+      ]
+    },
+    {
+      "id": "power-deficit",
+      "title": "Power Generation Peak Deficit",
+      "unit": "% Deficit",
+      "source": "Central Electricity Authority (CEA)",
+      "citationRef": "REF: CEA-LGBR-2026",
+      "category": "Energy & Climate",
+      "chartType": "line",
+      "direction": "lower-is-better",
+      "color": "#10b981",
+      "timeline": [
+        { "fy": "FY21", "val": 0.42 },
+        { "fy": "FY22", "val": 0.38 },
+        { "fy": "FY23", "val": 0.25 },
+        { "fy": "FY24", "val": 0.18 },
+        { "fy": "FY25", "val": 0.12 },
+        { "fy": "FY26", "val": 0.08 }
+      ]
+    }
+  ]
+}

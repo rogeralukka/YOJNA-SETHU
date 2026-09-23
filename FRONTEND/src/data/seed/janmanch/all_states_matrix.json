@@ -1,0 +1,422 @@
+[
+  {
+    "id": "andhra-pradesh",
+    "name": "Andhra Pradesh",
+    "region": "South",
+    "sdgScore": 74,
+    "censusLiteracy": 67.0,
+    "crimeRate": 264.8,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 160341 },
+      { "fy": "FY21", "val": 168063 },
+      { "fy": "FY22", "val": 197214 },
+      { "fy": "FY23", "val": 219881 },
+      { "fy": "FY24", "val": 242479 }
+    ]
+  },
+  {
+    "id": "arunachal-pradesh",
+    "name": "Arunachal Pradesh",
+    "region": "North-East",
+    "sdgScore": 65,
+    "censusLiteracy": 65.4,
+    "crimeRate": 212.0,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 182171 },
+      { "fy": "FY21", "val": 181537 },
+      { "fy": "FY22", "val": 190851 },
+      { "fy": "FY23", "val": 199992 },
+      { "fy": "FY24", "val": null }
+    ]
+  },
+  {
+    "id": "assam",
+    "name": "Assam",
+    "region": "North-East",
+    "sdgScore": 67,
+    "censusLiteracy": 72.2,
+    "crimeRate": 198.4,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 90123 },
+      { "fy": "FY21", "val": 86947 },
+      { "fy": "FY22", "val": 103371 },
+      { "fy": "FY23", "val": 119308 },
+      { "fy": "FY24", "val": 135787 }
+    ]
+  },
+  {
+    "id": "bihar",
+    "name": "Bihar",
+    "region": "East",
+    "sdgScore": 57,
+    "censusLiteracy": 61.8,
+    "crimeRate": 218.4,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 44175 },
+      { "fy": "FY21", "val": 42128 },
+      { "fy": "FY22", "val": 47296 },
+      { "fy": "FY23", "val": 53478 },
+      { "fy": "FY24", "val": 60337 }
+    ]
+  },
+  {
+    "id": "chhattisgarh",
+    "name": "Chhattisgarh",
+    "region": "Central",
+    "sdgScore": 65,
+    "censusLiteracy": 70.3,
+    "crimeRate": 332.1,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 106611 },
+      { "fy": "FY21", "val": 106117 },
+      { "fy": "FY22", "val": 122934 },
+      { "fy": "FY23", "val": 137329 },
+      { "fy": "FY24", "val": 147361 }
+    ]
+  },
+  {
+    "id": "goa",
+    "name": "Goa",
+    "region": "West",
+    "sdgScore": 77,
+    "censusLiteracy": 88.7,
+    "crimeRate": 188.6,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 435949 },
+      { "fy": "FY21", "val": 423047 },
+      { "fy": "FY22", "val": 459094 },
+      { "fy": "FY23", "val": 492648 },
+      { "fy": "FY24", "val": null }
+    ]
+  },
+  {
+    "id": "gujarat",
+    "name": "Gujarat",
+    "region": "West",
+    "sdgScore": 74,
+    "censusLiteracy": 78.0,
+    "crimeRate": 312.4,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 212428 },
+      { "fy": "FY21", "val": 207324 },
+      { "fy": "FY22", "val": 241584 },
+      { "fy": "FY23", "val": 272451 },
+      { "fy": "FY24", "val": null }
+    ]
+  },
+  {
+    "id": "haryana",
+    "name": "Haryana",
+    "region": "North",
+    "sdgScore": 70,
+    "censusLiteracy": 75.6,
+    "crimeRate": 342.1,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 232530 },
+      { "fy": "FY21", "val": 224587 },
+      { "fy": "FY22", "val": 264729 },
+      { "fy": "FY23", "val": 296592 },
+      { "fy": "FY24", "val": 325759 }
+    ]
+  },
+  {
+    "id": "himachal-pradesh",
+    "name": "Himachal Pradesh",
+    "region": "North",
+    "sdgScore": 77,
+    "censusLiteracy": 82.8,
+    "crimeRate": 224.2,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 186559 },
+      { "fy": "FY21", "val": 173152 },
+      { "fy": "FY22", "val": 195795 },
+      { "fy": "FY23", "val": 218788 },
+      { "fy": "FY24", "val": 235199 }
+    ]
+  },
+  {
+    "id": "jharkhand",
+    "name": "Jharkhand",
+    "region": "East",
+    "sdgScore": 62,
+    "censusLiteracy": 66.4,
+    "crimeRate": 182.5,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 75016 },
+      { "fy": "FY21", "val": 69963 },
+      { "fy": "FY22", "val": 88500 },
+      { "fy": "FY23", "val": 96449 },
+      { "fy": "FY24", "val": 105274 }
+    ]
+  },
+  {
+    "id": "karnataka",
+    "name": "Karnataka",
+    "region": "South",
+    "sdgScore": 75,
+    "censusLiteracy": 75.4,
+    "crimeRate": 248.6,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 222141 },
+      { "fy": "FY21", "val": 221781 },
+      { "fy": "FY22", "val": 266866 },
+      { "fy": "FY23", "val": 304474 },
+      { "fy": "FY24", "val": 332926 }
+    ]
+  },
+  {
+    "id": "kerala",
+    "name": "Kerala",
+    "region": "South",
+    "sdgScore": 79,
+    "censusLiteracy": 94.0,
+    "crimeRate": 661.0,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 208879 },
+      { "fy": "FY21", "val": 194432 },
+      { "fy": "FY22", "val": 230280 },
+      { "fy": "FY23", "val": 252662 },
+      { "fy": "FY24", "val": 281001 }
+    ]
+  },
+  {
+    "id": "madhya-pradesh",
+    "name": "Madhya Pradesh",
+    "region": "Central",
+    "sdgScore": 67,
+    "censusLiteracy": 69.3,
+    "crimeRate": 348.2,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 101909 },
+      { "fy": "FY21", "val": 102007 },
+      { "fy": "FY22", "val": 116689 },
+      { "fy": "FY23", "val": 132010 },
+      { "fy": "FY24", "val": 142565 }
+    ]
+  },
+  {
+    "id": "maharashtra",
+    "name": "Maharashtra",
+    "region": "West",
+    "sdgScore": 73,
+    "censusLiteracy": 82.3,
+    "crimeRate": 325.8,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 189843 },
+      { "fy": "FY21", "val": 182454 },
+      { "fy": "FY22", "val": 219573 },
+      { "fy": "FY23", "val": 252389 },
+      { "fy": "FY24", "val": 277603 }
+    ]
+  },
+  {
+    "id": "manipur",
+    "name": "Manipur",
+    "region": "North-East",
+    "sdgScore": 72,
+    "censusLiteracy": 76.9,
+    "crimeRate": 94.2,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 78574 },
+      { "fy": "FY21", "val": 75784 },
+      { "fy": "FY22", "val": 98826 },
+      { "fy": "FY23", "val": 111853 },
+      { "fy": "FY24", "val": null }
+    ]
+  },
+  {
+    "id": "meghalaya",
+    "name": "Meghalaya",
+    "region": "North-East",
+    "sdgScore": 63,
+    "censusLiteracy": 74.4,
+    "crimeRate": 120.4,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 95422 },
+      { "fy": "FY21", "val": 90751 },
+      { "fy": "FY22", "val": 107971 },
+      { "fy": "FY23", "val": 123896 },
+      { "fy": "FY24", "val": 136948 }
+    ]
+  },
+  {
+    "id": "mizoram",
+    "name": "Mizoram",
+    "region": "North-East",
+    "sdgScore": 72,
+    "censusLiteracy": 91.3,
+    "crimeRate": 168.2,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 195365 },
+      { "fy": "FY21", "val": 173521 },
+      { "fy": "FY22", "val": 190965 },
+      { "fy": "FY23", "val": 215144 },
+      { "fy": "FY24", "val": null }
+    ]
+  },
+  {
+    "id": "nagaland",
+    "name": "Nagaland",
+    "region": "North-East",
+    "sdgScore": 63,
+    "censusLiteracy": 79.6,
+    "crimeRate": 47.0,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 122759 },
+      { "fy": "FY21", "val": 119781 },
+      { "fy": "FY22", "val": 127225 },
+      { "fy": "FY23", "val": 145537 },
+      { "fy": "FY24", "val": null }
+    ]
+  },
+  {
+    "id": "odisha",
+    "name": "Odisha",
+    "region": "East",
+    "sdgScore": 66,
+    "censusLiteracy": 72.9,
+    "crimeRate": 318.6,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 104633 },
+      { "fy": "FY21", "val": 103211 },
+      { "fy": "FY22", "val": 134091 },
+      { "fy": "FY23", "val": 143768 },
+      { "fy": "FY24", "val": 163101 }
+    ]
+  },
+  {
+    "id": "punjab",
+    "name": "Punjab",
+    "region": "North",
+    "sdgScore": 76,
+    "censusLiteracy": 75.8,
+    "crimeRate": 238.2,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 154385 },
+      { "fy": "FY21", "val": 150620 },
+      { "fy": "FY22", "val": 170276 },
+      { "fy": "FY23", "val": 181678 },
+      { "fy": "FY24", "val": 196505 }
+    ]
+  },
+  {
+    "id": "rajasthan",
+    "name": "Rajasthan",
+    "region": "North",
+    "sdgScore": 67,
+    "censusLiteracy": 66.1,
+    "crimeRate": 368.4,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 115534 },
+      { "fy": "FY21", "val": 114925 },
+      { "fy": "FY22", "val": 134060 },
+      { "fy": "FY23", "val": 150653 },
+      { "fy": "FY24", "val": 167964 }
+    ]
+  },
+  {
+    "id": "sikkim",
+    "name": "Sikkim",
+    "region": "North-East",
+    "sdgScore": 76,
+    "censusLiteracy": 81.4,
+    "crimeRate": 124.8,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 412627 },
+      { "fy": "FY21", "val": 415045 },
+      { "fy": "FY22", "val": 466518 },
+      { "fy": "FY23", "val": 520466 },
+      { "fy": "FY24", "val": 587743 }
+    ]
+  },
+  {
+    "id": "tamil-nadu",
+    "name": "Tamil Nadu",
+    "region": "South",
+    "sdgScore": 78,
+    "censusLiteracy": 80.1,
+    "crimeRate": 298.5,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 206165 },
+      { "fy": "FY21", "val": 209628 },
+      { "fy": "FY22", "val": 242339 },
+      { "fy": "FY23", "val": 277802 },
+      { "fy": "FY24", "val": 315220 }
+    ]
+  },
+  {
+    "id": "telangana",
+    "name": "Telangana",
+    "region": "South",
+    "sdgScore": 74,
+    "censusLiteracy": 66.5,
+    "crimeRate": 284.2,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 231326 },
+      { "fy": "FY21", "val": 225734 },
+      { "fy": "FY22", "val": 269000 },
+      { "fy": "FY23", "val": 312522 },
+      { "fy": "FY24", "val": 356564 }
+    ]
+  },
+  {
+    "id": "tripura",
+    "name": "Tripura",
+    "region": "North-East",
+    "sdgScore": 71,
+    "censusLiteracy": 87.2,
+    "crimeRate": 134.6,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 121456 },
+      { "fy": "FY21", "val": 118401 },
+      { "fy": "FY22", "val": 137032 },
+      { "fy": "FY23", "val": 157364 },
+      { "fy": "FY24", "val": 177723 }
+    ]
+  },
+  {
+    "id": "uttar-pradesh",
+    "name": "Uttar Pradesh",
+    "region": "North",
+    "sdgScore": 67,
+    "censusLiteracy": 67.7,
+    "crimeRate": 171.6,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 65660 },
+      { "fy": "FY21", "val": 61809 },
+      { "fy": "FY22", "val": 73841 },
+      { "fy": "FY23", "val": 83636 },
+      { "fy": "FY24", "val": 93514 }
+    ]
+  },
+  {
+    "id": "uttarakhand",
+    "name": "Uttarakhand",
+    "region": "North",
+    "sdgScore": 79,
+    "censusLiteracy": 78.8,
+    "crimeRate": 204.8,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 190558 },
+      { "fy": "FY21", "val": 174526 },
+      { "fy": "FY22", "val": 205246 },
+      { "fy": "FY23", "val": 230994 },
+      { "fy": "FY24", "val": 260201 }
+    ]
+  },
+  {
+    "id": "west-bengal",
+    "name": "West Bengal",
+    "region": "East",
+    "sdgScore": 70,
+    "censusLiteracy": 76.3,
+    "crimeRate": 258.4,
+    "nsdpHistory": [
+      { "fy": "FY20", "val": 110316 },
+      { "fy": "FY21", "val": 105109 },
+      { "fy": "FY22", "val": 121904 },
+      { "fy": "FY23", "val": 139442 },
+      { "fy": "FY24", "val": 154119 }
+    ]
+  }
+]

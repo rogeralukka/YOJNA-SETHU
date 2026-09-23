@@ -1,0 +1,282 @@
+﻿{
+  "hubTraces": {
+    "/home": [
+      {
+        "id": "trace_home_audit",
+        "chipLabel": "Run Household Welfare Audit",
+        "route": "/home",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "type": "tool",
+            "name": "schemaRegistry.validateSchema",
+            "detail": "Validating schemas for DOC_AADHAAR, DOC_CASTE_CERT, DOC_INCOME_CERT across household hh_kumar_7890"
+          },
+          {
+            "stepNumber": 2,
+            "type": "rule",
+            "name": "eligibility.checkHouseholdBlockers",
+            "detail": "Evaluating validity window and dependency graph for 4 members (Ramesh, Sunita, Priya, Arjun)"
+          },
+          {
+            "stepNumber": 3,
+            "type": "verdict",
+            "name": "ledger.verdict",
+            "detail": "1 Blocking Expiry Detected: Ramesh Kumar's Income Certificate expired on 31-03-2024"
+          }
+        ],
+        "outcome": {
+          "title": "Household Welfare Audit Complete",
+          "verdict": "Household welfare audit identified 1 expired prerequisite certificate holding up dependent welfare scheme applications. 3 of 4 credentials remain fully verified.",
+          "actionRoute": "/profile",
+          "actionLabel": "Resolve in Profile Ledger"
+        }
+      },
+      {
+        "id": "trace_home_priya",
+        "chipLabel": "Check Priya's Scholarship Blockers",
+        "route": "/home",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "type": "tool",
+            "name": "deltaResolver.resolveDelta",
+            "detail": "Inspecting Post-Matric OBC Scholarship criteria for Priya Kumar (mem_priya_03, age 19)"
+          },
+          {
+            "stepNumber": 2,
+            "type": "rule",
+            "name": "docket.verifyPrerequisites",
+            "detail": "Checking verified bonafide, caste cert, and head-of-household income threshold (₹1.80L <= ₹2.50L)"
+          },
+          {
+            "stepNumber": 3,
+            "type": "verdict",
+            "name": "delta.status",
+            "detail": "BLOCKED: Inherited Income Certificate (DOC_INCOME_CERT) is expired (>12m validity window)"
+          }
+        ],
+        "outcome": {
+          "title": "Scholarship Eligibility Blocked",
+          "verdict": "Priya qualifies for Post-Matric OBC Scholarship (₹20,000/yr benefit), but application is blocked due to Ramesh's expired Income Certificate.",
+          "actionRoute": "/profile",
+          "actionLabel": "Update Income Certificate in Profile"
+        }
+      }
+    ],
+    "/jan-manch": [
+      {
+        "id": "trace_jm_jaljeevan",
+        "chipLabel": "Audit Jal Jeevan Tap Gap (Telangana vs National)",
+        "route": "/jan-manch",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "type": "tool",
+            "name": "janManch.queryPhysicalMetric",
+            "detail": "Querying dual-axis delivery cache for Jal Jeevan Mission (Sector: jaljeevan)"
+          },
+          {
+            "stepNumber": 2,
+            "type": "rule",
+            "name": "janManch.computeVariance",
+            "detail": "Comparing Telangana coverage (88.4% verified taps) against National average (78.2%)"
+          },
+          {
+            "stepNumber": 3,
+            "type": "verdict",
+            "name": "audit.verdict",
+            "detail": "Telangana maintains +10.2% positive variance over National delivery baseline"
+          }
+        ],
+        "outcome": {
+          "title": "Jal Jeevan Dual-Axis Audit",
+          "verdict": "Telangana has verified 15.1 Cr functional tap connections out of 19.3 Cr target with ₹62,400 Cr disbursed of ₹70,000 Cr sanctioned.",
+          "actionRoute": "/jan-manch",
+          "actionLabel": "View Jal Jeevan Metrics"
+        }
+      },
+      {
+        "id": "trace_jm_pmgsy",
+        "chipLabel": "Analyze PMGSY Road Delivery Variance (State vs Central)",
+        "route": "/jan-manch",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "type": "tool",
+            "name": "janManch.queryFinancialMetric",
+            "detail": "Loading PMGSY infrastructure financial and physical verified milestone data"
+          },
+          {
+            "stepNumber": 2,
+            "type": "rule",
+            "name": "janManch.computePhysicalRatio",
+            "detail": "Auditing road length upgraded (1,04,200 Km verified) vs sanctioned budget utilization (88.7%)"
+          },
+          {
+            "stepNumber": 3,
+            "type": "verdict",
+            "name": "infrastructure.verdict",
+            "detail": "Physical delivery rate (83.3%) tracks financial disbursement rate (88.7%) with zero unauthorized diversion"
+          }
+        ],
+        "outcome": {
+          "title": "PMGSY Variance Analysis",
+          "verdict": "Rural road infrastructure shows 88.7% fund disbursement (₹98,500 Cr) and 83.3% drone-verified road completion across Telangana and National corridors.",
+          "actionRoute": "/jan-manch",
+          "actionLabel": "View Infrastructure Metrics"
+        }
+      }
+    ],
+    "/notifications": [
+      {
+        "id": "trace_notif_expired",
+        "chipLabel": "Check Expired Certificates across Family",
+        "route": "/notifications",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "type": "tool",
+            "name": "household.scanDocumentValidity",
+            "detail": "Scanning 5 linked documents across 4 family members in DigiLocker URI pointer ledger"
+          },
+          {
+            "stepNumber": 2,
+            "type": "rule",
+            "name": "ledger.findExpiredPointers",
+            "detail": "Checking validity timestamps against current date baseline"
+          },
+          {
+            "stepNumber": 3,
+            "type": "verdict",
+            "name": "scan.verdict",
+            "detail": "Found 1 expired pointer: DOC_INCOME_CERT for Ramesh Kumar (URI: digilocker://mock/income_ramesh)"
+          }
+        ],
+        "outcome": {
+          "title": "Document Expiry Scan Result",
+          "verdict": "1 of 5 registered documents is expired. Income Certificate expired on 31-03-2024, blocking family entitlement pipelines.",
+          "actionRoute": "/profile",
+          "actionLabel": "Renew in Profile Vault"
+        }
+      },
+      {
+        "id": "trace_notif_pointers",
+        "chipLabel": "Verify DigiLocker URI Pointers",
+        "route": "/notifications",
+        "steps": [
+          {
+            "stepNumber": 1,
+            "type": "tool",
+            "name": "digilocker.verifyPointers",
+            "detail": "Verifying URI cryptographic pointers for UIDAI, State e-District, and Telangana University"
+          },
+          {
+            "stepNumber": 2,
+            "type": "rule",
+            "name": "security.validateZeroPII",
+            "detail": "Confirming zero raw biometric or plaintext Aadhaar payloads stored on client or central servers"
+          },
+          {
+            "stepNumber": 3,
+            "type": "verdict",
+            "name": "integrity.verdict",
+            "detail": "100% PII Storage Protocol Compliant: 5 valid URI pointers signed by authoritative issuers"
+          }
+        ],
+        "outcome": {
+          "title": "DigiLocker Cryptographic Pointers Verified",
+          "verdict": "All 5 credential pointers verified against State and Central trust roots. Zero PII storage protocol active.",
+          "actionRoute": "/notifications",
+          "actionLabel": "View Verified Notifications"
+        }
+      }
+    ]
+  },
+  "moduleDispatchTraces": {
+    "/kisan-setu": {
+      "title": "Kisan Setu Intent Dispatch",
+      "steps": [
+        { "stepNumber": 1, "type": "tool", "name": "offlineFallback.matchKeyword", "detail": "Resolved intent to agriculture domain" },
+        { "stepNumber": 2, "type": "rule", "name": "intentRouter.resolveRoute", "detail": "Target gateway: Kisan Setu (/kisan-setu)" },
+        { "stepNumber": 3, "type": "verdict", "name": "dispatch.verdict", "detail": "Gateway ready for PM-KISAN, APMC mandi rates, and crop insurance" }
+      ],
+      "outcome": {
+        "title": "Kisan Setu Gateway Ready",
+        "verdict": "Intent routed to Kisan Setu module for APMC mandi prices, direct benefit transfers, and crop protection.",
+        "actionRoute": "/kisan-setu",
+        "actionLabel": "Enter Kisan Setu"
+      }
+    },
+    "/shiksha-setu": {
+      "title": "Shiksha Setu Intent Dispatch",
+      "steps": [
+        { "stepNumber": 1, "type": "tool", "name": "offlineFallback.matchKeyword", "detail": "Resolved intent to education & skilling domain" },
+        { "stepNumber": 2, "type": "rule", "name": "intentRouter.resolveRoute", "detail": "Target gateway: Shiksha Setu (/shiksha-setu)" },
+        { "stepNumber": 3, "type": "verdict", "name": "dispatch.verdict", "detail": "Gateway ready for scholarships, education loans, and collegiate verification" }
+      ],
+      "outcome": {
+        "title": "Shiksha Setu Gateway Ready",
+        "verdict": "Intent routed to Shiksha Setu module for post-matric scholarships and skill certifications.",
+        "actionRoute": "/shiksha-setu",
+        "actionLabel": "Enter Shiksha Setu"
+      }
+    },
+    "/rozgar-setu": {
+      "title": "Rozgar Setu Intent Dispatch",
+      "steps": [
+        { "stepNumber": 1, "type": "tool", "name": "offlineFallback.matchKeyword", "detail": "Resolved intent to employment domain" },
+        { "stepNumber": 2, "type": "rule", "name": "intentRouter.resolveRoute", "detail": "Target gateway: Rozgar Setu (/rozgar-setu)" },
+        { "stepNumber": 3, "type": "verdict", "name": "dispatch.verdict", "detail": "Gateway ready for job exchange and MGNREGA workfare registry" }
+      ],
+      "outcome": {
+        "title": "Rozgar Setu Gateway Ready",
+        "verdict": "Intent routed to Rozgar Setu module for employment exchange and apprenticeship listings.",
+        "actionRoute": "/rozgar-setu",
+        "actionLabel": "Enter Rozgar Setu"
+      }
+    },
+    "/yojna-setu": {
+      "title": "Yojna Setu Intent Dispatch",
+      "steps": [
+        { "stepNumber": 1, "type": "tool", "name": "offlineFallback.matchKeyword", "detail": "Resolved intent to welfare schemes domain" },
+        { "stepNumber": 2, "type": "rule", "name": "intentRouter.resolveRoute", "detail": "Target gateway: Yojna Setu (/yojna-setu)" },
+        { "stepNumber": 3, "type": "verdict", "name": "dispatch.verdict", "detail": "Gateway ready for central & state scheme eligibility matching" }
+      ],
+      "outcome": {
+        "title": "Yojna Setu Gateway Ready",
+        "verdict": "Intent routed to Yojna Setu module for citizen entitlement matching and application tracking.",
+        "actionRoute": "/yojna-setu",
+        "actionLabel": "Enter Yojna Setu"
+      }
+    },
+    "/nagar-setu": {
+      "title": "Nagar Setu Intent Dispatch",
+      "steps": [
+        { "stepNumber": 1, "type": "tool", "name": "offlineFallback.matchKeyword", "detail": "Resolved intent to municipal services domain" },
+        { "stepNumber": 2, "type": "rule", "name": "intentRouter.resolveRoute", "detail": "Target gateway: Nagar Setu (/nagar-setu)" },
+        { "stepNumber": 3, "type": "verdict", "name": "dispatch.verdict", "detail": "Gateway ready for civil certificates, property tax, and civic services" }
+      ],
+      "outcome": {
+        "title": "Nagar Setu Gateway Ready",
+        "verdict": "Intent routed to Nagar Setu module for civil certificates and municipal utility services.",
+        "actionRoute": "/nagar-setu",
+        "actionLabel": "Enter Nagar Setu"
+      }
+    },
+    "/profile": {
+      "title": "Unified Profile Intent Dispatch",
+      "steps": [
+        { "stepNumber": 1, "type": "tool", "name": "offlineFallback.matchKeyword", "detail": "Resolved intent to citizen credentials & identity" },
+        { "stepNumber": 2, "type": "rule", "name": "intentRouter.resolveRoute", "detail": "Target gateway: Unified Family Profile (/profile)" },
+        { "stepNumber": 3, "type": "verdict", "name": "dispatch.verdict", "detail": "Ledger ready for DigiLocker URI pointers and Consent PIN management" }
+      ],
+      "outcome": {
+        "title": "Unified Profile Ready",
+        "verdict": "Intent routed to Unified Family Profile for document ledger and consent management.",
+        "actionRoute": "/profile",
+        "actionLabel": "Open Profile Ledger"
+      }
+    }
+  }
+}

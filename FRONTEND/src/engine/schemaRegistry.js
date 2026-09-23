@@ -1,0 +1,121 @@
+/**
+ * NagrikPath Digital India 2.0 Reference Architecture
+ * Master Scheme Registry
+ * PURE JAVASCRIPT - Zero React/DOM dependencies
+ */
+
+export const schemaRegistry = {
+  "post-matric-obc": {
+    id: "post-matric-obc",
+    name: "Central Post-Matric OBC Scholarship",
+    level: "CENTRAL",
+    sector: "Education",
+    maxAgeMonths: 12,
+    requiredDocs: [
+      {
+        docTag: "DOC_AADHAAR",
+        label: "Aadhaar Card",
+        inheritFromHead: false,
+        maxAgeMonths: 120
+      },
+      {
+        docTag: "DOC_CASTE_CERT",
+        label: "OBC Caste Certificate",
+        inheritFromHead: true,
+        maxAgeMonths: 60
+      },
+      {
+        docTag: "DOC_INCOME_CERT",
+        label: "Income Certificate",
+        inheritFromHead: true,
+        maxAgeMonths: 12
+      },
+      {
+        docTag: "DOC_COLLEGE_BONAFIDE",
+        label: "College Bonafide Certificate",
+        inheritFromHead: false,
+        maxAgeMonths: 12
+      }
+    ],
+    eligibility: {
+      minAge: 17,
+      maxAge: 35,
+      maxIncome: 250000,
+      category: ["OBC"],
+      gender: "ALL"
+    }
+  },
+  "pm-kisan": {
+    id: "pm-kisan",
+    name: "PM-KISAN",
+    level: "CENTRAL",
+    sector: "Agriculture",
+    maxAgeMonths: 12,
+    requiredDocs: [
+      {
+        docTag: "DOC_AADHAAR",
+        label: "Aadhaar Card",
+        inheritFromHead: false,
+        maxAgeMonths: 120
+      },
+      {
+        docTag: "DOC_LAND_RECORD",
+        label: "Land Ownership Record / RoR",
+        inheritFromHead: false,
+        maxAgeMonths: 36
+      },
+      {
+        docTag: "DOC_BANK_PASSBOOK",
+        label: "Bank Account Passbook",
+        inheritFromHead: false,
+        maxAgeMonths: 36
+      }
+    ],
+    eligibility: {
+      minAge: 18,
+      maxIncome: 400000,
+      category: ["ALL", "GEN", "OBC", "SC", "ST"],
+      gender: "ALL"
+    }
+  },
+  "pm-jay": {
+    id: "pm-jay",
+    name: "Ayushman Bharat PM-JAY",
+    level: "CENTRAL",
+    sector: "Health",
+    maxAgeMonths: 12,
+    requiredDocs: [
+      {
+        docTag: "DOC_AADHAAR",
+        label: "Aadhaar Card",
+        inheritFromHead: false,
+        maxAgeMonths: 120
+      },
+      {
+        docTag: "DOC_RATION_CARD",
+        label: "Ration Card",
+        inheritFromHead: true,
+        maxAgeMonths: 60
+      },
+      {
+        docTag: "DOC_INCOME_CERT",
+        label: "Income Certificate",
+        inheritFromHead: true,
+        maxAgeMonths: 12
+      }
+    ],
+    eligibility: {
+      minAge: 0,
+      maxIncome: 250000,
+      category: ["ALL", "GEN", "OBC", "SC", "ST"],
+      gender: "ALL"
+    }
+  }
+};
+
+// Aliases for convenience
+schemaRegistry["SCHEME_POST_MATRIC_OBC"] = schemaRegistry["post-matric-obc"];
+schemaRegistry["PM_KISAN"] = schemaRegistry["pm-kisan"];
+schemaRegistry["PM_JAY"] = schemaRegistry["pm-jay"];
+
+export default schemaRegistry;

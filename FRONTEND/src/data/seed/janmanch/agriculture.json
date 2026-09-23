@@ -1,0 +1,91 @@
+{
+  "sector": "agriculture",
+  "label": "Agriculture & Farmer Welfare",
+  "title": "Agriculture & Farmer Welfare",
+  "description": "Direct Income Support, Crop Insurance & Market Infrastructure",
+  "state": "Telangana",
+  "sanctionedCr": 60000,
+  "disbursedCr": 58250,
+  "targetUnits": 68.0,
+  "deliveredUnits": 65.5,
+  "central": {
+    "sanctionedCr": 60000,
+    "disbursedCr": 58250,
+    "targetUnits": 112000000,
+    "deliveredUnits": 108000000,
+    "unitLabel": "Farmers with Direct Benefit Transfers"
+  },
+  "stateData": {
+    "sanctionedCr": 7500,
+    "disbursedCr": 7280,
+    "targetUnits": 6800000,
+    "deliveredUnits": 6550000,
+    "unitLabel": "Farmers with Rythu Bandhu / DBT Verification"
+  },
+  "financialMetric": {
+    "id": "pm-kisan-allocation",
+    "label": "PM-KISAN State Allocation",
+    "unit": "₹ Cr",
+    "timeline": [
+      { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 5200, "stateDisbursed": 4750 },
+      { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 5800, "stateDisbursed": 5350 },
+      { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 6400, "stateDisbursed": 6100 },
+      { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 7000, "stateDisbursed": 6650 },
+      { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 7500, "stateDisbursed": 7280 },
+      { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 8100, "stateDisbursed": 7850 }
+    ]
+  },
+  "physicalMetric": {
+    "id": "pm-kisan-beneficiaries",
+    "label": "Verified Farmer Beneficiaries",
+    "unit": "Lakh Beneficiaries",
+    "timeline": [
+      { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 32.0, "deliveredVerified": 29.4 },
+      { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 34.5, "deliveredVerified": 32.1 },
+      { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 36.0, "deliveredVerified": 34.2 },
+      { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 37.5, "deliveredVerified": 35.8 },
+      { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 38.5, "deliveredVerified": 37.1 },
+      { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 39.2, "deliveredVerified": 38.1 }
+    ]
+  },
+  "auditFeed": [
+    {
+      "type": "Policy Change",
+      "title": "Mandatory e-KYC Facial Authentication via Aadhaar RD Service",
+      "date": "14-09-2026",
+      "summary": "Replaced biometrics with AI-assisted liveness detection across CSC centers to prevent proxy subsidy claims."
+    },
+    {
+      "type": "Budget Allocation",
+      "title": "Supplementary Kharif Crop Insurance Risk Fund Release",
+      "date": "02-09-2026",
+      "summary": "Cabinet sanctioned ₹2,400 Cr buffer for localized weather outbreak compensations across state river basins."
+    },
+    {
+      "type": "Legislative Review",
+      "title": "Public Accounts Committee Review on APMC Mandi Procurement",
+      "date": "28-08-2026",
+      "summary": "Resolution passed to mandate electronic weighbridge calibration with public audit logs in all state mandis."
+    }
+  ],
+  "updates": [
+    {
+      "type": "Policy Change",
+      "title": "Mandatory e-KYC Facial Authentication via Aadhaar RD Service",
+      "date": "14-09-2026",
+      "summary": "Replaced biometrics with AI-assisted liveness detection across CSC centers to prevent proxy subsidy claims."
+    },
+    {
+      "type": "Budget Allocation",
+      "title": "Supplementary Kharif Crop Insurance Risk Fund Release",
+      "date": "02-09-2026",
+      "summary": "Cabinet sanctioned ₹2,400 Cr buffer for localized weather outbreak compensations across state river basins."
+    },
+    {
+      "type": "Legislative Review",
+      "title": "Public Accounts Committee Review on APMC Mandi Procurement",
+      "date": "28-08-2026",
+      "summary": "Resolution passed to mandate electronic weighbridge calibration with public audit logs in all state mandis."
+    }
+  ]
+}

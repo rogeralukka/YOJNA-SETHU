@@ -1,0 +1,35 @@
+[
+  {
+    "id": "notif_001",
+    "title": "PM-KISAN Application Approved",
+    "description": "Amount credited to bank account",
+    "category": "Schemes",
+    "type": "success",
+    "timestamp": "2026-09-17T10:30:00.000Z",
+    "isRead": false,
+    "actionRoute": null,
+    "actionLabel": null
+  },
+  {
+    "id": "notif_002",
+    "title": "Document Expiry Alert",
+    "description": "Income Certificate expired",
+    "category": "Documents",
+    "type": "warning",
+    "timestamp": "2026-09-16T14:15:00.000Z",
+    "isRead": false,
+    "actionRoute": "/profile",
+    "actionLabel": "Resolve in Profile Ledger"
+  },
+  {
+    "id": "notif_003",
+    "title": "New Scheme Eligibility Match",
+    "description": "Ayushman Bharat PM-JAY",
+    "category": "Schemes",
+    "type": "info",
+    "timestamp": "2026-09-15T09:00:00.000Z",
+    "isRead": true,
+    "actionRoute": null,
+    "actionLabel": null
+  }
+]

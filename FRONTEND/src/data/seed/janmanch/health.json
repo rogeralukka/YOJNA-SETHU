@@ -1,0 +1,91 @@
+{
+  "sector": "health",
+  "label": "Ayushman Bharat & Public Health",
+  "title": "Ayushman Bharat & Public Health Infrastructure",
+  "description": "Universal Health Coverage, Golden Cards & Primary Health Centers",
+  "state": "Telangana",
+  "sanctionedCr": 86200,
+  "disbursedCr": 79800,
+  "targetUnits": 120.0,
+  "deliveredUnits": 104.0,
+  "central": {
+    "sanctionedCr": 86200,
+    "disbursedCr": 79800,
+    "targetUnits": 120000000,
+    "deliveredUnits": 104000000,
+    "unitLabel": "Beneficiary Families Issued Verified Health Cards"
+  },
+  "stateData": {
+    "sanctionedCr": 4800,
+    "disbursedCr": 4560,
+    "targetUnits": 8500000,
+    "deliveredUnits": 7800000,
+    "unitLabel": "Aarogyasri / Ayushman Co-branded Families Covered"
+  },
+  "financialMetric": {
+    "id": "ayushman-bharat-outlay",
+    "label": "Ayushman Bharat PM-JAY Outlay",
+    "unit": "₹ Cr",
+    "timeline": [
+      { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 850, "stateDisbursed": 780 },
+      { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 1100, "stateDisbursed": 1020 },
+      { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 1350, "stateDisbursed": 1280 },
+      { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 1600, "stateDisbursed": 1520 },
+      { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 1800, "stateDisbursed": 1720 },
+      { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 1950, "stateDisbursed": 1890 }
+    ]
+  },
+  "physicalMetric": {
+    "id": "ayushman-cards-issued",
+    "label": "Active Ayushman Cards Issued",
+    "unit": "Lakh Cards",
+    "timeline": [
+      { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 140.0, "deliveredVerified": 120.5 },
+      { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 180.0, "deliveredVerified": 162.0 },
+      { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 220.0, "deliveredVerified": 205.4 },
+      { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 260.0, "deliveredVerified": 248.0 },
+      { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 290.0, "deliveredVerified": 279.5 },
+      { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 320.0, "deliveredVerified": 310.2 }
+    ]
+  },
+  "auditFeed": [
+    {
+      "type": "Policy Change",
+      "title": "Standardized Surgical Package Rates Rationalization",
+      "date": "12-09-2026",
+      "summary": "Revised 400 hospital procedure ceilings to curb fraudulent claim billing by empanelled network hospitals."
+    },
+    {
+      "type": "Legislative Review",
+      "title": "Hospital Empanelment Disciplinary Committee Hearing",
+      "date": "01-09-2026",
+      "summary": "Suspended 3 nursing facilities found charging unauthorized out-of-pocket fees to card holders."
+    },
+    {
+      "type": "Budget Allocation",
+      "title": "Critical Care Infrastructure Emergency Grant Allocation",
+      "date": "18-08-2026",
+      "summary": "Approved ₹1,500 Cr for 50-bed pediatric ICUs in secondary public hospitals across the state."
+    }
+  ],
+  "updates": [
+    {
+      "type": "Policy Change",
+      "title": "Standardized Surgical Package Rates Rationalization",
+      "date": "12-09-2026",
+      "summary": "Revised 400 hospital procedure ceilings to curb fraudulent claim billing by empanelled network hospitals."
+    },
+    {
+      "type": "Legislative Review",
+      "title": "Hospital Empanelment Disciplinary Committee Hearing",
+      "date": "01-09-2026",
+      "summary": "Suspended 3 nursing facilities found charging unauthorized out-of-pocket fees to card holders."
+    },
+    {
+      "type": "Budget Allocation",
+      "title": "Critical Care Infrastructure Emergency Grant Allocation",
+      "date": "18-08-2026",
+      "summary": "Approved ₹1,500 Cr for 50-bed pediatric ICUs in secondary public hospitals across the state."
+    }
+  ]
+}

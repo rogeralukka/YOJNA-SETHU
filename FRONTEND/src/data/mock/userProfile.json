@@ -1,0 +1,155 @@
+{
+  "householdId": "hh_kumar_7890",
+  "headMemberId": "mem_ramesh_01",
+  "members": [
+    {
+      "memberId": "mem_ramesh_01",
+      "name": "Ramesh Kumar",
+      "relation": "Head",
+      "age": 48,
+      "gender": "Male",
+      "category": "OBC",
+      "occupation": "Farmer / Artisan",
+      "annualIncome": 180000,
+      "maskedAadhaar": "XXXX-XXXX-9012",
+      "maskedPan": "XXXXX9012R",
+      "consents": {
+        "pin": null,
+        "setAt": null
+      },
+      "documents": [
+        {
+          "docTag": "DOC_AADHAAR",
+          "label": "Aadhaar Card",
+          "status": "VERIFIED",
+          "uri": "digilocker://mock/aadhaar_ramesh",
+          "issuer": "UIDAI",
+          "issuedOn": "2018-06-12T00:00:00.000Z",
+          "issuanceTimestamp": "2018-06-12T00:00:00.000Z",
+          "expiresOn": null,
+          "isExpired": false
+        },
+        {
+          "docTag": "DOC_CASTE_CERT",
+          "label": "OBC Caste Certificate",
+          "status": "VERIFIED",
+          "uri": "digilocker://mock/caste_ramesh",
+          "issuer": "State e-District",
+          "issuedOn": "2022-01-10T00:00:00.000Z",
+          "issuanceTimestamp": "2022-01-10T00:00:00.000Z",
+          "expiresOn": null,
+          "isExpired": false
+        },
+        {
+          "docTag": "DOC_INCOME_CERT",
+          "label": "Income Certificate",
+          "status": "EXPIRED",
+          "uri": "digilocker://mock/income_ramesh",
+          "issuer": "State e-District",
+          "issuedOn": "2023-04-10T00:00:00.000Z",
+          "issuanceTimestamp": "2023-04-10T00:00:00.000Z",
+          "expiresOn": "2024-03-31T00:00:00.000Z",
+          "isExpired": true
+        }
+      ]
+    },
+    {
+      "memberId": "mem_sunita_02",
+      "name": "Sunita Kumar",
+      "relation": "Spouse",
+      "age": 45,
+      "gender": "Female",
+      "category": "OBC",
+      "occupation": "Homemaker",
+      "annualIncome": 0,
+      "maskedAadhaar": "XXXX-XXXX-4567",
+      "maskedPan": "XXXXX4567S",
+      "consents": {
+        "pin": null,
+        "setAt": null
+      },
+      "documents": [
+        {
+          "docTag": "DOC_AADHAAR",
+          "label": "Aadhaar Card",
+          "status": "VERIFIED",
+          "uri": "digilocker://mock/aadhaar_sunita",
+          "issuer": "UIDAI",
+          "issuedOn": "2019-08-20T00:00:00.000Z",
+          "issuanceTimestamp": "2019-08-20T00:00:00.000Z",
+          "expiresOn": null,
+          "isExpired": false
+        }
+      ]
+    },
+    {
+      "memberId": "mem_priya_03",
+      "name": "Priya Kumar",
+      "relation": "Daughter",
+      "age": 19,
+      "gender": "Female",
+      "category": "OBC",
+      "occupation": "Student",
+      "annualIncome": 0,
+      "maskedAadhaar": "XXXX-XXXX-1234",
+      "maskedPan": "XXXXX1234P",
+      "consents": {
+        "pin": null,
+        "setAt": null
+      },
+      "documents": [
+        {
+          "docTag": "DOC_AADHAAR",
+          "label": "Aadhaar Card",
+          "status": "VERIFIED",
+          "uri": "digilocker://mock/aadhaar_priya",
+          "issuer": "UIDAI",
+          "issuedOn": "2020-05-15T00:00:00.000Z",
+          "issuanceTimestamp": "2020-05-15T00:00:00.000Z",
+          "expiresOn": null,
+          "isExpired": false
+        },
+        {
+          "docTag": "DOC_COLLEGE_BONAFIDE",
+          "label": "College Bonafide Certificate",
+          "status": "VERIFIED",
+          "uri": "digilocker://mock/bonafide_priya",
+          "issuer": "Telangana University",
+          "issuedOn": "2026-01-15T00:00:00.000Z",
+          "issuanceTimestamp": "2026-01-15T00:00:00.000Z",
+          "expiresOn": null,
+          "isExpired": false
+        }
+      ]
+    },
+    {
+      "memberId": "mem_arjun_04",
+      "name": "Arjun Kumar",
+      "relation": "Son",
+      "age": 14,
+      "gender": "Male",
+      "category": "OBC",
+      "occupation": "Student",
+      "annualIncome": 0,
+      "maskedAadhaar": "XXXX-XXXX-3456",
+      "maskedPan": "XXXXX3456A",
+      "consents": {
+        "pin": null,
+        "setAt": null
+      },
+      "documents": [
+        {
+          "docTag": "DOC_AADHAAR",
+          "label": "Aadhaar Card",
+          "status": "VERIFIED",
+          "uri": "digilocker://mock/aadhaar_arjun",
+          "issuer": "UIDAI",
+          "issuedOn": "2021-11-10T00:00:00.000Z",
+          "issuanceTimestamp": "2021-11-10T00:00:00.000Z",
+          "expiresOn": null,
+          "isExpired": false
+        }
+      ]
+    }
+  ]
+}

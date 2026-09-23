@@ -1,0 +1,185 @@
+{
+  "shiksha-setu": {
+    "slug": "shiksha-setu",
+    "title": "Shiksha Setu",
+    "sector": "Education & Skilling",
+    "tagline": "Empowering every learner with scholarships, skill credentials, and student support",
+    "status": "Phase 2 Pipeline",
+    "upcomingSchemes": [
+      {
+        "id": "sch_01",
+        "name": "Post-Matric Scholarship",
+        "description": "Financial assistance for students from reserved and backward categories pursuing higher secondary and collegiate education."
+      },
+      {
+        "id": "sch_02",
+        "name": "PMKVY Skill Development",
+        "description": "Short-term technical training, industry placement incentives, and certified RPL skill assessment."
+      },
+      {
+        "id": "sch_03",
+        "name": "Education Loan Subsidy",
+        "description": "Central sector interest subsidy on educational loans for economically weaker sections."
+      }
+    ],
+    "whatThisModuleWillDo": [
+      "Discover scholarships & skill courses",
+      "Check eligibility from unified profile",
+      "Track applications"
+    ],
+    "drawerContent": {
+      "department": "Ministry of Education & Ministry of Skill Development",
+      "roadmap": "National Scholarship Portal (NSP 2.0) federation and Skill India Digital (SID) credentials bridge under reference architecture validation.",
+      "prerequisites": [
+        "Aadhaar e-KYC (UIDAI)",
+        "Academic Bonafide Certificate",
+        "Category / Caste Certificate (State e-District)",
+        "Family Income Certificate (max 12 months validity)"
+      ]
+    }
+  },
+  "rozgar-setu": {
+    "slug": "rozgar-setu",
+    "title": "Rozgar Setu",
+    "sector": "Employment & Jobs",
+    "tagline": "Unified digital gateway connecting jobseekers to formal employment, public workfare, and apprenticeships",
+    "status": "Phase 2 Pipeline",
+    "upcomingSchemes": [
+      {
+        "id": "sch_04",
+        "name": "Employment Exchange",
+        "description": "State-wide live registration, vocational matching, and public sector employment notifications."
+      },
+      {
+        "id": "sch_05",
+        "name": "Apprenticeship Programs",
+        "description": "National Apprenticeship Promotion Scheme (NAPS) stipend sharing and industry on-job training."
+      },
+      {
+        "id": "sch_06",
+        "name": "MGNREGA Job Card",
+        "description": "Statutory 100-day wage employment guarantee for rural households and public work verification."
+      },
+      {
+        "id": "sch_07",
+        "name": "EPFO Passbook",
+        "description": "Universal Account Number (UAN) provident fund balance checking and claims settlement tracker."
+      }
+    ],
+    "whatThisModuleWillDo": [
+      "Job matching based on skills",
+      "MGNREGA wage tracking",
+      "Apprenticeship opportunities"
+    ],
+    "drawerContent": {
+      "department": "Ministry of Labour and Employment & Ministry of Rural Development",
+      "roadmap": "National Career Service (NCS) gateway adapter and e-Shram unorganized worker registry sync under development.",
+      "prerequisites": [
+        "Aadhaar-Linked Mobile Verification",
+        "Skill Training Certificate / Marksheet",
+        "Bank Account Details (DBT-Enabled NPCI Mapping)",
+        "MGNREGA Household Job Card"
+      ]
+    }
+  },
+  "kisan-setu": {
+    "slug": "kisan-setu",
+    "title": "Kisan Setu",
+    "sector": "Agriculture & Mandi",
+    "tagline": "Comprehensive farmer welfare, real-time market prices, crop insurance, and direct benefit orchestration",
+    "status": "Phase 2 Pipeline",
+    "upcomingSchemes": [
+      {
+        "id": "sch_08",
+        "name": "PM-KISAN",
+        "description": "Income support of ₹6,000 per year in three equal installments to all landholding farmer families."
+      },
+      {
+        "id": "sch_09",
+        "name": "PM Fasal Bima Yojana",
+        "description": "Comprehensive risk insurance covering yield loss, localized calamities, and post-harvest damages."
+      },
+      {
+        "id": "sch_10",
+        "name": "Mandi Rates",
+        "description": "Live commodity prices across APMCs with minimum support price (MSP) monitoring."
+      },
+      {
+        "id": "sch_11",
+        "name": "Soil Health Card",
+        "description": "Periodic soil nutrient status reports with customized dosage recommendations for fertilizers."
+      },
+      {
+        "id": "sch_12",
+        "name": "MSP Procurement",
+        "description": "Direct state procurement slot booking, token issuance, and payment receipt tracking."
+      }
+    ],
+    "whatThisModuleWillDo": [
+      "Real-time mandi prices",
+      "Crop insurance claims",
+      "Subsidy tracking",
+      "Weather alerts"
+    ],
+    "drawerContent": {
+      "department": "Ministry of Agriculture and Farmers Welfare",
+      "roadmap": "AgriStack unified registry protocol and e-NAM (National Agriculture Market) real-time ticker federated gateway.",
+      "prerequisites": [
+        "Aadhaar (UIDAI)",
+        "State Land Ownership Record (RoR / Record of Rights)",
+        "Aadhaar-Seeded Bank Passbook",
+        "Kisan Credit Card (KCC) Account Number"
+      ]
+    }
+  },
+  "nagar-setu": {
+    "slug": "nagar-setu",
+    "title": "Nagar Setu",
+    "sector": "Municipal Services",
+    "tagline": "Empowering urban citizens with transparent civic utilities, municipal permits, and tax payment solutions",
+    "status": "Phase 2 Pipeline",
+    "upcomingSchemes": [
+      {
+        "id": "sch_13",
+        "name": "Birth/Death Certificate",
+        "description": "Civil registration system digital certificate pull, correction request, and QR verification."
+      },
+      {
+        "id": "sch_14",
+        "name": "Property Tax Payment",
+        "description": "Assessment search, online dues clearance, rebate calculation, and digital receipt generation."
+      },
+      {
+        "id": "sch_15",
+        "name": "Water Connection",
+        "description": "New pipeline sanctioning, meter connection testing, and volumetric billing integration."
+      },
+      {
+        "id": "sch_16",
+        "name": "Civic Grievance Logging",
+        "description": "Geo-tagged issue reporting for sanitation, streetlights, roads, and municipal tracking."
+      },
+      {
+        "id": "sch_17",
+        "name": "Building Permission",
+        "description": "Online building plan approval system (OBPAS) scrutiny, NOC tracking, and occupancy certificates."
+      }
+    ],
+    "whatThisModuleWillDo": [
+      "Municipal certificates",
+      "Property tax",
+      "Civic complaints",
+      "Water & waste management"
+    ],
+    "drawerContent": {
+      "department": "Ministry of Housing and Urban Affairs & State Urban Local Bodies",
+      "roadmap": "National Urban Digital Mission (NUDM) open APIs and state municipal corporation federation engine.",
+      "prerequisites": [
+        "Aadhaar / DigiLocker Verification",
+        "Property Unique Identification Number (UPRN)",
+        "Utility Consumer Connection Number",
+        "Electricity Bill / Water Bill Receipt"
+      ]
+    }
+  }
+}

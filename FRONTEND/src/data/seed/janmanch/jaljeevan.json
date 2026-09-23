@@ -1,0 +1,91 @@
+{
+  "sector": "jaljeevan",
+  "label": "Jal Jeevan Mission (Har Ghar Jal)",
+  "title": "Jal Jeevan Mission (Har Ghar Jal)",
+  "description": "Functional Household Tap Connections & Real-time Water Quality",
+  "state": "Telangana",
+  "sanctionedCr": 70000,
+  "disbursedCr": 62400,
+  "targetUnits": 193.0,
+  "deliveredUnits": 151.0,
+  "central": {
+    "sanctionedCr": 70000,
+    "disbursedCr": 62400,
+    "targetUnits": 193000000,
+    "deliveredUnits": 151000000,
+    "unitLabel": "Rural Tap Connections Geo-tagged & Functional"
+  },
+  "stateData": {
+    "sanctionedCr": 5450,
+    "disbursedCr": 5120,
+    "targetUnits": 5450000,
+    "deliveredUnits": 4820000,
+    "unitLabel": "Household Tap Connections Operational"
+  },
+  "financialMetric": {
+    "id": "jal-jeevan-outlay",
+    "label": "Har Ghar Jal Mission Outlay",
+    "unit": "₹ Cr",
+    "timeline": [
+      { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 2100, "stateDisbursed": 1890 },
+      { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 2900, "stateDisbursed": 2680 },
+      { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 3600, "stateDisbursed": 3380 },
+      { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 4200, "stateDisbursed": 3990 },
+      { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 4550, "stateDisbursed": 4360 },
+      { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 4800, "stateDisbursed": 4650 }
+    ]
+  },
+  "physicalMetric": {
+    "id": "tap-water-coverage",
+    "label": "Functional Tap Connections Coverage",
+    "unit": "% Coverage",
+    "timeline": [
+      { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 55.0, "deliveredVerified": 48.2 },
+      { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 68.0, "deliveredVerified": 62.4 },
+      { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 78.0, "deliveredVerified": 73.5 },
+      { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 86.0, "deliveredVerified": 82.1 },
+      { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 92.0, "deliveredVerified": 89.4 },
+      { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 96.0, "deliveredVerified": 94.2 }
+    ]
+  },
+  "auditFeed": [
+    {
+      "type": "Policy Change",
+      "title": "IoT Sensor Water Quality Automated Telemetry Guidelines",
+      "date": "10-09-2026",
+      "summary": "Real-time residual chlorine and pH monitoring connected to state public dashboard with automated audit alerts."
+    },
+    {
+      "type": "Legislative Review",
+      "title": "State Water & Sanitation Mission Field Quality Verification",
+      "date": "05-09-2026",
+      "summary": "Independent state engineering audit confirmed 98% continuous tap water flow during scheduled daily distribution."
+    },
+    {
+      "type": "Budget Allocation",
+      "title": "State Matching Share Disbursement for Fluoride Filtration",
+      "date": "22-08-2026",
+      "summary": "State finance department released ₹820 Cr for multi-village surface water filtration plants."
+    }
+  ],
+  "updates": [
+    {
+      "type": "Policy Change",
+      "title": "IoT Sensor Water Quality Automated Telemetry Guidelines",
+      "date": "10-09-2026",
+      "summary": "Real-time residual chlorine and pH monitoring connected to state public dashboard with automated audit alerts."
+    },
+    {
+      "type": "Legislative Review",
+      "title": "State Water & Sanitation Mission Field Quality Verification",
+      "date": "05-09-2026",
+      "summary": "Independent state engineering audit confirmed 98% continuous tap water flow during scheduled daily distribution."
+    },
+    {
+      "type": "Budget Allocation",
+      "title": "State Matching Share Disbursement for Fluoride Filtration",
+      "date": "22-08-2026",
+      "summary": "State finance department released ₹820 Cr for multi-village surface water filtration plants."
+    }
+  ]
+}

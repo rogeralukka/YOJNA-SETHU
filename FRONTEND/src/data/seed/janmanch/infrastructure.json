@@ -1,0 +1,91 @@
+{
+  "sector": "infrastructure",
+  "label": "PMGSY Rural Roads",
+  "title": "Pradhan Mantri Gram Sadak Yojana (PMGSY)",
+  "description": "All-Weather Rural Road Connectivity & Upgraded Bridges",
+  "state": "Telangana",
+  "sanctionedCr": 111000,
+  "disbursedCr": 98500,
+  "targetUnits": 125.0,
+  "deliveredUnits": 104.2,
+  "central": {
+    "sanctionedCr": 111000,
+    "disbursedCr": 98500,
+    "targetUnits": 125000,
+    "deliveredUnits": 104200,
+    "unitLabel": "Km Rural Roads Upgraded & Drone-Surveyed"
+  },
+  "stateData": {
+    "sanctionedCr": 4200,
+    "disbursedCr": 3850,
+    "targetUnits": 10500,
+    "deliveredUnits": 9420,
+    "unitLabel": "Km All-Weather Rural Roadways Completed"
+  },
+  "financialMetric": {
+    "id": "pmgsy-rural-roads-outlay",
+    "label": "PMGSY Rural Roads Outlay",
+    "unit": "₹ Cr",
+    "timeline": [
+      { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 600, "stateDisbursed": 540 },
+      { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 800, "stateDisbursed": 730 },
+      { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 1050, "stateDisbursed": 970 },
+      { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 1250, "stateDisbursed": 1180 },
+      { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 1380, "stateDisbursed": 1310 },
+      { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 1450, "stateDisbursed": 1400 }
+    ]
+  },
+  "physicalMetric": {
+    "id": "rural-roads-completed",
+    "label": "Rural All-Weather Roads Completed",
+    "unit": "Km Completed",
+    "timeline": [
+      { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 4800, "deliveredVerified": 4200 },
+      { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 6500, "deliveredVerified": 5900 },
+      { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 8200, "deliveredVerified": 7650 },
+      { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 9800, "deliveredVerified": 9200 },
+      { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 11200, "deliveredVerified": 10650 },
+      { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 12400, "deliveredVerified": 11800 }
+    ]
+  },
+  "auditFeed": [
+    {
+      "type": "Policy Change",
+      "title": "Mandatory Quality Audit via Central Road Research Institute (CRRI)",
+      "date": "15-09-2026",
+      "summary": "Third-party pavement roughness surveys mandated before contractor final milestone payment release."
+    },
+    {
+      "type": "Budget Allocation",
+      "title": "PMGSY-III Final Phase Bridge Construction Sanctions",
+      "date": "04-09-2026",
+      "summary": "Released ₹3,100 Cr for all-weather connectivity bridges across perennial flood-prone river corridors."
+    },
+    {
+      "type": "Legislative Review",
+      "title": "Public Works Standing Committee Deliberations",
+      "date": "25-08-2026",
+      "summary": "Blacklisted contractor for unapproved delay in 18km connectivity link between state agricultural market and national highway."
+    }
+  ],
+  "updates": [
+    {
+      "type": "Policy Change",
+      "title": "Mandatory Quality Audit via Central Road Research Institute (CRRI)",
+      "date": "15-09-2026",
+      "summary": "Third-party pavement roughness surveys mandated before contractor final milestone payment release."
+    },
+    {
+      "type": "Budget Allocation",
+      "title": "PMGSY-III Final Phase Bridge Construction Sanctions",
+      "date": "04-09-2026",
+      "summary": "Released ₹3,100 Cr for all-weather connectivity bridges across perennial flood-prone river corridors."
+    },
+    {
+      "type": "Legislative Review",
+      "title": "Public Works Standing Committee Deliberations",
+      "date": "25-08-2026",
+      "summary": "Blacklisted contractor for unapproved delay in 18km connectivity link between state agricultural market and national highway."
+    }
+  ]
+}

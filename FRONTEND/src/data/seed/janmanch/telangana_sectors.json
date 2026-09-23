@@ -1,0 +1,730 @@
+{
+  "agriculture": {
+    "sector": "agriculture",
+    "label": "Agriculture & Farmer Welfare",
+    "title": "Agriculture & Farmer Welfare",
+    "description": "Direct Income Support, Crop Insurance & Market Infrastructure",
+    "state": "Telangana",
+    "sanctionedCr": 60000,
+    "disbursedCr": 58250,
+    "targetUnits": 68.0,
+    "deliveredUnits": 65.5,
+    "central": {
+      "sanctionedCr": 60000,
+      "disbursedCr": 58250,
+      "targetUnits": 112000000,
+      "deliveredUnits": 108000000,
+      "unitLabel": "Farmers with Direct Benefit Transfers"
+    },
+    "stateData": {
+      "sanctionedCr": 7500,
+      "disbursedCr": 7280,
+      "targetUnits": 6800000,
+      "deliveredUnits": 6550000,
+      "unitLabel": "Farmers with Rythu Bandhu / DBT Verification"
+    },
+    "financialMetric": {
+      "id": "pm-kisan-allocation",
+      "label": "PM-KISAN State Allocation",
+      "unit": "₹ Cr",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 5200, "stateDisbursed": 4750 },
+        { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 5800, "stateDisbursed": 5350 },
+        { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 6400, "stateDisbursed": 6100 },
+        { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 7000, "stateDisbursed": 6650 },
+        { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 7500, "stateDisbursed": 7280 },
+        { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 8100, "stateDisbursed": 7850 }
+      ]
+    },
+    "physicalMetric": {
+      "id": "pm-kisan-beneficiaries",
+      "label": "Verified Farmer Beneficiaries",
+      "unit": "Lakh Beneficiaries",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 32.0, "deliveredVerified": 29.4 },
+        { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 34.5, "deliveredVerified": 32.1 },
+        { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 36.0, "deliveredVerified": 34.2 },
+        { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 37.5, "deliveredVerified": 35.8 },
+        { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 38.5, "deliveredVerified": 37.1 },
+        { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 39.2, "deliveredVerified": 38.1 }
+      ]
+    },
+    "auditFeed": [
+      {
+        "type": "Policy Change",
+        "title": "Mandatory e-KYC Facial Authentication via Aadhaar RD Service",
+        "date": "14-09-2026",
+        "summary": "Replaced biometrics with AI-assisted liveness detection across CSC centers to prevent proxy subsidy claims."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "Supplementary Kharif Crop Insurance Risk Fund Release",
+        "date": "02-09-2026",
+        "summary": "Cabinet sanctioned ₹2,400 Cr buffer for localized weather outbreak compensations across state river basins."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "Public Accounts Committee Review on APMC Mandi Procurement",
+        "date": "28-08-2026",
+        "summary": "Resolution passed to mandate electronic weighbridge calibration with public audit logs in all state mandis."
+      }
+    ],
+    "updates": [
+      {
+        "type": "Policy Change",
+        "title": "Mandatory e-KYC Facial Authentication via Aadhaar RD Service",
+        "date": "14-09-2026",
+        "summary": "Replaced biometrics with AI-assisted liveness detection across CSC centers to prevent proxy subsidy claims."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "Supplementary Kharif Crop Insurance Risk Fund Release",
+        "date": "02-09-2026",
+        "summary": "Cabinet sanctioned ₹2,400 Cr buffer for localized weather outbreak compensations across state river basins."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "Public Accounts Committee Review on APMC Mandi Procurement",
+        "date": "28-08-2026",
+        "summary": "Resolution passed to mandate electronic weighbridge calibration with public audit logs in all state mandis."
+      }
+    ]
+  },
+  "jaljeevan": {
+    "sector": "jaljeevan",
+    "label": "Jal Jeevan Mission (Har Ghar Jal)",
+    "title": "Jal Jeevan Mission (Har Ghar Jal)",
+    "description": "Functional Household Tap Connections & Real-time Water Quality",
+    "state": "Telangana",
+    "sanctionedCr": 70000,
+    "disbursedCr": 62400,
+    "targetUnits": 193.0,
+    "deliveredUnits": 151.0,
+    "central": {
+      "sanctionedCr": 70000,
+      "disbursedCr": 62400,
+      "targetUnits": 193000000,
+      "deliveredUnits": 151000000,
+      "unitLabel": "Rural Tap Connections Geo-tagged & Functional"
+    },
+    "stateData": {
+      "sanctionedCr": 5450,
+      "disbursedCr": 5120,
+      "targetUnits": 5450000,
+      "deliveredUnits": 4820000,
+      "unitLabel": "Household Tap Connections Operational"
+    },
+    "financialMetric": {
+      "id": "jal-jeevan-outlay",
+      "label": "Har Ghar Jal Mission Outlay",
+      "unit": "₹ Cr",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 2100, "stateDisbursed": 1890 },
+        { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 2900, "stateDisbursed": 2680 },
+        { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 3600, "stateDisbursed": 3380 },
+        { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 4200, "stateDisbursed": 3990 },
+        { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 4550, "stateDisbursed": 4360 },
+        { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 4800, "stateDisbursed": 4650 }
+      ]
+    },
+    "physicalMetric": {
+      "id": "tap-water-coverage",
+      "label": "Functional Tap Connections Coverage",
+      "unit": "% Coverage",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 55.0, "deliveredVerified": 48.2 },
+        { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 68.0, "deliveredVerified": 62.4 },
+        { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 78.0, "deliveredVerified": 73.5 },
+        { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 86.0, "deliveredVerified": 82.1 },
+        { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 92.0, "deliveredVerified": 89.4 },
+        { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 96.0, "deliveredVerified": 94.2 }
+      ]
+    },
+    "auditFeed": [
+      {
+        "type": "Policy Change",
+        "title": "IoT Sensor Water Quality Automated Telemetry Guidelines",
+        "date": "10-09-2026",
+        "summary": "Real-time residual chlorine and pH monitoring connected to state public dashboard with automated audit alerts."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "State Water & Sanitation Mission Field Quality Verification",
+        "date": "04-09-2026",
+        "summary": "Independent engineers physically verified pipe continuity across 1,840 Habitations under Mission Bhagiratha."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "O&M Village Water and Sanitation Committee Grant",
+        "date": "22-08-2026",
+        "summary": "Devolved ₹420 Cr directly to Gram Panchayats for motorized pump repairs and solar backup integration."
+      }
+    ],
+    "updates": [
+      {
+        "type": "Policy Change",
+        "title": "IoT Sensor Water Quality Automated Telemetry Guidelines",
+        "date": "10-09-2026",
+        "summary": "Real-time residual chlorine and pH monitoring connected to state public dashboard with automated audit alerts."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "State Water & Sanitation Mission Field Quality Verification",
+        "date": "04-09-2026",
+        "summary": "Independent engineers physically verified pipe continuity across 1,840 Habitations under Mission Bhagiratha."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "O&M Village Water and Sanitation Committee Grant",
+        "date": "22-08-2026",
+        "summary": "Devolved ₹420 Cr directly to Gram Panchayats for motorized pump repairs and solar backup integration."
+      }
+    ]
+  },
+  "health": {
+    "sector": "health",
+    "label": "Ayushman Bharat & Public Health",
+    "title": "Ayushman Bharat & Public Health Infrastructure",
+    "description": "Universal Health Coverage, Golden Cards & Primary Health Centers",
+    "state": "Telangana",
+    "sanctionedCr": 86200,
+    "disbursedCr": 79800,
+    "targetUnits": 120.0,
+    "deliveredUnits": 104.0,
+    "central": {
+      "sanctionedCr": 86200,
+      "disbursedCr": 79800,
+      "targetUnits": 120000000,
+      "deliveredUnits": 104000000,
+      "unitLabel": "Beneficiary Families Issued Verified Health Cards"
+    },
+    "stateData": {
+      "sanctionedCr": 4800,
+      "disbursedCr": 4560,
+      "targetUnits": 8500000,
+      "deliveredUnits": 7800000,
+      "unitLabel": "Aarogyasri / Ayushman Co-branded Families Covered"
+    },
+    "financialMetric": {
+      "id": "ayushman-bharat-outlay",
+      "label": "Ayushman Bharat PM-JAY Outlay",
+      "unit": "₹ Cr",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 850, "stateDisbursed": 780 },
+        { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 1100, "stateDisbursed": 1020 },
+        { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 1350, "stateDisbursed": 1280 },
+        { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 1600, "stateDisbursed": 1520 },
+        { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 1800, "stateDisbursed": 1720 },
+        { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 1950, "stateDisbursed": 1890 }
+      ]
+    },
+    "physicalMetric": {
+      "id": "ayushman-cards-issued",
+      "label": "Active Ayushman Cards Issued",
+      "unit": "Lakh Cards",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 140.0, "deliveredVerified": 120.5 },
+        { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 180.0, "deliveredVerified": 162.0 },
+        { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 220.0, "deliveredVerified": 205.4 },
+        { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 260.0, "deliveredVerified": 248.0 },
+        { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 290.0, "deliveredVerified": 279.5 },
+        { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 320.0, "deliveredVerified": 310.2 }
+      ]
+    },
+    "auditFeed": [
+      {
+        "type": "Policy Change",
+        "title": "Standardized Surgical Package Rates Rationalization",
+        "date": "12-09-2026",
+        "summary": "Revised 400 hospital procedure ceilings to curb fraudulent claim billing by empanelled network hospitals."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "Hospital Empanelment Disciplinary Committee Hearing",
+        "date": "01-09-2026",
+        "summary": "De-empanelled 6 private hospitals for demanding cash upfront from cardholders during emergency tertiary care."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "Basti Dawakhana Tier-2 Urban Clinic Modernization Fund",
+        "date": "19-08-2026",
+        "summary": "Released ₹310 Cr for diagnostic equipment and telemetry links across 150 municipal health centers."
+      }
+    ],
+    "updates": [
+      {
+        "type": "Policy Change",
+        "title": "Standardized Surgical Package Rates Rationalization",
+        "date": "12-09-2026",
+        "summary": "Revised 400 hospital procedure ceilings to curb fraudulent claim billing by empanelled network hospitals."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "Hospital Empanelment Disciplinary Committee Hearing",
+        "date": "01-09-2026",
+        "summary": "De-empanelled 6 private hospitals for demanding cash upfront from cardholders during emergency tertiary care."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "Basti Dawakhana Tier-2 Urban Clinic Modernization Fund",
+        "date": "19-08-2026",
+        "summary": "Released ₹310 Cr for diagnostic equipment and telemetry links across 150 municipal health centers."
+      }
+    ]
+  },
+  "infrastructure": {
+    "sector": "infrastructure",
+    "label": "PMGSY Rural Roads",
+    "title": "Pradhan Mantri Gram Sadak Yojana (PMGSY)",
+    "description": "All-Weather Rural Road Connectivity & Upgraded Bridges",
+    "state": "Telangana",
+    "sanctionedCr": 111000,
+    "disbursedCr": 98500,
+    "targetUnits": 125.0,
+    "deliveredUnits": 104.2,
+    "central": {
+      "sanctionedCr": 111000,
+      "disbursedCr": 98500,
+      "targetUnits": 125000,
+      "deliveredUnits": 104200,
+      "unitLabel": "Km Rural Roads Upgraded & Drone-Surveyed"
+    },
+    "stateData": {
+      "sanctionedCr": 4200,
+      "disbursedCr": 3850,
+      "targetUnits": 10500,
+      "deliveredUnits": 9420,
+      "unitLabel": "Km All-Weather Rural Roadways Completed"
+    },
+    "financialMetric": {
+      "id": "pmgsy-rural-roads-outlay",
+      "label": "PMGSY Rural Roads Outlay",
+      "unit": "₹ Cr",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 600, "stateDisbursed": 540 },
+        { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 800, "stateDisbursed": 730 },
+        { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 1050, "stateDisbursed": 970 },
+        { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 1250, "stateDisbursed": 1180 },
+        { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 1380, "stateDisbursed": 1310 },
+        { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 1450, "stateDisbursed": 1400 }
+      ]
+    },
+    "physicalMetric": {
+      "id": "rural-roads-completed",
+      "label": "Rural All-Weather Roads Completed",
+      "unit": "Km Completed",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 4800, "deliveredVerified": 4200 },
+        { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 6500, "deliveredVerified": 5900 },
+        { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 8200, "deliveredVerified": 7650 },
+        { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 9800, "deliveredVerified": 9200 },
+        { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 11200, "deliveredVerified": 10650 },
+        { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 12400, "deliveredVerified": 11800 }
+      ]
+    },
+    "auditFeed": [
+      {
+        "type": "Policy Change",
+        "title": "Mandatory Quality Audit via Central Road Research Institute (CRRI)",
+        "date": "15-09-2026",
+        "summary": "Third-party pavement roughness surveys mandated before contractor final milestone payment release."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "PMGSY-III Final Phase Bridge Construction Sanctions",
+        "date": "06-09-2026",
+        "summary": "Sanctioned ₹680 Cr for 42 high-level bridges over Godavari tributaries to prevent monsoon cutoff."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "State Road Safety Council Biennial Compliance Audit",
+        "date": "24-08-2026",
+        "summary": "Audited 12,000 km of rural district roads for retro-reflective signages and crash barrier installations."
+      }
+    ],
+    "updates": [
+      {
+        "type": "Policy Change",
+        "title": "Mandatory Quality Audit via Central Road Research Institute (CRRI)",
+        "date": "15-09-2026",
+        "summary": "Third-party pavement roughness surveys mandated before contractor final milestone payment release."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "PMGSY-III Final Phase Bridge Construction Sanctions",
+        "date": "06-09-2026",
+        "summary": "Sanctioned ₹680 Cr for 42 high-level bridges over Godavari tributaries to prevent monsoon cutoff."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "State Road Safety Council Biennial Compliance Audit",
+        "date": "24-08-2026",
+        "summary": "Audited 12,000 km of rural district roads for retro-reflective signages and crash barrier installations."
+      }
+    ]
+  },
+  "clean-energy": {
+    "sector": "clean-energy",
+    "label": "Clean Energy & Grid",
+    "title": "RDSS Grid Modernization & PM Surya Ghar",
+    "description": "Rooftop Solar, Agricultural Feeder Solarization & Smart Grid Infrastructure",
+    "state": "Telangana",
+    "sanctionedCr": 3450,
+    "disbursedCr": 3190,
+    "targetUnits": 145000,
+    "deliveredUnits": 138200,
+    "central": {
+      "sanctionedCr": 3450,
+      "disbursedCr": 3190,
+      "targetUnits": 145000,
+      "deliveredUnits": 138200,
+      "unitLabel": "Solar feeders and rooftop units installed"
+    },
+    "stateData": {
+      "sanctionedCr": 3450,
+      "disbursedCr": 3190,
+      "targetUnits": 145000,
+      "deliveredUnits": 138200,
+      "unitLabel": "Solar Feeders & Rooftop Units Operational"
+    },
+    "financialMetric": {
+      "id": "rdss-grid-outlay",
+      "label": "RDSS & Solar Modernization Outlay",
+      "unit": "₹ Cr",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 1800, "stateDisbursed": 1650 },
+        { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 2200, "stateDisbursed": 2010 },
+        { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 2600, "stateDisbursed": 2410 },
+        { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 2950, "stateDisbursed": 2740 },
+        { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 3200, "stateDisbursed": 2980 },
+        { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 3450, "stateDisbursed": 3190 }
+      ]
+    },
+    "physicalMetric": {
+      "id": "solar-units-installed",
+      "label": "Solar Feeder & Rooftop Installations",
+      "unit": "Installations",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 42000, "deliveredVerified": 38500 },
+        { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 65000, "deliveredVerified": 61200 },
+        { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 92000, "deliveredVerified": 87400 },
+        { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 115000, "deliveredVerified": 109800 },
+        { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 132000, "deliveredVerified": 126400 },
+        { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 145000, "deliveredVerified": 138200 }
+      ]
+    },
+    "auditFeed": [
+      {
+        "type": "Policy Change",
+        "title": "Solar Agricultural Feeder Telemetry Integration",
+        "date": "16-09-2026",
+        "summary": "Mandated continuous smart meter logging on 11kV agricultural feeders to monitor day-time solar pumping reliability."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "PM Surya Ghar Muft Bijli Subsidy Direct Tranche",
+        "date": "08-09-2026",
+        "summary": "Disbursed ₹420 Cr direct capital subsidy tranches to 32,000 domestic rooftop solar prosumers."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "DISCOM Distribution Transformer Failure Rate Inspection",
+        "date": "29-08-2026",
+        "summary": "State Regulatory Commission verified 99.2% uptime across smart-metered urban distribution transformers."
+      }
+    ],
+    "updates": [
+      {
+        "type": "Policy Change",
+        "title": "Solar Agricultural Feeder Telemetry Integration",
+        "date": "16-09-2026",
+        "summary": "Mandated continuous smart meter logging on 11kV agricultural feeders to monitor day-time solar pumping reliability."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "PM Surya Ghar Muft Bijli Subsidy Direct Tranche",
+        "date": "08-09-2026",
+        "summary": "Disbursed ₹420 Cr direct capital subsidy tranches to 32,000 domestic rooftop solar prosumers."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "DISCOM Distribution Transformer Failure Rate Inspection",
+        "date": "29-08-2026",
+        "summary": "State Regulatory Commission verified 99.2% uptime across smart-metered urban distribution transformers."
+      }
+    ]
+  },
+  "housing": {
+    "sector": "housing",
+    "label": "Housing & Urban",
+    "title": "PMAY-Urban & 2BHK Dignity Housing",
+    "description": "Affordable Pucca Housing & Urban Slum Rehabilitation",
+    "state": "Telangana",
+    "sanctionedCr": 4200,
+    "disbursedCr": 3820,
+    "targetUnits": 240000,
+    "deliveredUnits": 208500,
+    "central": {
+      "sanctionedCr": 4200,
+      "disbursedCr": 3820,
+      "targetUnits": 240000,
+      "deliveredUnits": 208500,
+      "unitLabel": "Sanctioned vs Occupied Dignity Homes"
+    },
+    "stateData": {
+      "sanctionedCr": 4200,
+      "disbursedCr": 3820,
+      "targetUnits": 240000,
+      "deliveredUnits": 208500,
+      "unitLabel": "Dignity Homes Handed Over to Beneficiaries"
+    },
+    "financialMetric": {
+      "id": "pmay-urban-outlay",
+      "label": "PMAY-Urban & 2BHK State Outlay",
+      "unit": "₹ Cr",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 2400, "stateDisbursed": 2150 },
+        { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 2900, "stateDisbursed": 2620 },
+        { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 3400, "stateDisbursed": 3090 },
+        { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 3750, "stateDisbursed": 3420 },
+        { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 4000, "stateDisbursed": 3650 },
+        { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 4200, "stateDisbursed": 3820 }
+      ]
+    },
+    "physicalMetric": {
+      "id": "dignity-homes-delivered",
+      "label": "Dignity Homes Delivered & Handed Over",
+      "unit": "Homes",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 95000, "deliveredVerified": 82000 },
+        { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 135000, "deliveredVerified": 118000 },
+        { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 175000, "deliveredVerified": 152000 },
+        { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 205000, "deliveredVerified": 181000 },
+        { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 225000, "deliveredVerified": 196000 },
+        { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 240000, "deliveredVerified": 208500 }
+      ]
+    },
+    "auditFeed": [
+      {
+        "type": "Policy Change",
+        "title": "Mandatory Geo-Tagging and Beneficiary Biometric Handover",
+        "date": "12-09-2026",
+        "summary": "Geo-tagged key handover protocols integrated with municipal GIS registry to eliminate ghost allotments."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "Basic Civic Infrastructure Integration Grant Release",
+        "date": "03-09-2026",
+        "summary": "Sanctioned ₹380 Cr for internal drinking water networks and underground sewerage in peripheral colonies."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "Urban Local Body Quality Inspection Committee Report",
+        "date": "21-08-2026",
+        "summary": "Structural audit confirmed safety certificates across 18 high-rise residential towers in Greater Hyderabad."
+      }
+    ],
+    "updates": [
+      {
+        "type": "Policy Change",
+        "title": "Mandatory Geo-Tagging and Beneficiary Biometric Handover",
+        "date": "12-09-2026",
+        "summary": "Geo-tagged key handover protocols integrated with municipal GIS registry to eliminate ghost allotments."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "Basic Civic Infrastructure Integration Grant Release",
+        "date": "03-09-2026",
+        "summary": "Sanctioned ₹380 Cr for internal drinking water networks and underground sewerage in peripheral colonies."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "Urban Local Body Quality Inspection Committee Report",
+        "date": "21-08-2026",
+        "summary": "Structural audit confirmed safety certificates across 18 high-rise residential towers in Greater Hyderabad."
+      }
+    ]
+  },
+  "livelihoods": {
+    "sector": "livelihoods",
+    "label": "Rural Livelihoods",
+    "title": "MGNREGA Rural Wage Guarantee",
+    "description": "Guaranteed Wage Employment & Water Conservation Asset Creation",
+    "state": "Telangana",
+    "sanctionedCr": 4600,
+    "disbursedCr": 4410,
+    "targetUnits": 95000000,
+    "deliveredUnits": 89400000,
+    "central": {
+      "sanctionedCr": 4600,
+      "disbursedCr": 4410,
+      "targetUnits": 95000000,
+      "deliveredUnits": 89400000,
+      "unitLabel": "Persondays generated through verified jobcards"
+    },
+    "stateData": {
+      "sanctionedCr": 4600,
+      "disbursedCr": 4410,
+      "targetUnits": 95000000,
+      "deliveredUnits": 89400000,
+      "unitLabel": "Persondays of Guaranteed Employment Provided"
+    },
+    "financialMetric": {
+      "id": "mgnrega-wage-outlay",
+      "label": "MGNREGA Rural Wage Outlay",
+      "unit": "₹ Cr",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 3200, "stateDisbursed": 3050 },
+        { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 3650, "stateDisbursed": 3510 },
+        { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 4000, "stateDisbursed": 3840 },
+        { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 4250, "stateDisbursed": 4090 },
+        { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 4450, "stateDisbursed": 4280 },
+        { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 4600, "stateDisbursed": 4410 }
+      ]
+    },
+    "physicalMetric": {
+      "id": "persondays-generated",
+      "label": "Persondays of Rural Employment Generated",
+      "unit": "Persondays",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 72000000, "deliveredVerified": 68400000 },
+        { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 79000000, "deliveredVerified": 75200000 },
+        { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 84000000, "deliveredVerified": 80100000 },
+        { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 88000000, "deliveredVerified": 83600000 },
+        { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 92000000, "deliveredVerified": 87200000 },
+        { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 95000000, "deliveredVerified": 89400000 }
+      ]
+    },
+    "auditFeed": [
+      {
+        "type": "Policy Change",
+        "title": "Aadhaar-Based Payment Bridge (ABPS) 100% Reconciliation",
+        "date": "14-09-2026",
+        "summary": "All wage payments routed directly via NPCI Aadhaar payment bridge with zero intermediary bank delays."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "Supplementary Material Component Release for Check Dams",
+        "date": "05-09-2026",
+        "summary": "Allocated ₹560 Cr for stone masonry materials across 2,400 water shed harvest percolation tanks."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "Social Audit Directorate Annual Public Disclosure Hearing",
+        "date": "26-08-2026",
+        "summary": "Conducted 1,120 Gram Sabha public hearings; recovered ₹1.8 Cr in unauthorized muster roll entries."
+      }
+    ],
+    "updates": [
+      {
+        "type": "Policy Change",
+        "title": "Aadhaar-Based Payment Bridge (ABPS) 100% Reconciliation",
+        "date": "14-09-2026",
+        "summary": "All wage payments routed directly via NPCI Aadhaar payment bridge with zero intermediary bank delays."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "Supplementary Material Component Release for Check Dams",
+        "date": "05-09-2026",
+        "summary": "Allocated ₹560 Cr for stone masonry materials across 2,400 water shed harvest percolation tanks."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "Social Audit Directorate Annual Public Disclosure Hearing",
+        "date": "26-08-2026",
+        "summary": "Conducted 1,120 Gram Sabha public hearings; recovered ₹1.8 Cr in unauthorized muster roll entries."
+      }
+    ]
+  },
+  "education": {
+    "sector": "education",
+    "label": "School Education",
+    "title": "Samagra Shiksha & Mana Ooru Mana Badi",
+    "description": "Comprehensive School Infrastructure Modernization & Digital Classrooms",
+    "state": "Telangana",
+    "sanctionedCr": 2800,
+    "disbursedCr": 2490,
+    "targetUnits": 18000,
+    "deliveredUnits": 15240,
+    "central": {
+      "sanctionedCr": 2800,
+      "disbursedCr": 2490,
+      "targetUnits": 18000,
+      "deliveredUnits": 15240,
+      "unitLabel": "Smart classrooms and schools modernized"
+    },
+    "stateData": {
+      "sanctionedCr": 2800,
+      "disbursedCr": 2490,
+      "targetUnits": 18000,
+      "deliveredUnits": 15240,
+      "unitLabel": "Government Schools Modernized & Solar-Powered"
+    },
+    "financialMetric": {
+      "id": "samagra-shiksha-outlay",
+      "label": "Samagra Shiksha Infrastructure Outlay",
+      "unit": "₹ Cr",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "centralSanctioned": 1400, "stateDisbursed": 1210 },
+        { "fiscalYear": "FY22", "year": 2022, "centralSanctioned": 1750, "stateDisbursed": 1540 },
+        { "fiscalYear": "FY23", "year": 2023, "centralSanctioned": 2100, "stateDisbursed": 1860 },
+        { "fiscalYear": "FY24", "year": 2024, "centralSanctioned": 2400, "stateDisbursed": 2130 },
+        { "fiscalYear": "FY25", "year": 2025, "centralSanctioned": 2650, "stateDisbursed": 2360 },
+        { "fiscalYear": "FY26", "year": 2026, "centralSanctioned": 2800, "stateDisbursed": 2490 }
+      ]
+    },
+    "physicalMetric": {
+      "id": "schools-modernized",
+      "label": "Government Schools Modernized",
+      "unit": "Schools",
+      "timeline": [
+        { "fiscalYear": "FY21", "year": 2021, "targetSanctioned": 5800, "deliveredVerified": 4800 },
+        { "fiscalYear": "FY22", "year": 2022, "targetSanctioned": 8900, "deliveredVerified": 7450 },
+        { "fiscalYear": "FY23", "year": 2023, "targetSanctioned": 12000, "deliveredVerified": 10200 },
+        { "fiscalYear": "FY24", "year": 2024, "targetSanctioned": 14500, "deliveredVerified": 12350 },
+        { "fiscalYear": "FY25", "year": 2025, "targetSanctioned": 16500, "deliveredVerified": 14100 },
+        { "fiscalYear": "FY26", "year": 2026, "targetSanctioned": 18000, "deliveredVerified": 15240 }
+      ]
+    },
+    "auditFeed": [
+      {
+        "type": "Policy Change",
+        "title": "Mandatory Digital Learning Aids & Broadband Telemetry",
+        "date": "13-09-2026",
+        "summary": "Mandated continuous broadband uptime verification for digital interactive whiteboards across rural secondary schools."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "Solar Electrification & Clean Sanitation Priority Fund",
+        "date": "04-09-2026",
+        "summary": "Sanctioned ₹240 Cr for rooftop solar panels and dedicated running water sanitation blocks in high schools."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "Public Accounts Review on Dual-Desk and Lab Procurement",
+        "date": "23-08-2026",
+        "summary": "Inspected 850 STEM laboratory kits across Mahabubnagar and Nalgonda district educational circles."
+      }
+    ],
+    "updates": [
+      {
+        "type": "Policy Change",
+        "title": "Mandatory Digital Learning Aids & Broadband Telemetry",
+        "date": "13-09-2026",
+        "summary": "Mandated continuous broadband uptime verification for digital interactive whiteboards across rural secondary schools."
+      },
+      {
+        "type": "Budget Allocation",
+        "title": "Solar Electrification & Clean Sanitation Priority Fund",
+        "date": "04-09-2026",
+        "summary": "Sanctioned ₹240 Cr for rooftop solar panels and dedicated running water sanitation blocks in high schools."
+      },
+      {
+        "type": "Legislative Review",
+        "title": "Public Accounts Review on Dual-Desk and Lab Procurement",
+        "date": "23-08-2026",
+        "summary": "Inspected 850 STEM laboratory kits across Mahabubnagar and Nalgonda district educational circles."
+      }
+    ]
+  }
+}
