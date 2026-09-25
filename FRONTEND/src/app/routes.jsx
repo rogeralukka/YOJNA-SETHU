@@ -75,6 +75,7 @@ export default function AppRoutes() {
         {/* Yojna Setu Module (Existing standalone layout skeleton) */}
         <Route element={<YojnaLayout />}>
           <Route path="/yojna-setu" element={<YojnaSetuDashboard />} />
+          <Route path="/yojna-setu/:subview" element={<YojnaSetuDashboard />} />
         </Route>
 
         {/* Pipeline Domain Shells */}

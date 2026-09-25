@@ -1,18 +1,20 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ThemeToggle from "../shared/ThemeToggle";
-import LanguageSelector from "../shared/LanguageSelector";
+import LanguageSwitcher from "../common/LanguageSwitcher";
 import ProfileChip from "../shared/ProfileChip";
 import { useUI } from "../../context/UIContext";
 
 /**
  * Context-aware TopNav component.
  * Left: Context-aware logo (NagrikPath on hub, module logo on modules, context logo on /profile).
- * Right: Fixed order: ThemeToggle -> LanguageSelector -> ProfileChip (or Get Started on public routes).
+ * Right: Fixed order: LanguageSwitcher -> ThemeToggle -> ProfileChip (or Get Started on public routes).
  * Logo click navigates to /home (or /) and acts as the escape hatch.
  * No F11 keydown listener.
  */
 export default function TopNav({ isPublic = false }) {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { lastModule, openAuthModal } = useUI();
@@ -79,7 +81,7 @@ export default function TopNav({ isPublic = false }) {
     <header className="sticky top-0 z-50 w-full shrink-0 border-b-2 border-slate-300 dark:border-white/[0.08] bg-white/95 dark:bg-[#0F1115]/95 backdrop-blur-md shadow-xs transition-colors duration-300 ease-in-out">
       <div className="flex h-16 items-center justify-between px-4 sm:px-6">
         {/* Left Side: Clean Brand Text Logo (Fix 1 & Fix 6) */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <a
             href={activeModuleContext === "yojna-setu" ? "/yojna-setu" : "/home"}
             onClick={handleLogoClick}
@@ -92,10 +94,10 @@ export default function TopNav({ isPublic = false }) {
           </a>
         </div>
 
-        {/* Right Side: Fixed Order (ThemeToggle -> LanguageSelector -> ProfileChip / Get Started) */}
-        <div className="flex items-center space-x-3">
+        {/* Right Side: Fixed Order (LanguageSwitcher -> ThemeToggle -> ProfileChip / Get Started) */}
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
           <ThemeToggle />
-          <LanguageSelector />
 
           {isPublic ? (
             <button
@@ -103,7 +105,7 @@ export default function TopNav({ isPublic = false }) {
               onClick={openAuthModal}
               className="px-4 py-2 text-xs font-bold rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition hover:shadow-md cursor-pointer"
             >
-              Get Started
+              {t("nav.getStarted", "Get Started")}
             </button>
           ) : (
             <ProfileChip />

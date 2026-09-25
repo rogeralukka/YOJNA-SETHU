@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight } from 'lucide-react';
 
 /**
@@ -7,6 +8,8 @@ import { ArrowRight } from 'lucide-react';
  * Displays total selection count, quick "Clear" action, and "Apply to Selected (N) →" batch CTA.
  */
 export function BatchApplyDock({ selectedCount, onClear, onBatchApply }) {
+  const { t } = useTranslation();
+
   if (!selectedCount || selectedCount <= 0) return null;
 
   return (
@@ -18,7 +21,9 @@ export function BatchApplyDock({ selectedCount, onClear, onBatchApply }) {
             {selectedCount}
           </span>
           <span className="text-xs sm:text-sm font-semibold text-neutral-800 dark:text-[#EDEDED] whitespace-nowrap">
-            {selectedCount === 1 ? '1 Scheme Selected' : `${selectedCount} Schemes Selected`}
+            {selectedCount === 1
+              ? t('yojnaSetu.batchDock.schemeSelectedSingular', { count: 1 })
+              : t('yojnaSetu.batchDock.schemesSelectedPlural', { count: selectedCount })}
           </span>
         </div>
 
@@ -31,7 +36,7 @@ export function BatchApplyDock({ selectedCount, onClear, onBatchApply }) {
           onClick={onClear}
           className="text-xs font-medium text-neutral-500 hover:text-neutral-800 dark:text-[#8A8F98] dark:hover:text-[#EDEDED] px-2.5 py-1 rounded-full hover:bg-neutral-100 dark:hover:bg-[#16191F] transition-colors cursor-pointer"
         >
-          Clear
+          {t('yojnaSetu.batchDock.clear')}
         </button>
 
         {/* Primary Batch Action CTA */}
@@ -40,8 +45,8 @@ export function BatchApplyDock({ selectedCount, onClear, onBatchApply }) {
           onClick={onBatchApply}
           className="py-2 px-4 sm:px-5 rounded-full text-xs sm:text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.98] transition-all shadow-md shadow-blue-500/20 flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
         >
-          <span>Apply to Selected ({selectedCount})</span>
-          <ArrowRight className="w-4 h-4" />
+          <span>{t('yojnaSetu.batchDock.applySelectedWithCount', { count: selectedCount })}</span>
+          <ArrowRight className="w-4 h-4 rtl:rotate-180" />
         </button>
       </div>
     </div>

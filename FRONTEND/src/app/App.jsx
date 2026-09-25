@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { HouseholdProvider } from "../context/HouseholdContext";
 import { ThemeProvider } from "../context/ThemeContext";
 import { LanguageProvider } from "../context/LanguageContext";
 import { UIProvider, useUI } from "../context/UIContext";
 import ErrorBoundary from "../components/shared/ErrorBoundary";
+import useDirection from "../hooks/useDirection";
+import useScriptFont from "../hooks/useScriptFont";
 import AppRoutes from "./routes";
 
 /**
@@ -41,6 +44,26 @@ function GlobalEscHandler() {
 }
 
 /**
+ * Directional and language container wrapper.
+ * Subscribes to RTL/LTR direction changes (e.g. Urdu vs other 12 languages),
+ * injects on-demand script fonts, and applies dir and lang properties to the root container.
+ */
+function AppContent() {
+  const direction = useDirection();
+  useScriptFont();
+  const { i18n } = useTranslation();
+
+  return (
+    <div dir={direction} lang={i18n.language || "en"} className="min-h-full w-full">
+      <GlobalEscHandler />
+      <ErrorBoundary moduleName="NagrikPath Application" fullPage={true}>
+        <AppRoutes />
+      </ErrorBoundary>
+    </div>
+  );
+}
+
+/**
  * Root App component.
  * Provider order strictly enforced:
  * Router OUTERMOST, then HouseholdProvider > ThemeProvider > LanguageProvider > UIProvider.
@@ -53,10 +76,7 @@ export default function App() {
         <ThemeProvider>
           <LanguageProvider>
             <UIProvider>
-              <GlobalEscHandler />
-              <ErrorBoundary moduleName="NagrikPath Application" fullPage={true}>
-                <AppRoutes />
-              </ErrorBoundary>
+              <AppContent />
             </UIProvider>
           </LanguageProvider>
         </ThemeProvider>

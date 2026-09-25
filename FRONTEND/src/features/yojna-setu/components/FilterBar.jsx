@@ -1,41 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Search } from 'lucide-react';
 import { ProfileContextDropdown } from './ProfileContextDropdown';
-
-export const SCHEME_TYPE_OPTIONS = [
-  { value: 'ALL', label: 'All Schemes' },
-  { value: 'CENTRAL', label: 'Central Schemes' },
-  { value: 'STATE', label: 'State Schemes' }
-];
-
-export const LIFE_STATUS_OPTIONS = [
-  { value: 'ALL', label: 'All Life Statuses' },
-  { value: 'student', label: 'Student' },
-  { value: 'farmer', label: 'Farmer' },
-  { value: 'senior_citizen', label: 'Senior Citizen' },
-  { value: 'self_employed', label: 'Self Employed' }
-];
-
-export const SECTOR_OPTIONS = [
-  { value: 'ALL', label: 'All Sectors' },
-  { value: 'Agriculture', label: 'Agriculture' },
-  { value: 'Education', label: 'Education' },
-  { value: 'Health', label: 'Health' },
-  { value: 'Manufacturing & MSME', label: 'Manufacturing & MSME' },
-  { value: 'Social Welfare', label: 'Social Welfare' }
-];
-
-export const MATCH_OPTIONS = [
-  { value: 'ALL', label: 'All Match Levels' },
-  { value: 'HIGH_MATCH', label: 'High Match' },
-  { value: 'CRITERIA_CHECK', label: 'Criteria Check' }
-];
-
-export const SORT_OPTIONS = [
-  { value: 'RECOMMENDED', label: 'Sort: Recommended' },
-  { value: 'DEADLINE', label: 'Sort: Deadline (Earliest)' },
-  { value: 'BENEFIT', label: 'Sort: Benefit Value' }
-];
 
 /**
  * FilterBar:
@@ -56,6 +22,43 @@ export function FilterBar({
   selectedSort = 'RECOMMENDED',
   onSelectSort = () => {}
 }) {
+  const { t } = useTranslation();
+
+  const schemeTypeOptions = useMemo(() => [
+    { value: 'ALL', label: t('yojnaSetu.filters.allSchemes') },
+    { value: 'CENTRAL', label: t('yojnaSetu.filters.centralSchemes') },
+    { value: 'STATE', label: t('yojnaSetu.filters.stateSchemes') }
+  ], [t]);
+
+  const lifeStatusOptions = useMemo(() => [
+    { value: 'ALL', label: t('yojnaSetu.filters.allLifeStatuses') },
+    { value: 'student', label: t('yojnaSetu.filters.student') },
+    { value: 'farmer', label: t('yojnaSetu.filters.farmer') },
+    { value: 'senior_citizen', label: t('yojnaSetu.filters.seniorCitizen') },
+    { value: 'self_employed', label: t('yojnaSetu.filters.selfEmployed') }
+  ], [t]);
+
+  const sectorOptions = useMemo(() => [
+    { value: 'ALL', label: t('yojnaSetu.filters.allSectors') },
+    { value: 'Agriculture', label: t('yojnaSetu.filters.agriculture') },
+    { value: 'Education', label: t('yojnaSetu.filters.education') },
+    { value: 'Health', label: t('yojnaSetu.filters.health') },
+    { value: 'Manufacturing & MSME', label: t('yojnaSetu.filters.manufacturingMsme') },
+    { value: 'Social Welfare', label: t('yojnaSetu.filters.socialWelfare') }
+  ], [t]);
+
+  const matchOptions = useMemo(() => [
+    { value: 'ALL', label: t('yojnaSetu.filters.allMatchLevels') },
+    { value: 'HIGH_MATCH', label: t('yojnaSetu.filters.highMatch') },
+    { value: 'CRITERIA_CHECK', label: t('yojnaSetu.filters.criteriaCheck') }
+  ], [t]);
+
+  const sortOptions = useMemo(() => [
+    { value: 'RECOMMENDED', label: t('yojnaSetu.filters.sortRecommended') },
+    { value: 'DEADLINE', label: t('yojnaSetu.filters.sortDeadlineEarliest') },
+    { value: 'BENEFIT', label: t('yojnaSetu.filters.sortBenefitValue') }
+  ], [t]);
+
   return (
     <div className="flex flex-col gap-3 mb-6 p-3 sm:p-4 rounded-2xl bg-neutral-100/90 dark:bg-[#16191F] border border-neutral-200 dark:border-white/[0.08] shadow-xs">
       {/* Top Row: Profile Switcher + Search Input */}
@@ -69,10 +72,10 @@ export function FilterBar({
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search schemes by name, keyword..."
-            className="w-full h-10 pl-9 pr-4 text-xs sm:text-sm rounded-xl bg-white dark:bg-[#0F1115] border border-neutral-200 dark:border-white/[0.08] text-neutral-900 dark:text-[#EDEDED] placeholder-neutral-500 dark:placeholder-[#8A8F98] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-xs"
+            placeholder={t('yojnaSetu.filters.searchPlaceholder')}
+            className="w-full h-10 pl-9 pr-4 rtl:pl-4 rtl:pr-9 text-xs sm:text-sm rounded-xl bg-white dark:bg-[#0F1115] border border-neutral-200 dark:border-white/[0.08] text-neutral-900 dark:text-[#EDEDED] placeholder-neutral-500 dark:placeholder-[#8A8F98] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-xs"
           />
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-[#8A8F98] pointer-events-none" />
+          <Search className="w-4 h-4 absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-[#8A8F98] pointer-events-none" />
         </div>
       </div>
 
@@ -84,7 +87,7 @@ export function FilterBar({
           onChange={(e) => onSelectSchemeType(e.target.value)}
           className="h-9 px-2.5 text-xs rounded-xl bg-white dark:bg-[#0F1115] border border-neutral-200 dark:border-white/[0.08] text-neutral-800 dark:text-[#EDEDED] focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer truncate shadow-xs"
         >
-          {SCHEME_TYPE_OPTIONS.map((opt) => (
+          {schemeTypeOptions.map((opt) => (
             <option key={opt.value} value={opt.value} className="bg-white dark:bg-[#0F1115] text-neutral-900 dark:text-[#EDEDED]">
               {opt.label}
             </option>
@@ -97,7 +100,7 @@ export function FilterBar({
           onChange={(e) => onSelectLifeStatus(e.target.value)}
           className="h-9 px-2.5 text-xs rounded-xl bg-white dark:bg-[#0F1115] border border-neutral-200 dark:border-white/[0.08] text-neutral-800 dark:text-[#EDEDED] focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer truncate shadow-xs"
         >
-          {LIFE_STATUS_OPTIONS.map((opt) => (
+          {lifeStatusOptions.map((opt) => (
             <option key={opt.value} value={opt.value} className="bg-white dark:bg-[#0F1115] text-neutral-900 dark:text-[#EDEDED]">
               {opt.label}
             </option>
@@ -110,7 +113,7 @@ export function FilterBar({
           onChange={(e) => onSelectSector(e.target.value)}
           className="h-9 px-2.5 text-xs rounded-xl bg-white dark:bg-[#0F1115] border border-neutral-200 dark:border-white/[0.08] text-neutral-800 dark:text-[#EDEDED] focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer truncate shadow-xs"
         >
-          {SECTOR_OPTIONS.map((opt) => (
+          {sectorOptions.map((opt) => (
             <option key={opt.value} value={opt.value} className="bg-white dark:bg-[#0F1115] text-neutral-900 dark:text-[#EDEDED]">
               {opt.label}
             </option>
@@ -123,7 +126,7 @@ export function FilterBar({
           onChange={(e) => onSelectMatch(e.target.value)}
           className="h-9 px-2.5 text-xs rounded-xl bg-white dark:bg-[#0F1115] border border-neutral-200 dark:border-white/[0.08] text-neutral-800 dark:text-[#EDEDED] focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer truncate shadow-xs"
         >
-          {MATCH_OPTIONS.map((opt) => (
+          {matchOptions.map((opt) => (
             <option key={opt.value} value={opt.value} className="bg-white dark:bg-[#0F1115] text-neutral-900 dark:text-[#EDEDED]">
               {opt.label}
             </option>
@@ -136,7 +139,7 @@ export function FilterBar({
           onChange={(e) => onSelectSort(e.target.value)}
           className="col-span-2 sm:col-span-1 h-9 px-2.5 text-xs rounded-xl bg-white dark:bg-[#0F1115] border border-neutral-200 dark:border-white/[0.08] text-neutral-800 dark:text-[#EDEDED] focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer truncate shadow-xs"
         >
-          {SORT_OPTIONS.map((opt) => (
+          {sortOptions.map((opt) => (
             <option key={opt.value} value={opt.value} className="bg-white dark:bg-[#0F1115] text-neutral-900 dark:text-[#EDEDED]">
               {opt.label}
             </option>

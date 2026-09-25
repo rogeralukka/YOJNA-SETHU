@@ -1,11 +1,11 @@
 import React from 'react';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import Icon from '../../../features/yojna-setu/components/Icon';
 
 export const AdminOverview = () => {
   const { applications, businesses, schemes, navigateTo } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const totalApps = applications.length;
   const pendingApps = applications.filter((a) => a.status === 'Pending' || a.status === 'In Review').length;

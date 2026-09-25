@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, Info, CheckCircle2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { ALL_PROCESSED_STATES } from "../utils/allStatesRankingsEngine";
 
 const REGIONS = ["All", "South", "North", "North-East", "East", "West", "Central"];
@@ -10,6 +11,7 @@ const REGIONS = ["All", "South", "North", "North-East", "East", "West", "Central
  * micro progress bars, and institutional citations.
  */
 export default function AllStatesRankingsTable({ selectedStateId, onSelectState }) {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("All");
   const [sortField, setSortField] = useState("rank");
@@ -95,7 +97,7 @@ export default function AllStatesRankingsTable({ selectedStateId, onSelectState 
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Filter by state name..."
+            placeholder={t("janManch.filterByState")}
             className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-[#16191F] border border-slate-200 dark:border-white/[0.08] rounded-lg text-slate-900 dark:text-[#EDEDED] placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-all font-sans"
           />
         </div>
@@ -134,7 +136,7 @@ export default function AllStatesRankingsTable({ selectedStateId, onSelectState 
                 onClick={() => handleSort("rank")}
               >
                 <div className="flex items-center">
-                  <span>Rank</span>
+                  <span>{t("janManch.stateColumns.rank")}</span>
                   {renderSortIcon("rank")}
                 </div>
               </th>
@@ -144,7 +146,7 @@ export default function AllStatesRankingsTable({ selectedStateId, onSelectState 
                 onClick={() => handleSort("name")}
               >
                 <div className="flex items-center">
-                  <span>State / UT</span>
+                  <span>{t("janManch.stateColumns.state")}</span>
                   {renderSortIcon("name")}
                 </div>
               </th>
@@ -154,7 +156,7 @@ export default function AllStatesRankingsTable({ selectedStateId, onSelectState 
                 onClick={() => handleSort("sdgScore")}
               >
                 <div className="flex items-center">
-                  <span>NITI SDG Index</span>
+                  <span>{t("janManch.stateColumns.compositeScore")}</span>
                   {renderSortIcon("sdgScore")}
                 </div>
               </th>
@@ -164,7 +166,7 @@ export default function AllStatesRankingsTable({ selectedStateId, onSelectState 
                 onClick={() => handleSort("latestNsdp")}
               >
                 <div className="flex items-center">
-                  <span>Per Capita NSDP</span>
+                  <span>{t("janManch.stateColumns.perCapitaIncome")}</span>
                   {renderSortIcon("latestNsdp")}
                 </div>
               </th>
@@ -174,7 +176,7 @@ export default function AllStatesRankingsTable({ selectedStateId, onSelectState 
                 onClick={() => handleSort("incomeGrowth")}
               >
                 <div className="flex items-center">
-                  <span>5Y Growth</span>
+                  <span>{t("janManch.fiveYearGrowth")}</span>
                   {renderSortIcon("incomeGrowth")}
                 </div>
               </th>
@@ -184,7 +186,7 @@ export default function AllStatesRankingsTable({ selectedStateId, onSelectState 
                 onClick={() => handleSort("censusLiteracy")}
               >
                 <div className="flex items-center">
-                  <span>Literacy</span>
+                  <span>{t("janManch.stateColumns.literacyRate")}</span>
                   {renderSortIcon("censusLiteracy")}
                 </div>
               </th>
@@ -194,9 +196,9 @@ export default function AllStatesRankingsTable({ selectedStateId, onSelectState 
                 onClick={() => handleSort("crimeRate")}
               >
                 <div className="flex items-center">
-                  <span>Crime Rate</span>
+                  <span>{t("janManch.stateColumns.crimeRate")}</span>
                   <span
-                    title="NCRB measures registered FIRs per 1L population. Higher rates in states like Kerala reflect reporting propensity rather than higher underlying violence."
+                    title={t("janManch.ncrbFootnote")}
                     className="cursor-help"
                   >
                     <Info size={11} className="ml-1 text-slate-400" />
@@ -315,7 +317,7 @@ export default function AllStatesRankingsTable({ selectedStateId, onSelectState 
 
       {/* Institutional Citation Footnote */}
       <div className="pt-2 text-[11px] text-slate-400 dark:text-[#8A8F98]/80 leading-relaxed border-t border-slate-100 dark:border-white/[0.04]">
-        <span className="font-semibold text-slate-500 dark:text-[#8A8F98]">Institutional Citation: </span>
+        <span className="font-semibold text-slate-500 dark:text-[#8A8F98]">{t("janManch.institutionalCitation")} </span>
         Indicators compiled from official Union Government publications: NITI Aayog SDG India Index (2023–24), RBI Handbook of Statistics Table 9 / MoSPI Per Capita NSDP at Current Prices (FY20–FY24), NCRB Crime in India (2022), and Office of the Registrar General Census of India (2011 baseline; Telangana backward-aggregated by State Planning Board).
       </div>
     </div>

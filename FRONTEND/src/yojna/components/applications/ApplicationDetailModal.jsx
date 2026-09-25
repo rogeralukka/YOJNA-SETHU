@@ -1,10 +1,10 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import Icon from '../../../features/yojna-setu/components/Icon';
 
 export const ApplicationDetailModal = ({ application, isOpen, onClose }) => {
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   if (!isOpen || !application) return null;
 

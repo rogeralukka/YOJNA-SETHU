@@ -1,8 +1,10 @@
 import React from "react";
 import { Network, Crown, User } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useHousehold } from "../../context/HouseholdContext";
 
 export default function FamilyTree() {
+  const { t } = useTranslation();
   const { household } = useHousehold();
 
   const members = household?.members || [];
@@ -19,15 +21,15 @@ export default function FamilyTree() {
           </div>
           <div>
             <h2 className="text-base font-semibold text-slate-900 dark:text-[#EDEDED]">
-              Family Tree & Relationship Graph
+              {t("profile.familyTreeTitle")}
             </h2>
             <p className="text-xs text-slate-500 dark:text-[#8A8F98]">
-              Hierarchical entitlement dependency and guardian linkage
+              {t("profile.familyTreeSubtitle")}
             </p>
           </div>
         </div>
         <span className="text-xs text-slate-600 dark:text-[#8A8F98] bg-slate-100 dark:bg-[#16191F] px-3 py-1.5 rounded-full border border-slate-200 dark:border-white/[0.08] self-start sm:self-auto">
-          Household ID: <span className="font-mono font-bold text-slate-900 dark:text-[#EDEDED]">{household?.householdId}</span>
+          {t("profile.householdId")} <span className="font-mono font-bold text-slate-900 dark:text-[#EDEDED]">{household?.householdId}</span>
         </span>
       </div>
 
@@ -46,7 +48,7 @@ export default function FamilyTree() {
                     {head.name}
                   </span>
                   <span className="text-[10px] font-mono uppercase tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded shrink-0">
-                    HEAD OF HOUSEHOLD
+                    {t("profile.headOfHousehold")}
                   </span>
                 </div>
                 <div className="text-xs text-slate-500 dark:text-[#8A8F98] mt-0.5">
@@ -64,7 +66,7 @@ export default function FamilyTree() {
         {dependents.length > 0 && (
           <div className="space-y-3">
             <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-[#8A8F98] flex items-center space-x-2">
-              <span>Dependents & Household Members</span>
+              <span>{t("profile.dependentsTitle")}</span>
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-[#16191F] text-slate-600 dark:text-[#8A8F98] border border-slate-200 dark:border-white/[0.08]">
                 {dependents.length}
               </span>
@@ -101,7 +103,7 @@ export default function FamilyTree() {
       </div>
 
       <p className="text-[11px] text-slate-400 dark:text-[#8A8F98]/70 italic pt-2">
-        Guardian linking for adopted or dependent family members supported under Digital Public Infrastructure (DPI) federated schema.
+        {t("profile.guardianLinkingNote")}
       </p>
     </div>
   );

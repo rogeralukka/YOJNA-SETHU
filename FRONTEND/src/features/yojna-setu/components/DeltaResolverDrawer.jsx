@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHousehold } from '../../../context/HouseholdContext';
 import {
   GitFork,
@@ -8,7 +9,8 @@ import {
   CloudDownload,
   FolderX,
   CheckCircle2,
-  Lock
+  Lock,
+  ArrowRight
 } from 'lucide-react';
 
 /**
@@ -17,6 +19,7 @@ import {
  * Positioned with breathing room from viewport edges matching AI assistant panel aesthetics.
  */
 export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocket }) {
+  const { t } = useTranslation();
   const { activeMember, headOfHousehold, simulateIssuancePull } = useHousehold();
   const [pullingDocTag, setPullingDocTag] = useState(null);
 
@@ -74,21 +77,21 @@ export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocke
           <div className="min-w-0 flex-1">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20 mb-2">
               <GitFork className="w-3.5 h-3.5 shrink-0" />
-              <span>ELIGIBILITY DELTA RESOLUTION</span>
+              <span className="uppercase">{t('yojnaSetu.deltaDrawer.title')}</span>
             </div>
             <h2 className="text-lg sm:text-xl font-bold text-neutral-900 dark:text-[#EDEDED] leading-snug truncate">
               {scheme.name}
             </h2>
             <p className="text-xs text-neutral-500 dark:text-[#8A8F98] mt-1">
-              Applicant: <span className="font-semibold text-neutral-800 dark:text-[#EDEDED]">{activeMember?.name}</span>
+              {t('yojnaSetu.deltaDrawer.applicantLabel')} <span className="font-semibold text-neutral-800 dark:text-[#EDEDED]">{activeMember?.name}</span>
             </p>
           </div>
 
           <button
             onClick={onClose}
             className="shrink-0 p-1.5 rounded-lg text-neutral-500 dark:text-[#8A8F98] hover:bg-neutral-100 dark:hover:bg-[#16191F] hover:text-neutral-900 dark:hover:text-[#EDEDED] transition-colors cursor-pointer"
-            title="Close (Esc)"
-            aria-label="Close"
+            title={t('yojnaSetu.deltaDrawer.closeEsc')}
+            aria-label={t('common.close')}
           >
             <X className="w-5 h-5" />
           </button>
@@ -98,7 +101,7 @@ export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocke
         <div className="flex-1 overflow-y-auto custom-scrollbar p-5 sm:p-6 space-y-6">
           <div className="flex items-center justify-between pb-2 border-b border-neutral-100 dark:border-white/[0.06]">
             <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-[#8A8F98]">
-              Prerequisite Credentials & Ledger Audit
+              {t('yojnaSetu.deltaDrawer.sectionAudit')}
             </span>
             <span
               className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
@@ -107,7 +110,7 @@ export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocke
                   : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
               }`}
             >
-              {isReady ? 'All Criteria Satisfied' : 'Action Required'}
+              {isReady ? t('yojnaSetu.deltaDrawer.allCriteriaSatisfied') : t('yojnaSetu.deltaDrawer.actionRequired')}
             </span>
           </div>
 
@@ -115,7 +118,7 @@ export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocke
           {delta.expiredDocs && delta.expiredDocs.length > 0 && (
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-                Expired Prerequisites ({delta.expiredDocs.length})
+                {t('yojnaSetu.deltaDrawer.expiredPrerequisites', { count: delta.expiredDocs.length })}
               </h4>
               {delta.expiredDocs.map((doc) => {
                 const isCurrentlyPulling = pullingDocTag === doc.docTag;
@@ -153,12 +156,12 @@ export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocke
                       {isCurrentlyPulling ? (
                         <>
                           <Loader2 className="w-4 h-4 animate-spin" />
-                          <span>Querying State e-District Gateway...</span>
+                          <span>{t('yojnaSetu.deltaDrawer.queryingGateway')}...</span>
                         </>
                       ) : (
                         <>
                           <CloudDownload className="w-4 h-4" />
-                          <span>Fetch Latest Issuance (State e-District via DigiLocker Pull API)</span>
+                          <span>{t('yojnaSetu.deltaDrawer.fetchLatestIssuance')}</span>
                         </>
                       )}
                     </button>
@@ -172,7 +175,7 @@ export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocke
           {delta.missingDocs && delta.missingDocs.length > 0 && (
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-[#8A8F98]">
-                Missing Credentials ({delta.missingDocs.length})
+                {t('yojnaSetu.deltaDrawer.missingCredentials', { count: delta.missingDocs.length })}
               </h4>
               {delta.missingDocs.map((doc) => (
                 <div
@@ -186,12 +189,12 @@ export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocke
                         {doc.label}
                       </div>
                       <div className="text-[11px] text-neutral-500 dark:text-[#8A8F98]">
-                        Required for direct eligibility verification
+                        {t('yojnaSetu.deltaDrawer.requiredForVerification')}
                       </div>
                     </div>
                   </div>
                   <span className="px-2 py-0.5 rounded text-[11px] font-mono text-neutral-500 dark:text-[#8A8F98] bg-neutral-200/60 dark:bg-white/[0.06] border border-neutral-300 dark:border-white/[0.08]">
-                    Not in vault
+                    {t('yojnaSetu.deltaDrawer.notInVault')}
                   </span>
                 </div>
               ))}
@@ -202,7 +205,7 @@ export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocke
           {delta.fulfilledDocs && delta.fulfilledDocs.length > 0 && (
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                Verified In Ledger ({delta.fulfilledDocs.length})
+                {t('yojnaSetu.deltaDrawer.verifiedInLedger', { count: delta.fulfilledDocs.length })}
               </h4>
               {delta.fulfilledDocs.map((doc) => (
                 <div
@@ -238,7 +241,8 @@ export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocke
               onClick={() => onSynthesizeDocket(scheme)}
               className="w-full py-3 px-4 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.99] transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 cursor-pointer"
             >
-              Synthesize Application Docket →
+              <span>{t('yojnaSetu.card.synthesizeDocket')}</span>
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
             </button>
           ) : (
             <button
@@ -246,7 +250,7 @@ export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocke
               className="w-full py-3 px-4 rounded-xl text-sm font-semibold text-neutral-400 dark:text-[#8A8F98] bg-neutral-200 dark:bg-[#16191F] border border-neutral-300 dark:border-white/[0.08] cursor-not-allowed flex items-center justify-center gap-2"
             >
               <Lock className="w-4 h-4" />
-              Resolve Prerequisites Above to Synthesize
+              <span>{t('yojnaSetu.deltaDrawer.resolvePrerequisitesAbove')}</span>
             </button>
           )}
         </div>
@@ -256,4 +260,3 @@ export function DeltaResolverDrawer({ isOpen, onClose, scheme, onSynthesizeDocke
 }
 
 export default DeltaResolverDrawer;
-

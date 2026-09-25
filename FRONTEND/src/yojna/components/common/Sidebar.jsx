@@ -1,6 +1,6 @@
 import React from 'react';
 import { useData, CITIZEN_VIEWS } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import {
   LayoutDashboard,
   Building2,
@@ -14,7 +14,7 @@ import {
 
 export const Sidebar = () => {
   const { currentView, navigateTo, isSidebarCollapsed, setIsSidebarCollapsed } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const activeView = CITIZEN_VIEWS.includes(currentView) ? currentView : 'dashboard';
 

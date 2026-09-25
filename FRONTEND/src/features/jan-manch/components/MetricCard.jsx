@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowUpRight, ArrowDownRight, IndianRupee, Layers } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 /**
  * MetricCard:
@@ -13,11 +14,13 @@ export default function MetricCard({
   value,
   unit,
   trend,
-  trendLabel = "vs prior period",
-  rateLabel = "Federal-to-State Utilization Rate",
+  trendLabel,
+  rateLabel,
   rateValue,
   category = "financial"
 }) {
+  const { t } = useTranslation();
+  const effectiveRateLabel = rateLabel || t("janManch.utilizationRate");
   const isPositive = trend >= 0;
   const isFinancial = category === "financial";
   const Icon = isFinancial ? IndianRupee : Layers;
@@ -72,7 +75,7 @@ export default function MetricCard({
       {/* Bottom Row: Dynamic Rate Telemetry */}
       <div className="flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-100 dark:border-white/[0.04]">
         <span className="text-slate-500 dark:text-[#8A8F98] truncate pr-2">
-          {rateLabel}:
+          {effectiveRateLabel}:
         </span>
         <span className="font-bold text-slate-900 dark:text-[#EDEDED] whitespace-nowrap">
           {typeof rateValue === "number" ? `${rateValue.toFixed(1)}%` : rateValue}

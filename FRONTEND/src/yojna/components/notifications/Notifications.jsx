@@ -1,6 +1,6 @@
 import React from 'react';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import {
   CheckCheck,
   CheckCircle2,
@@ -19,7 +19,7 @@ export const Notifications = () => {
     navigateTo,
     schemes
   } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const todayNotifs = notifications.filter((n) => n.dateGroup === 'today');
   const yesterdayNotifs = notifications.filter((n) => n.dateGroup !== 'today');
@@ -159,15 +159,15 @@ export const Notifications = () => {
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-[#16191F] border border-neutral-200 dark:border-white/[0.08] text-neutral-800 dark:text-[#EDEDED] hover:bg-neutral-100 dark:hover:bg-[#1D212A] transition-all text-xs font-semibold shadow-xs cursor-pointer"
         >
           <CheckCheck className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-          <span>Mark All as Read</span>
+          <span>{t('yojnaSetu.markAllAsRead', 'Mark All as Read')}</span>
         </button>
       </div>
 
       {notifications.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-[#0F1115] border border-neutral-200 dark:border-white/[0.08] rounded-3xl text-center shadow-sm">
           <Bell className="w-12 h-12 text-neutral-400 dark:text-[#8A8F98] mb-3" />
-          <h3 className="text-base font-bold text-neutral-900 dark:text-[#EDEDED]">No Notifications</h3>
-          <p className="text-xs text-neutral-500 dark:text-[#8A8F98]">You are all caught up with your latest updates!</p>
+          <h3 className="text-base font-bold text-neutral-900 dark:text-[#EDEDED]">{t('yojnaSetu.noNotifications', 'No Notifications')}</h3>
+          <p className="text-xs text-neutral-500 dark:text-[#8A8F98]">{t('yojnaSetu.allCaughtUp', 'You are all caught up with your latest updates!')}</p>
         </div>
       ) : (
         <div className="space-y-8">

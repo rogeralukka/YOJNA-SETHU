@@ -1,12 +1,12 @@
 import React from 'react';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import { getOccupationLabel, getSectorLabel, getLifeStatusLabel } from '../../data/taxonomy';
 import Icon from '../../../features/yojna-setu/components/Icon';
 
 export const SchemeDetail = ({ onOpenDocket }) => {
   const { selectedSchemeId, schemes, isBookmarked, toggleBookmark, navigateTo, evaluateScheme, userProfile } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const scheme = schemes.find((s) => s.id === selectedSchemeId) || schemes[0];
   const bookmarked = scheme ? isBookmarked(scheme.id) : false;
@@ -17,7 +17,7 @@ export const SchemeDetail = ({ onOpenDocket }) => {
       <div className="p-8 text-center text-on-surface dark:text-white">
         <p>{t('schemeNotFound')}</p>
         <button onClick={() => navigateTo('dashboard')} className="mt-4 px-4 py-2 bg-primary text-white rounded-lg">
-          {t('backToDashboard')}
+          {t('yojnaSetu.backToDashboard', 'Back to Dashboard')}
         </button>
       </div>
     );
@@ -63,8 +63,8 @@ export const SchemeDetail = ({ onOpenDocket }) => {
           onClick={() => navigateTo('dashboard')}
           className="inline-flex items-center gap-2 text-xs font-semibold text-on-surface-variant dark:text-[#8A8F98] hover:text-primary transition-colors"
         >
-          <Icon name="arrow_back" size={18} />
-          <span>{t('backToDashboard')}</span>
+          <Icon name="arrow_back" size={18} className="rtl:rotate-180" />
+          <span>{t('yojnaSetu.backToDashboard', 'Back to Dashboard')}</span>
         </button>
       </div>
 
@@ -198,7 +198,7 @@ export const SchemeDetail = ({ onOpenDocket }) => {
               <div className="p-3.5 bg-amber-500/10 dark:bg-amber-950/40 rounded-xl border border-amber-500/30 flex items-center justify-between gap-3 text-xs">
                 <div className="flex items-center gap-2 text-amber-800 dark:text-amber-300">
                   <Icon name="info" size={18} />
-                  <span>Missing profile fields: <strong>{evaluation.missingFields.join(', ')}</strong></span>
+                  <span>{t('yojnaSetu.schemeDetail.missingProfileFields')} <strong>{evaluation.missingFields.join(', ')}</strong></span>
                 </div>
                 <button
                   onClick={() => navigateTo('profile')}
@@ -318,7 +318,7 @@ export const SchemeDetail = ({ onOpenDocket }) => {
                   className="w-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 py-3 px-6 rounded-xl font-label-bold text-xs sm:text-sm flex items-center justify-center gap-2 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors"
                 >
                   <Icon name="verified_user" size={18} />
-                  <span>View Verifiable Docket (JSON-LD)</span>
+                  <span>{t('yojnaSetu.schemeDetail.viewVerifiableDocket')}</span>
                 </button>
               )}
 

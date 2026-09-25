@@ -1,11 +1,11 @@
 import React from 'react';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import Icon from '../../../features/yojna-setu/components/Icon';
 
 export const ReviewLater = () => {
   const { applications, setReviewLater, navigateTo } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const reviewLaterApps = applications.filter((a) => a.reviewLater);
 

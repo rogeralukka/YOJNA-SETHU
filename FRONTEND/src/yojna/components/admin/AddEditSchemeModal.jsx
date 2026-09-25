@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import { INDIAN_STATES } from '../../data/states';
 import { LIFE_STATUSES, OCCUPATIONS, SECTORS } from '../../data/taxonomy';
 import Icon from '../../../features/yojna-setu/components/Icon';
 
 export const AddEditSchemeModal = ({ isOpen, onClose, editingScheme = null }) => {
   const { addScheme, updateScheme } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const [name, setName] = useState('');
   const [department, setDepartment] = useState('Ministry of Agriculture & Farmers Welfare');

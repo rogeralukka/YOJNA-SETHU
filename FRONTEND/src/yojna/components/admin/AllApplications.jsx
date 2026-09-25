@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import Icon from '../../../features/yojna-setu/components/Icon';
 
 export const AllApplications = () => {
   const { applications, navigateTo } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');

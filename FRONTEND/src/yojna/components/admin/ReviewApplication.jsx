@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import Icon from '../../../features/yojna-setu/components/Icon';
 
 export const ReviewApplication = () => {
@@ -13,7 +13,7 @@ export const ReviewApplication = () => {
     navigateTo,
     showToast
   } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   // Find active application or fallback to first pending
   const application =
@@ -27,12 +27,12 @@ export const ReviewApplication = () => {
   if (!application) {
     return (
       <div className="p-8 text-center">
-        <p>No applications available for review.</p>
+        <p>{t('yojnaSetu.noAppsForReview', 'No applications available for review.')}</p>
         <button
           onClick={() => navigateTo('admin-all-applications')}
           className="mt-4 px-4 py-2 bg-primary text-white rounded-lg text-xs"
         >
-          Back to All Applications
+          {t('yojnaSetu.backToAllApps', 'Back to All Applications')}
         </button>
       </div>
     );
@@ -103,7 +103,7 @@ export const ReviewApplication = () => {
           <button
             onClick={() => window.print()}
             className="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container dark:bg-[#16191F] hover:bg-surface-container-high dark:hover:bg-[#1D212A] text-on-surface-variant dark:text-[#8A8F98] hover:dark:text-[#EDEDED] border border-transparent dark:border-white/[0.08] shadow-sm"
-            title="Print Application"
+            title={t('yojnaSetu.printApplication', 'Print Application')}
           >
             <Icon name="print" size={20} />
           </button>
@@ -332,14 +332,14 @@ export const ReviewApplication = () => {
                     <button
                       onClick={() => showToast(`Previewing ${doc.name}`, 'info')}
                       className="p-2 rounded-full hover:bg-surface-variant dark:hover:bg-[#1D212A] text-on-surface-variant dark:text-[#8A8F98] hover:text-primary dark:hover:text-[#EDEDED] transition-colors"
-                      title="Preview Document"
+                      title={t('yojnaSetu.previewDocument', 'Preview Document')}
                     >
                       <Icon name="visibility" size={18} />
                     </button>
                     <button
                       onClick={() => showToast(`Downloaded ${doc.name}`, 'success')}
                       className="p-2 rounded-full hover:bg-surface-variant dark:hover:bg-[#1D212A] text-on-surface-variant dark:text-[#8A8F98] hover:text-primary dark:hover:text-[#EDEDED] transition-colors"
-                      title="Download Document"
+                      title={t('yojnaSetu.downloadDocument', 'Download Document')}
                     >
                       <Icon name="download" size={18} />
                     </button>

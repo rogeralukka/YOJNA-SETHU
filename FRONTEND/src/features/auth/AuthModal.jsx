@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { ArrowRight, Lock } from "lucide-react";
 import { useUI } from "../../context/UIContext";
 
 /**
@@ -8,11 +10,12 @@ import { useUI } from "../../context/UIContext";
  * 1. ONLY ONE view at a time (Login OR Register)
  * 2. No admin login path
  * 3. Mock auth sets localStorage "nagrikpath_session"
- * 4. OTP simulated and visibly labeled "PoC simulation"
- * 5. One-click button labeled exactly: "Simulate OTP (PoC)"
+ * 4. Fully localized via react-i18next
+ * 5. One-click button to simulate OTP for demo convenience
  * 6. Modal owns the Esc key
  */
 export default function AuthModal({ onClose }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { registerModalOpen, registerModalClose } = useUI();
 
@@ -111,17 +114,19 @@ export default function AuthModal({ onClose }) {
       >
         {/* Modal Top Header */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <span className="text-2xl">🔐</span>
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
+              <Lock size={18} />
+            </div>
             <h2 className="text-xl font-bold text-slate-900 dark:text-[#EDEDED]">
-              Secure Access
+              {t("auth.secureAccess", "Secure Access")}
             </h2>
           </div>
           <button
             type="button"
             onClick={handleClose}
-            aria-label="Close modal"
-            className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-[#EDEDED] text-xl font-bold cursor-pointer p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#16191F] transition"
+            aria-label={t("auth.closeModal", "Close modal")}
+            className="absolute top-4 right-4 rtl:right-auto rtl:left-4 text-slate-400 hover:text-slate-600 dark:hover:text-[#EDEDED] text-xl font-bold cursor-pointer p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#16191F] transition"
           >
             ✕
           </button>
@@ -132,13 +137,13 @@ export default function AuthModal({ onClose }) {
           <button
             type="button"
             onClick={() => setView("login")}
-            className={`pb-2 text-sm font-bold border-b-2 mr-6 transition ${
+            className={`pb-2 text-sm font-bold border-b-2 me-6 transition ${
               view === "login"
                 ? "border-blue-600 text-blue-600 dark:text-blue-400"
                 : "border-transparent text-slate-400 dark:text-[#8A8F98] hover:text-slate-600 dark:hover:text-[#EDEDED]"
             }`}
           >
-            Login
+            {t("auth.tabLogin", "Login")}
           </button>
           <button
             type="button"
@@ -149,7 +154,7 @@ export default function AuthModal({ onClose }) {
                 : "border-transparent text-slate-400 dark:text-[#8A8F98] hover:text-slate-600 dark:hover:text-[#EDEDED]"
             }`}
           >
-            Register
+            {t("auth.tabRegister", "Register")}
           </button>
         </div>
 
@@ -158,13 +163,13 @@ export default function AuthModal({ onClose }) {
           <form onSubmit={handleLoginSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-[#8A8F98] mb-1">
-                Email / Mobile
+                {t("auth.emailOrMobile", "Email / Mobile")}
               </label>
               <input
                 type="text"
                 value={loginIdentifier}
                 onChange={(e) => setLoginIdentifier(e.target.value)}
-                placeholder="Enter email or mobile"
+                placeholder={t("auth.enterEmailOrMobile", "Enter email or mobile")}
                 required
                 className="bg-slate-50 dark:bg-[#16191F] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-[#EDEDED] rounded-lg p-3 w-full text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
               />
@@ -172,7 +177,7 @@ export default function AuthModal({ onClose }) {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-[#8A8F98] mb-1">
-                Password
+                {t("auth.password", "Password")}
               </label>
               <input
                 type="password"
@@ -186,9 +191,10 @@ export default function AuthModal({ onClose }) {
 
             <button
               type="submit"
-              className="w-full py-3 px-4 text-sm font-bold rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition hover:shadow-md flex items-center justify-center space-x-2 cursor-pointer"
+              className="w-full py-3 px-4 text-sm font-bold rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition hover:shadow-md flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Login →</span>
+              <span>{t("auth.loginButton", "Login")}</span>
+              <ArrowRight className="rtl:rotate-180" size={16} />
             </button>
 
             <div className="text-center pt-2">
@@ -197,7 +203,7 @@ export default function AuthModal({ onClose }) {
                 onClick={() => setView("register")}
                 className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
               >
-                New here? Register now
+                {t("auth.newHereRegister", "New here? Register now")}
               </button>
             </div>
           </form>
@@ -208,7 +214,7 @@ export default function AuthModal({ onClose }) {
           <form onSubmit={handleRegisterSubmit} className="space-y-3.5">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-[#8A8F98] mb-1">
-                Phone Number
+                {t("auth.phoneNumber", "Phone Number")}
               </label>
               <input
                 type="tel"
@@ -220,24 +226,24 @@ export default function AuthModal({ onClose }) {
               />
             </div>
 
-            {/* OTP Section with PoC Simulation */}
+            {/* OTP Section with Demo Helper & Simulation */}
             <div>
               <div className="flex items-center justify-between mb-1">
                 <label className="block text-xs font-semibold text-slate-700 dark:text-[#8A8F98]">
-                  OTP Verification
+                  {t("auth.otpVerification", "OTP Verification")}
                 </label>
                 {otpSimulated && (
-                  <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950 px-1.5 py-0.5 rounded">
-                    PoC simulation
+                  <span className="text-[10px] font-medium text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950 px-1.5 py-0.5 rounded">
+                    {t("auth.demoOtpHelper", "Demo mode — any 6-digit code works")}
                   </span>
                 )}
               </div>
-              <div className="flex space-x-2">
+              <div className="flex gap-2">
                 <input
                   type="text"
                   value={regOtp}
                   onChange={(e) => setRegOtp(e.target.value)}
-                  placeholder="6-digit OTP"
+                  placeholder={t("auth.enterOtp", "6-digit OTP")}
                   maxLength={6}
                   required
                   className="flex-1 bg-slate-50 dark:bg-[#16191F] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-[#EDEDED] rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
@@ -247,7 +253,7 @@ export default function AuthModal({ onClose }) {
                   onClick={() => setOtpSent(true)}
                   className="px-3.5 py-2.5 text-xs font-semibold rounded-lg border border-slate-300 dark:border-white/10 text-slate-700 dark:text-[#EDEDED] hover:bg-slate-100 dark:hover:bg-[#16191F] cursor-pointer transition"
                 >
-                  {otpSent ? "Resend" : "Send OTP"}
+                  {otpSent ? t("auth.resendOtp", "Resend") : t("auth.sendOtp", "Send OTP")}
                 </button>
               </div>
 
@@ -258,20 +264,20 @@ export default function AuthModal({ onClose }) {
                   onClick={handleSimulateOtp}
                   className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900 px-2.5 py-1 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/60 transition cursor-pointer"
                 >
-                  Simulate OTP (PoC)
+                  {t("auth.simulateOtpButton", "Simulate OTP")}
                 </button>
               </div>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-[#8A8F98] mb-1">
-                Full Name
+                {t("auth.fullName", "Full Name")}
               </label>
               <input
                 type="text"
                 value={regName}
                 onChange={(e) => setRegName(e.target.value)}
-                placeholder="Citizen Full Name"
+                placeholder={t("auth.citizenFullName", "Citizen Full Name")}
                 required
                 className="bg-slate-50 dark:bg-[#16191F] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-[#EDEDED] rounded-lg p-3 w-full text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
               />
@@ -280,38 +286,39 @@ export default function AuthModal({ onClose }) {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-[#8A8F98] mb-1">
-                  Age
+                  {t("common.age", "Age")}
                 </label>
                 <input
                   type="number"
                   value={regAge}
                   onChange={(e) => setRegAge(e.target.value)}
-                  placeholder="Age"
+                  placeholder={t("common.age", "Age")}
                   className="bg-slate-50 dark:bg-[#16191F] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-[#EDEDED] rounded-lg p-3 w-full text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-[#8A8F98] mb-1">
-                  Gender
+                  {t("auth.gender", "Gender")}
                 </label>
                 <select
                   value={regGender}
                   onChange={(e) => setRegGender(e.target.value)}
                   className="bg-slate-50 dark:bg-[#16191F] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-[#EDEDED] rounded-lg p-3 w-full text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Transgender">Transgender</option>
-                  <option value="Other">Other</option>
+                  <option value="Male">{t("auth.genderMale", "Male")}</option>
+                  <option value="Female">{t("auth.genderFemale", "Female")}</option>
+                  <option value="Transgender">{t("auth.genderTransgender", "Transgender")}</option>
+                  <option value="Other">{t("auth.genderOther", "Other")}</option>
                 </select>
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 px-4 text-sm font-bold rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition hover:shadow-md flex items-center justify-center space-x-2 mt-2 cursor-pointer"
+              className="w-full py-3 px-4 text-sm font-bold rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition hover:shadow-md flex items-center justify-center gap-2 mt-2 cursor-pointer"
             >
-              <span>Register →</span>
+              <span>{t("auth.registerButton", "Register")}</span>
+              <ArrowRight className="rtl:rotate-180" size={16} />
             </button>
 
             <div className="text-center pt-2">
@@ -320,7 +327,7 @@ export default function AuthModal({ onClose }) {
                 onClick={() => setView("login")}
                 className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
               >
-                Already have account? Login
+                {t("auth.alreadyHaveAccount", "Already have account? Login")}
               </button>
             </div>
           </form>

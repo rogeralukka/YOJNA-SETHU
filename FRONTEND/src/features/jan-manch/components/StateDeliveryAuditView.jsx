@@ -17,6 +17,7 @@ import jaljeevanData from "../../../data/seed/janmanch/jaljeevan.json";
 import healthData from "../../../data/seed/janmanch/health.json";
 import infrastructureData from "../../../data/seed/janmanch/infrastructure.json";
 import { Sparkles, Building2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const SECTOR_DATA_MAP = {
   ...telanganaSectorsData,
@@ -41,6 +42,7 @@ function filterTimeline(timeline = [], range = "ALL") {
  * 3. Granular Scheme Audit (Active for Telangana Pilot with 8 sectors)
  */
 export default function StateDeliveryAuditView() {
+  const { t } = useTranslation();
   const [selectedStateId, setSelectedStateId] = useState("telangana");
   const [activeSectorKey, setActiveSectorKey] = useState("agriculture");
   const [timeRange, setTimeRange] = useState("ALL");
@@ -138,7 +140,7 @@ export default function StateDeliveryAuditView() {
               className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800 text-xs font-semibold cursor-pointer hover:bg-blue-100 transition-all font-mono self-start sm:self-auto"
             >
               <Sparkles size={13} />
-              <span>Switch to Telangana Pilot</span>
+              <span>{t("janManch.switchToTelangana")}</span>
             </button>
           )}
         </div>
@@ -287,10 +289,10 @@ export default function StateDeliveryAuditView() {
               </div>
               <div>
                 <h4 className="text-sm font-bold text-slate-900 dark:text-[#EDEDED]">
-                  State Scheme Telemetry Pilot Scope
+                  {t("janManch.telemetryPilotScope")}
                 </h4>
                 <p className="text-xs text-slate-500 dark:text-[#8A8F98] mt-1 font-sans leading-relaxed max-w-2xl">
-                  Granular central scheme audit telemetry (financial allocation, disbursement variance, and ground physical verification) is active for the <strong className="text-slate-900 dark:text-white">Telangana Pilot</strong> across 8 state sectors. Select Telangana to audit central vs state disbursements, or explore the All-India Rankings table above.
+                  {t("janManch.telemetryPilotDesc")}
                 </p>
               </div>
             </div>
@@ -300,7 +302,7 @@ export default function StateDeliveryAuditView() {
               onClick={() => setSelectedStateId("telangana")}
               className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold shadow-xs hover:bg-slate-800 transition-all cursor-pointer shrink-0 font-mono"
             >
-              Audit Telangana Pilot
+              {t("janManch.auditTelanganaPilot")}
             </button>
           </div>
         )}

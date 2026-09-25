@@ -12,6 +12,7 @@ import CompositeProgressHero from "./CompositeProgressHero";
 import { useNationalPulse } from "../hooks/useNationalPulse";
 import { getMetricColorTheme } from "../utils/chromaticEngine";
 import { fetchLiveCurrencyRate } from "../api/currencyService";
+import { useTranslation } from "react-i18next";
 
 /**
  * NationalPulseView:
@@ -22,6 +23,7 @@ import { fetchLiveCurrencyRate } from "../api/currencyService";
  * - 100% Offline Client-Side Verification Fallback & Zero-Auth Live Telemetry
  */
 export default function NationalPulseView() {
+  const { t } = useTranslation();
   const { indicators, provenance } = useNationalPulse("ALL");
   const [liveCurrency, setLiveCurrency] = useState(null);
 
@@ -165,10 +167,10 @@ export default function NationalPulseView() {
       {/* 3. Clean Citizen Header Row */}
       <div className="pt-2 border-t border-slate-200 dark:border-white/[0.08]">
         <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-[#EDEDED] font-mono">
-          MACROECONOMIC &amp; DIGITAL PUBLIC INFRASTRUCTURE MATRIX
+          {t("janManch.macroMatrixTitle")}
         </h2>
         <p className="text-xs text-slate-500 dark:text-[#8A8F98] mt-0.5">
-          12 empirical indicators tracking national progress • Adaptive chromatic evaluation
+          {t("janManch.macroMatrixSubtitle")}
         </p>
       </div>
 

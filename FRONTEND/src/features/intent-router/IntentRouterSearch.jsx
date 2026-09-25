@@ -1,10 +1,12 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import useIntentRouter from "./hooks/useIntentRouter";
 import IntentResultsDropdown from "./IntentResultsDropdown";
 
 export default function IntentRouterSearch() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const containerRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -58,7 +60,7 @@ export default function IntentRouterSearch() {
     >
       {/* Search Input Box */}
       <div className="relative flex items-center">
-        <div className="absolute left-4 pointer-events-none text-slate-400 dark:text-slate-500">
+        <div className="absolute left-4 rtl:left-auto rtl:right-4 pointer-events-none text-slate-400 dark:text-slate-500">
           <Search size={18} />
         </div>
         <input
@@ -67,14 +69,14 @@ export default function IntentRouterSearch() {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onKeyDown={handleKeyDown}
-          placeholder="Type what you need — I'll take you there"
-          className="w-full pl-11 pr-10 py-3.5 rounded-2xl bg-white dark:bg-[#0F1115] text-slate-900 dark:text-[#EDEDED] placeholder-slate-400 dark:placeholder-[#8A8F98] text-sm font-medium border border-slate-200 dark:border-white/[0.08] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          placeholder={t("intentRouter.placeholder")}
+          className="w-full pl-11 pr-10 rtl:pl-10 rtl:pr-11 py-3.5 rounded-2xl bg-white dark:bg-[#0F1115] text-slate-900 dark:text-[#EDEDED] placeholder-slate-400 dark:placeholder-[#8A8F98] text-sm font-medium border border-slate-200 dark:border-white/[0.08] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
         />
         {query.length > 0 && (
           <button
             type="button"
             onClick={handleClear}
-            className="absolute right-3.5 p-1 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="absolute right-3.5 rtl:right-auto rtl:left-3.5 p-1 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
             title="Clear search"
           >
             <X size={16} />

@@ -1,15 +1,22 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useTheme } from "../../context/ThemeContext";
 
 export default function ThemeToggle() {
+  const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
+
+  const toggleLabel =
+    theme === "dark"
+      ? t("common.switchToLight", "Switch to light mode")
+      : t("common.switchToDark", "Switch to dark mode");
 
   return (
     <button
       onClick={toggleTheme}
       type="button"
-      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-      title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+      aria-label={toggleLabel}
+      title={toggleLabel}
       className="p-2 rounded-lg text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-white/[0.06] transition-colors focus:outline-none flex items-center justify-center"
     >
       {theme === "dark" ? (

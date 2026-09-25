@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHousehold } from '../../../context/HouseholdContext';
 import { useSchemeEvaluation } from '../../../features/yojna-setu/hooks/useSchemeEvaluation';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import { useData } from '../../context/DataContext';
 import { verifyPinHash, hashString } from '../../../lib/utils/hash';
 import {
@@ -21,7 +21,7 @@ export const ShareEligibility = () => {
   const { activeMember } = useHousehold();
   const { evaluatedSchemes, totalEligible, eligibleReadyCount, eligibleBlockedCount } = useSchemeEvaluation();
   const { showToast, navigateTo } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const [pin, setPin] = useState('');
   const [isPinVerified, setIsPinVerified] = useState(false);
@@ -104,8 +104,8 @@ export const ShareEligibility = () => {
           <button
             onClick={() => navigateTo('dashboard')}
             className="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-[#16191F] hover:bg-neutral-200 dark:hover:bg-[#1D212A] text-neutral-500 dark:text-[#8A8F98] hover:text-neutral-900 dark:hover:text-[#EDEDED] transition-colors flex items-center justify-center cursor-pointer"
-            title="Close"
-            aria-label="Close"
+            title={t('common.close', 'Close')}
+            aria-label={t('common.close', 'Close')}
           >
             <X className="w-4 h-4" />
           </button>
@@ -150,7 +150,7 @@ export const ShareEligibility = () => {
                 className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white rounded-xl text-xs font-semibold shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <ShieldCheck className="w-4 h-4" />
-                <span>Verify & Unlock Share Summary</span>
+                <span>{t('yojnaSetu.share.verifyUnlockSummary')}</span>
               </button>
             </form>
           </div>
@@ -165,41 +165,41 @@ export const ShareEligibility = () => {
                 </span>
                 <span className="text-[11px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-2.5 py-0.5 rounded-full font-bold inline-flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Verified Resident</span>
+                  <span>{t('yojnaSetu.share.verifiedResident')}</span>
                 </span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-3 text-xs">
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-neutral-500 dark:text-[#8A8F98]">Full Name</span>
+                  <span className="text-neutral-500 dark:text-[#8A8F98]">{t('common.fullName', 'Full Name')}</span>
                   <span className="font-semibold text-neutral-800 dark:text-[#EDEDED] truncate">
                     {activeMember?.name || 'Citizen'}
                   </span>
                 </div>
 
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-neutral-500 dark:text-[#8A8F98]">Age</span>
+                  <span className="text-neutral-500 dark:text-[#8A8F98]">{t('common.age', 'Age')}</span>
                   <span className="font-semibold text-neutral-800 dark:text-[#EDEDED]">
                     {activeMember?.age || 19} Years
                   </span>
                 </div>
 
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-neutral-500 dark:text-[#8A8F98]">State</span>
+                  <span className="text-neutral-500 dark:text-[#8A8F98]">{t('yojnaSetu.state', 'State')}</span>
                   <span className="font-semibold text-neutral-800 dark:text-[#EDEDED]">
                     {activeMember?.state || 'Telangana'}
                   </span>
                 </div>
 
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-neutral-500 dark:text-[#8A8F98]">Category</span>
+                  <span className="text-neutral-500 dark:text-[#8A8F98]">{t('yojnaSetu.category', 'Category')}</span>
                   <span className="font-semibold text-neutral-800 dark:text-[#EDEDED]">
                     {activeMember?.category || 'OBC'}
                   </span>
                 </div>
 
                 <div className="flex flex-col gap-0.5 sm:col-span-2">
-                  <span className="text-neutral-500 dark:text-[#8A8F98]">Discovered Entitlements</span>
+                  <span className="text-neutral-500 dark:text-[#8A8F98]">{t('yojnaSetu.share.discoveredEntitlements')}</span>
                   <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                     {totalEligible} Schemes ({eligibleReadyCount} Ready · {eligibleBlockedCount} Action Pending)
                   </span>
@@ -265,7 +265,7 @@ export const ShareEligibility = () => {
               className="px-4 py-2.5 rounded-xl flex items-center gap-2 text-xs font-semibold text-neutral-700 dark:text-[#EDEDED] border border-neutral-200 dark:border-white/[0.08] bg-white dark:bg-[#0F1115] hover:bg-neutral-100 dark:hover:bg-[#1D212A] transition-all cursor-pointer"
             >
               <FileDown className="w-4 h-4" />
-              <span>Download PDF</span>
+              <span>{t('yojnaSetu.share.downloadPdf')}</span>
             </button>
 
             <button

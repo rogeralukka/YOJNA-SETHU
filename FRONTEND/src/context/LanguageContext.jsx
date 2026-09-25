@@ -1,57 +1,36 @@
+// TODO: Remove during Phase 6 — migrate consumers to useTranslation(). Only LanguageSwitcher.jsx survives.
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { SUPPORTED_LANGUAGES } from "../components/common/LanguageSwitcher";
 
-const LANG_KEY = "nagrikpath_lang";
-
-export const LANGUAGES = [
-  { code: "en", name: "English", nativeName: "English", supported: true },
-  { code: "hi", name: "Hindi", nativeName: "हिन्दी", supported: true },
-  { code: "bn", name: "Bengali", nativeName: "বাংলা", supported: false },
-  { code: "te", name: "Telugu", nativeName: "తెలుగు", supported: false },
-  { code: "mr", name: "Marathi", nativeName: "मराठी", supported: false },
-  { code: "ta", name: "Tamil", nativeName: "தமிழ்", supported: false },
-  { code: "ur", name: "Urdu", nativeName: "اردو", supported: false },
-  { code: "gu", name: "Gujarati", nativeName: "ગુજરાતી", supported: false },
-  { code: "kn", name: "Kannada", nativeName: "ಕನ್ನಡ", supported: false },
-  { code: "or", name: "Odia", nativeName: "ଓଡ଼ିଆ", supported: false },
-  { code: "ml", name: "Malayalam", nativeName: "മലയാളം", supported: false },
-  { code: "pa", name: "Punjabi", nativeName: "ਪੰਜਾਬੀ", supported: false },
-  { code: "as", name: "Assamese", nativeName: "অসমীয়া", supported: false }
-];
-
+export const LANGUAGES = SUPPORTED_LANGUAGES;
 export const LanguageContext = createContext(null);
 
 export function LanguageProvider({ children }) {
-  const [lang, setLangState] = useState(() => {
-    try {
-      const saved = localStorage.getItem(LANG_KEY);
-      if (saved && LANGUAGES.some((l) => l.code === saved)) {
-        return saved;
-      }
-    } catch {
-      // fallback
-    }
-    return "en";
-  });
+  const { i18n } = useTranslation();
+  const [lang, setLangState] = useState(() => (i18n.language || "en").split("-")[0]);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(LANG_KEY, lang);
-      document.documentElement.setAttribute("data-lang", lang);
-    } catch (e) {
-      console.warn("Language storage error", e);
-    }
-  }, [lang]);
+    const handleLanguageChanged = (newLang) => {
+      const code = (newLang || "en").split("-")[0];
+      setLangState(code);
+      document.documentElement.setAttribute("data-lang", code);
+    };
+
+    i18n.on("languageChanged", handleLanguageChanged);
+    document.documentElement.setAttribute("data-lang", (i18n.language || "en").split("-")[0]);
+
+    return () => {
+      i18n.off("languageChanged", handleLanguageChanged);
+    };
+  }, [i18n]);
 
   const setLang = (code) => {
-    if (LANGUAGES.some((l) => l.code === code)) {
-      setLangState(code);
-    }
+    i18n.changeLanguage(code);
   };
 
-  const isRollout = !LANGUAGES.find((l) => l.code === lang)?.supported;
-
   return (
-    <LanguageContext.Provider value={{ lang, setLang, isRollout, languages: LANGUAGES }}>
+    <LanguageContext.Provider value={{ lang, setLang, isRollout: false, languages: SUPPORTED_LANGUAGES }}>
       {children}
     </LanguageContext.Provider>
   );

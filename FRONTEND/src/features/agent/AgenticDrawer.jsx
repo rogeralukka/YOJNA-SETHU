@@ -13,11 +13,13 @@ import {
 import { useUI } from "../../context/UIContext";
 import agentTracesData from "../../data/seed/agentTraces.json";
 import { fallbackRoute } from "../../engine/offlineFallback";
+import { useTranslation } from "react-i18next";
 
 const UNRECOGNIZED_PROMPT_MESSAGE =
   "To test autonomous execution in this prototype, select one of the seeded action traces above.";
 
 export default function AgenticDrawer() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [queryInput, setQueryInput] = useState("");
   const [messages, setMessages] = useState([]);
@@ -196,7 +198,7 @@ export default function AgenticDrawer() {
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
           className="rounded-full px-4 h-10 bg-neutral-900 dark:bg-[#0F1115] border border-neutral-700/50 dark:border-white/10 text-neutral-200 shadow-xl flex items-center gap-2 hover:border-white/25 transition-all cursor-pointer group"
-          title="Open Deterministic Action Agent"
+          title={t("agent.triggerTitle")}
         >
           <Sparkles size={14} className="text-neutral-400 dark:text-neutral-300 group-hover:rotate-12 transition-transform" />
           <span className="font-mono text-xs font-bold tracking-wider">NAGRIK AGENT</span>
@@ -224,13 +226,13 @@ export default function AgenticDrawer() {
                 className="text-[11px] font-mono text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 cursor-pointer transition px-1.5 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-white/5"
                 title="Reset conversation"
               >
-                CHAT RESET
+                {t("agent.chatReset")}
               </button>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
                 className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-[#EDEDED] hover:bg-slate-100 dark:hover:bg-white/5 transition cursor-pointer"
-                title="Close agent telemetry card (Esc)"
+                title={t("agent.closeCard")}
               >
                 <X size={16} />
               </button>
@@ -242,7 +244,7 @@ export default function AgenticDrawer() {
             {/* Context-Aware Recommended Action Chips */}
             <div className="space-y-2">
               <div className="text-[10px] font-mono tracking-widest text-slate-400 dark:text-[#8A8F98] uppercase font-bold">
-                RECOMMENDED ACTION TRACES
+                {t("agent.recommendedTraces")}
               </div>
               <div className="flex flex-wrap gap-2">
                 {currentRouteTraces.map((trace) => (
@@ -263,8 +265,8 @@ export default function AgenticDrawer() {
             {/* Conversation Messages */}
             {messages.length === 0 ? (
               <div className="text-center py-6 text-slate-400 dark:text-[#8A8F98]/70 font-mono text-[11px] space-y-1">
-                <p>Select a recommended action trace above</p>
-                <p className="text-[10px] opacity-75">or type a keyword below for deterministic execution.</p>
+                <p>{t("agent.emptyPromptTitle")}</p>
+                <p className="text-[10px] opacity-75">{t("agent.emptyPromptSubtitle")}</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -329,7 +331,7 @@ export default function AgenticDrawer() {
                         {msg.isExecuting && (
                           <div className="p-2.5 rounded-xl border border-dashed border-emerald-500/40 bg-emerald-950/20 font-mono text-xs text-emerald-400 flex items-center space-x-2 animate-pulse">
                             <Cpu size={13} className="animate-spin text-emerald-400" />
-                            <span>Evaluating deterministic decision tree (&lt; 2.5s)...</span>
+                            <span>{t("agent.evaluatingTree")}</span>
                           </div>
                         )}
                       </div>
@@ -350,7 +352,7 @@ export default function AgenticDrawer() {
                             className="w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center space-x-1.5 shadow-sm transition cursor-pointer"
                           >
                             <span>{msg.outcome.actionLabel}</span>
-                            <ArrowRight size={13} />
+                            <ArrowRight size={13} className="rtl:rotate-180" />
                           </button>
                         </div>
                       )}
@@ -369,16 +371,16 @@ export default function AgenticDrawer() {
                 type="text"
                 value={queryInput}
                 onChange={(e) => setQueryInput(e.target.value)}
-                placeholder="Type keyword (e.g. mandi, scholarship, audit)..."
-                className="w-full pl-3 pr-9 py-2 text-xs font-mono rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#16191F] text-slate-900 dark:text-[#EDEDED] placeholder-slate-400 dark:placeholder-[#8A8F98] focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                placeholder={t("agent.inputPlaceholder")}
+                className="w-full pl-3 pr-9 rtl:pl-9 rtl:pr-3 py-2 text-xs font-mono rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#16191F] text-slate-900 dark:text-[#EDEDED] placeholder-slate-400 dark:placeholder-[#8A8F98] focus:outline-none focus:ring-1 focus:ring-emerald-500"
               />
               <button
                 type="submit"
                 disabled={!queryInput.trim() || isExecutingGlobal}
-                className="absolute right-1.5 p-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white disabled:opacity-40 transition cursor-pointer"
-                title="Submit trace keyword"
+                className="absolute right-1.5 rtl:right-auto rtl:left-1.5 p-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white disabled:opacity-40 transition cursor-pointer"
+                title={t("agent.submitTrace")}
               >
-                <Send size={12} />
+                <Send size={12} className="rtl:rotate-180" />
               </button>
             </form>
           </div>

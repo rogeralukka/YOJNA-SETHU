@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHousehold } from '../../../context/HouseholdContext';
 import { hashString, verifyPinHash } from '../../../lib/utils/hash';
 import { buildDocket } from '../../../engine/docket';
@@ -20,6 +21,7 @@ import {
  * Enforces Esc ownership, 3-attempt PIN lockout, zero plaintext PIN storage, and deterministic hash computation.
  */
 export function DocketPreviewModal({ isOpen, onClose, scheme }) {
+  const { t } = useTranslation();
   const { activeMember, setPin } = useHousehold();
 
   const [activeTab, setActiveTab] = useState('human'); // 'human' | 'json'
@@ -203,7 +205,7 @@ export function DocketPreviewModal({ isOpen, onClose, scheme }) {
           <button
             onClick={onClose}
             className="p-1.5 rounded-lg text-neutral-500 dark:text-[#8A8F98] hover:bg-neutral-100 dark:hover:bg-[#16191F] hover:text-neutral-900 dark:hover:text-[#EDEDED] transition-colors"
-            title="Close Modal (Esc)"
+            title={t('yojnaSetu.docketPreview.closeEsc')}
           >
             <X className="w-5 h-5" />
           </button>
@@ -247,23 +249,23 @@ export function DocketPreviewModal({ isOpen, onClose, scheme }) {
                 </span>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
                   <div>
-                    <span className="text-neutral-500 dark:text-[#8A8F98] block">Applicant Name</span>
+                    <span className="text-neutral-500 dark:text-[#8A8F98] block">{t('yojnaSetu.docketPreview.applicantName')}</span>
                     <span className="font-semibold text-neutral-900 dark:text-[#EDEDED]">{activeMember.name}</span>
                   </div>
                   <div>
-                    <span className="text-neutral-500 dark:text-[#8A8F98] block">Aadhaar (Masked)</span>
+                    <span className="text-neutral-500 dark:text-[#8A8F98] block">{t('yojnaSetu.docketPreview.aadhaarMasked')}</span>
                     <span className="font-mono font-semibold text-neutral-900 dark:text-[#EDEDED]">{activeMember.maskedAadhaar}</span>
                   </div>
                   <div>
-                    <span className="text-neutral-500 dark:text-[#8A8F98] block">Age / Category</span>
+                    <span className="text-neutral-500 dark:text-[#8A8F98] block">{t('yojnaSetu.docketPreview.ageCategory')}</span>
                     <span className="font-semibold text-neutral-900 dark:text-[#EDEDED]">{activeMember.age} Yrs · {activeMember.category}</span>
                   </div>
                   <div>
-                    <span className="text-neutral-500 dark:text-[#8A8F98] block">Sector</span>
+                    <span className="text-neutral-500 dark:text-[#8A8F98] block">{t('yojnaSetu.docketPreview.sector')}</span>
                     <span className="font-semibold text-neutral-900 dark:text-[#EDEDED]">{scheme.sector}</span>
                   </div>
                   <div className="col-span-2">
-                    <span className="text-neutral-500 dark:text-[#8A8F98] block">Target Scheme</span>
+                    <span className="text-neutral-500 dark:text-[#8A8F98] block">{t('yojnaSetu.docketPreview.targetScheme')}</span>
                     <span className="font-semibold text-neutral-900 dark:text-[#EDEDED]">{scheme.name}</span>
                   </div>
                 </div>
@@ -407,7 +409,7 @@ export function DocketPreviewModal({ isOpen, onClose, scheme }) {
               onClick={onClose}
               className="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-neutral-700 dark:text-[#8A8F98] hover:bg-neutral-200 dark:hover:bg-[#16191F] transition-colors"
             >
-              Close
+              {t('common.close')}
             </button>
 
             {activeTab === 'human' && (

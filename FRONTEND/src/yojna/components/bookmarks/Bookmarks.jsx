@@ -1,6 +1,6 @@
 import React from 'react';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import {
   Bookmark,
   Star,
@@ -12,7 +12,7 @@ import {
 
 export const Bookmarks = () => {
   const { schemes, bookmarks, toggleBookmark, navigateTo } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const bookmarkedSchemes = schemes.filter((s) => bookmarks.includes(s.id));
 
@@ -108,15 +108,15 @@ export const Bookmarks = () => {
                   onClick={() => navigateTo('application-form', [scheme])}
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
                 >
-                  <span>Apply Now</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>{t('yojnaSetu.actions.applyNow', 'Apply Now')}</span>
+                  <ArrowRight className="w-4 h-4 rtl:rotate-180" />
                 </button>
 
                 <button
                   onClick={() => navigateTo('scheme-detail', scheme.id)}
                   className="p-2.5 rounded-xl bg-neutral-100 dark:bg-[#16191F] hover:bg-neutral-200 dark:hover:bg-[#1D212A] text-neutral-700 dark:text-[#EDEDED] border border-neutral-200 dark:border-white/[0.08] transition-colors cursor-pointer"
-                  title="View Scheme Details"
-                  aria-label="View Scheme Details"
+                  title={t('yojnaSetu.viewSchemeDetails', 'View Scheme Details')}
+                  aria-label={t('yojnaSetu.viewSchemeDetails', 'View Scheme Details')}
                 >
                   <Info className="w-4 h-4" />
                 </button>

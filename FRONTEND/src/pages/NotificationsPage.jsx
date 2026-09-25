@@ -1,23 +1,28 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AlertTriangle, CheckCircle2, Bell, Sparkles } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { AlertTriangle, CheckCircle2, Sparkles } from "lucide-react";
 import notificationsData from "../data/mock/notifications.json";
 
 /**
  * NotificationsPage (/notifications)
  * Features:
  *   • Filter chips: [All] [Unread] [Schemes] [Documents] [Governance]
- *   • Exactly 3 seeded cards from notifications.json:
- *       1. PM-KISAN Application Approved
- *       2. Document Expiry Alert (action routes to /profile and MUST NOT mutate state directly)
- *       3. Ayushman Bharat PM-JAY Match
+ *   • Seeded cards from notifications.json (localized via i18n)
  *   • Minimalist Lucide SVG icons (ZERO raw emojis)
  */
 export default function NotificationsPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState("All");
 
-  const filters = ["All", "Unread", "Schemes", "Documents", "Governance"];
+  const filters = [
+    { id: "All", label: t("notifications.filters.all", "All") },
+    { id: "Unread", label: t("notifications.filters.unread", "Unread") },
+    { id: "Schemes", label: t("notifications.filters.schemes", "Schemes") },
+    { id: "Documents", label: t("notifications.filters.documents", "Documents") },
+    { id: "Governance", label: t("notifications.filters.governance", "Governance") }
+  ];
 
   const filteredNotifications = notificationsData.filter((item) => {
     if (activeFilter === "All") return true;
@@ -30,7 +35,6 @@ export default function NotificationsPage() {
 
   const handleActionClick = (actionRoute) => {
     if (actionRoute) {
-      // Navigates to target route without mutating household state
       navigate(actionRoute);
     }
   };
@@ -40,21 +44,21 @@ export default function NotificationsPage() {
       {/* Page Header */}
       <div className="border-b border-slate-200 dark:border-white/[0.08] pb-4">
         <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-[#EDEDED] uppercase">
-          Notifications & Updates
+          {t("notifications.pageTitle", "Notifications & Updates")}
         </h1>
         <p className="text-xs text-slate-500 dark:text-[#8A8F98] mt-0.5">
-          Real-time delivery notices, document validity alerts, and scheme matching
+          {t("notifications.pageSubtitle", "Delivery notices, document validity alerts, and scheme matching")}
         </p>
       </div>
 
       {/* Filter Chips: [All] [Unread] [Schemes] [Documents] [Governance] */}
       <div className="flex flex-wrap gap-2">
         {filters.map((filter) => {
-          const isActive = activeFilter === filter;
+          const isActive = activeFilter === filter.id;
           return (
             <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
+              key={filter.id}
+              onClick={() => setActiveFilter(filter.id)}
               type="button"
               className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors duration-200 cursor-pointer ${
                 isActive
@@ -62,7 +66,7 @@ export default function NotificationsPage() {
                   : "bg-white dark:bg-[#0F1115] text-slate-600 dark:text-[#8A8F98] border border-slate-200 dark:border-white/[0.08] hover:bg-slate-100 dark:hover:bg-[#16191F] dark:hover:text-[#EDEDED]"
               }`}
             >
-              {filter}
+              {filter.label}
             </button>
           );
         })}
@@ -72,7 +76,7 @@ export default function NotificationsPage() {
       <div className="space-y-4">
         {filteredNotifications.length === 0 ? (
           <div className="text-center py-12 text-slate-400 dark:text-[#8A8F98] text-xs bg-white dark:bg-[#0F1115] rounded-2xl border border-slate-200 dark:border-white/[0.08] shadow-sm">
-            No notifications found under "{activeFilter}".
+            {t("notifications.emptyState", "No notifications match the current filter.")}
           </div>
         ) : (
           filteredNotifications.map((notif) => {
@@ -90,7 +94,7 @@ export default function NotificationsPage() {
                     : "border-slate-200 dark:border-white/[0.08]"
                 }`}
               >
-                <div className="flex items-start space-x-3.5">
+                <div className="flex items-start space-x-3.5 rtl:space-x-reverse">
                   <div
                     className={`p-2.5 rounded-xl shrink-0 mt-0.5 border ${
                       isWarning
@@ -109,19 +113,19 @@ export default function NotificationsPage() {
                     )}
                   </div>
                   <div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 rtl:space-x-reverse">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-[#EDEDED]">
-                        {notif.title}
+                        {t(`notifications.items.${notif.id}.title`, notif.title)}
                       </h3>
                       {!notif.isRead && (
                         <span className="w-2 h-2 rounded-full bg-blue-600 inline-block" />
                       )}
                     </div>
                     <p className="text-xs text-slate-600 dark:text-[#8A8F98] mt-1 leading-relaxed">
-                      {notif.description}
+                      {t(`notifications.items.${notif.id}.description`, notif.description)}
                     </p>
                     <span className="text-[10px] text-slate-400 dark:text-[#8A8F98]/70 font-mono mt-1.5 inline-block">
-                      Category: {notif.category}
+                      {t("notifications.categoryLabel", "Category:")} {t(`notifications.filters.${notif.category.toLowerCase()}`, notif.category)}
                     </span>
                   </div>
                 </div>
@@ -133,7 +137,7 @@ export default function NotificationsPage() {
                     onClick={() => handleActionClick(notif.actionRoute)}
                     className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white transition shadow-xs whitespace-nowrap self-start sm:self-auto cursor-pointer"
                   >
-                    {notif.actionLabel || "Resolve in Profile"}
+                    {notif.actionLabel ? t(`notifications.items.${notif.id}.actionLabel`, notif.actionLabel) : t("notifications.resolveInProfile", "Resolve in Profile")}
                   </button>
                 )}
               </div>

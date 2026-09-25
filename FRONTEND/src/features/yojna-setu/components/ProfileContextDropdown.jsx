@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHousehold } from '../../../context/HouseholdContext';
 import { useData } from '../../../yojna/context/DataContext';
 import {
@@ -17,6 +18,7 @@ import {
  * Citizen/Household members and Registered Enterprise/Business profiles.
  */
 export function ProfileContextDropdown() {
+  const { t } = useTranslation();
   const { household, activeMemberId, activeMember, switchMember } = useHousehold();
   const { businesses, activeContext, setActiveContext, navigateTo } = useData();
   const [isOpen, setIsOpen] = useState(false);
@@ -39,8 +41,8 @@ export function ProfileContextDropdown() {
 
   // Determine current active trigger label and icon
   const activeLabel = isPersonal
-    ? `Personal: ${activeMember?.name || 'Citizen'}`
-    : `Business: ${activeBusiness?.businessName || 'Enterprise'}`;
+    ? t('yojnaSetu.contextDropdown.personalTrigger', { name: activeMember?.name || 'Citizen' })
+    : t('yojnaSetu.contextDropdown.businessTrigger', { name: activeBusiness?.businessName || 'Enterprise' });
 
   const handleSelectMember = (memberId) => {
     switchMember(memberId);
@@ -87,13 +89,13 @@ export function ProfileContextDropdown() {
 
       {/* Dropdown Menu Modal / Popover */}
       {isOpen && (
-        <div className="absolute left-0 mt-2 w-72 sm:w-80 rounded-2xl bg-white dark:bg-[#0F1115] border border-neutral-200 dark:border-white/[0.08] shadow-2xl z-50 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-150">
+        <div className="absolute left-0 rtl:left-auto rtl:right-0 mt-2 w-72 sm:w-80 rounded-2xl bg-white dark:bg-[#0F1115] border border-neutral-200 dark:border-white/[0.08] shadow-2xl z-50 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-150">
           <div className="max-h-[380px] overflow-y-auto custom-scrollbar p-2 space-y-3">
             {/* Section 1: Household Members */}
             <div>
               <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-neutral-400 dark:text-[#8A8F98] flex items-center gap-1.5">
                 <Users className="w-3.5 h-3.5" />
-                <span>Household Profiles ({members.length})</span>
+                <span>{t('yojnaSetu.contextDropdown.householdProfiles', { count: members.length })}</span>
               </div>
 
               <div className="space-y-1 mt-1">
@@ -104,7 +106,7 @@ export function ProfileContextDropdown() {
                       key={member.memberId}
                       type="button"
                       onClick={() => handleSelectMember(member.memberId)}
-                      className={`w-full px-3 py-2 rounded-xl text-left flex items-center justify-between transition-colors cursor-pointer ${
+                      className={`w-full px-3 py-2 rounded-xl text-left rtl:text-right flex items-center justify-between transition-colors cursor-pointer ${
                         isSelected
                           ? 'bg-blue-500/10 text-blue-700 dark:text-blue-400 font-bold border border-blue-500/20'
                           : 'hover:bg-neutral-100 dark:hover:bg-[#16191F] text-neutral-700 dark:text-[#EDEDED]'
@@ -119,12 +121,12 @@ export function ProfileContextDropdown() {
                             {member.name}
                           </div>
                           <div className="text-[10px] text-neutral-500 dark:text-[#8A8F98] truncate">
-                            {member.relationship === 'HEAD' ? 'Head of Household' : member.relationship} · {member.age} Yrs
+                            {member.relationship === 'HEAD' ? t('yojnaSetu.contextDropdown.headOfHousehold') : member.relationship} · {member.age} Yrs
                           </div>
                         </div>
                       </div>
 
-                      {isSelected && <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 ml-2" />}
+                      {isSelected && <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 ml-2 rtl:ml-0 rtl:mr-2" />}
                     </button>
                   );
                 })}
@@ -135,7 +137,7 @@ export function ProfileContextDropdown() {
             <div className="pt-2 border-t border-neutral-100 dark:border-white/[0.06]">
               <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-neutral-400 dark:text-[#8A8F98] flex items-center gap-1.5">
                 <Briefcase className="w-3.5 h-3.5" />
-                <span>Enterprise Profiles ({businesses?.length || 0})</span>
+                <span>{t('yojnaSetu.contextDropdown.enterpriseProfiles', { count: businesses?.length || 0 })}</span>
               </div>
 
               <div className="space-y-1 mt-1">
@@ -146,7 +148,7 @@ export function ProfileContextDropdown() {
                       key={biz.id}
                       type="button"
                       onClick={() => handleSelectBusiness(biz.id)}
-                      className={`w-full px-3 py-2 rounded-xl text-left flex items-center justify-between transition-colors cursor-pointer ${
+                      className={`w-full px-3 py-2 rounded-xl text-left rtl:text-right flex items-center justify-between transition-colors cursor-pointer ${
                         isSelected
                           ? 'bg-purple-500/10 text-purple-700 dark:text-purple-400 font-bold border border-purple-500/20'
                           : 'hover:bg-neutral-100 dark:hover:bg-[#16191F] text-neutral-700 dark:text-[#EDEDED]'
@@ -166,7 +168,7 @@ export function ProfileContextDropdown() {
                         </div>
                       </div>
 
-                      {isSelected && <Check className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0 ml-2" />}
+                      {isSelected && <Check className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0 ml-2 rtl:ml-0 rtl:mr-2" />}
                     </button>
                   );
                 })}
@@ -182,7 +184,7 @@ export function ProfileContextDropdown() {
               className="w-full py-2 px-3 rounded-xl text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-500/10 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>+ Add Business Profile</span>
+              <span>{t('yojnaSetu.contextDropdown.addBusinessProfile')}</span>
             </button>
           </div>
         </div>

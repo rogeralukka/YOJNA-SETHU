@@ -1,14 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import { AddEditSchemeModal } from './AddEditSchemeModal';
 import { getOccupationLabel, getSectorLabel, getLifeStatusLabel } from '../../data/taxonomy';
 import Icon from '../../../features/yojna-setu/components/Icon';
 
 export const SchemeManagement = () => {
   const { schemes, deleteScheme, getAdminAuditLogs } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');

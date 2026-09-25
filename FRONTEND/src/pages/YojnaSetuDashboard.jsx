@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useData, CITIZEN_VIEWS, ADMIN_VIEWS } from "../yojna/context/DataContext";
 import { useHousehold } from "../context/HouseholdContext";
 import { useAuth } from "../yojna/context/AuthContext";
@@ -30,10 +30,28 @@ import DocketModal from "../components/shared/DocketModal";
  */
 export default function YojnaSetuDashboard() {
   const navigate = useNavigate();
-  const { currentView, selectedSchemeId, schemes, createApplication, showToast } = useData();
+  const { subview } = useParams();
+  const { currentView, navigateTo, selectedSchemeId, schemes, createApplication, showToast } = useData();
   const { isAdmin } = useAuth();
   const { activeMember, headOfHousehold } = useHousehold();
   const [docketModalOpen, setDocketModalOpen] = useState(false);
+
+  // Sync route subview parameter to DataContext view
+  useEffect(() => {
+    if (subview) {
+      if (subview === "notifications") {
+        navigateTo("notifications");
+      } else if (subview === "applications" || subview === "my-applications") {
+        navigateTo("my-applications");
+      } else if (subview === "business" || subview === "my-business") {
+        navigateTo("my-business");
+      } else if (subview === "bookmarks") {
+        navigateTo("bookmarks");
+      } else if (subview === "share" || subview === "share-eligibility") {
+        navigateTo("share-eligibility");
+      }
+    }
+  }, [subview, navigateTo]);
 
   // If user requests profile view in Yojna, route to NagrikPath Unified Profile
   useEffect(() => {

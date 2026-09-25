@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Sparkles, Compass, AlertCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useUI } from "../../context/UIContext";
 
 export default function IntentResultsDropdown({
@@ -13,6 +14,7 @@ export default function IntentResultsDropdown({
   onClose,
   onSelect
 }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
   const { registerModalOpen, registerModalClose } = useUI();
@@ -73,13 +75,13 @@ export default function IntentResultsDropdown({
                   {moduleName || route}
                 </div>
                 <div className="text-xs text-slate-500 dark:text-[#8A8F98] truncate">
-                  Matched keyword: <span className="font-semibold text-blue-600 dark:text-blue-400">"{matchedKeyword}"</span>
+                  {t("intentRouter.matchedKeyword", { keyword: matchedKeyword })}
                 </div>
               </div>
             </div>
-            <div className="flex items-center space-x-1 text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">
-              <span className="hidden sm:inline">Press Enter to Jump</span>
-              <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+            <div className="flex items-center space-x-1 rtl:space-x-reverse text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">
+              <span className="hidden sm:inline">{t("intentRouter.pressEnterToJump")}</span>
+              <ArrowRight size={15} className="group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:rotate-180 transition-transform" />
             </div>
           </button>
         </div>
@@ -88,10 +90,10 @@ export default function IntentResultsDropdown({
       {/* 2. ZERO-MATCH / AMBIGUOUS INTENT CANDIDATES */}
       {status === "candidates" && (
         <div className="p-4 space-y-3">
-          <div className="flex items-center space-x-2 text-xs font-semibold text-slate-700 dark:text-[#EDEDED]">
+          <div className="flex items-center space-x-2 rtl:space-x-reverse text-xs font-semibold text-slate-700 dark:text-[#EDEDED]">
             <AlertCircle size={15} className="text-amber-500 shrink-0" />
             {/* Exact String from Specification (Item 2) */}
-            <span>No direct intent match. Showing closest categories</span>
+            <span>{t("intentRouter.noDirectMatch")}</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 pt-1">

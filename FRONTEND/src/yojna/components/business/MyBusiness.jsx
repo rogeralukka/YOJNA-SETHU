@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import { BusinessModal } from './BusinessModal';
 import {
   Factory,
@@ -19,7 +19,7 @@ import {
 
 export const MyBusiness = () => {
   const { businesses, deleteBusiness, setActiveContext, navigateTo } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingBiz, setEditingBiz] = useState(null);
@@ -94,8 +94,8 @@ export const MyBusiness = () => {
                     <button
                       onClick={() => handleOpenEdit(biz)}
                       className="w-8 h-8 rounded-lg flex items-center justify-center text-neutral-500 dark:text-[#8A8F98] hover:bg-neutral-100 dark:hover:bg-[#16191F] hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
-                      title="Edit business"
-                      aria-label="Edit business"
+                      title={t('yojnaSetu.editBusinessTooltip', 'Edit business')}
+                      aria-label={t('yojnaSetu.editBusinessTooltip', 'Edit business')}
                     >
                       <Pencil className="w-4 h-4" />
                     </button>
@@ -103,8 +103,8 @@ export const MyBusiness = () => {
                     <button
                       onClick={() => setDeleteConfirmId(biz.id)}
                       className="w-8 h-8 rounded-lg flex items-center justify-center text-neutral-500 dark:text-[#8A8F98] hover:bg-rose-500/10 hover:text-rose-600 dark:hover:text-rose-400 transition-colors cursor-pointer"
-                      title="Delete business"
-                      aria-label="Delete business"
+                      title={t('yojnaSetu.deleteBusinessTooltip', 'Delete business')}
+                      aria-label={t('yojnaSetu.deleteBusinessTooltip', 'Delete business')}
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -164,8 +164,8 @@ export const MyBusiness = () => {
                 onClick={() => handleCheckEligibility(biz.id)}
                 className="mt-auto w-full py-2.5 px-4 rounded-xl bg-neutral-100 hover:bg-blue-600 hover:text-white dark:bg-[#16191F] dark:hover:bg-blue-600 border border-neutral-200 dark:border-white/[0.08] text-neutral-800 dark:text-[#EDEDED] font-semibold text-xs flex items-center justify-center gap-2 transition-all relative z-10 cursor-pointer"
               >
-                <span>Check Eligibility</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>{t('yojnaSetu.checkEligibility', 'Check Eligibility')}</span>
+                <ArrowRight className="w-4 h-4 rtl:rotate-180" />
               </button>
             </div>
           );

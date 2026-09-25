@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   CreditCard,
   ArrowRight,
@@ -38,6 +39,7 @@ export function SchemeCard({
   onInspectDelta,
   onSynthesizeDocket
 }) {
+  const { t } = useTranslation();
   const department = getSchemeDepartment(scheme);
   const benefit = getSchemeBenefit(scheme);
 
@@ -48,7 +50,7 @@ export function SchemeCard({
   if (scheme.state === 'ELIGIBLE-READY') {
     badgePill = (
       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap leading-none bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shrink-0">
-        Ready to Apply
+        {t('yojnaSetu.card.readyToApply')}
       </span>
     );
 
@@ -57,13 +59,17 @@ export function SchemeCard({
         onClick={() => onSynthesizeDocket(scheme)}
         className="w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.99] transition-all shadow-md shadow-blue-500/10 flex items-center justify-center gap-1.5 cursor-pointer"
       >
-        <span>Synthesize Application Docket</span>
-        <ArrowRight className="w-4 h-4" />
+        <span>{t('yojnaSetu.card.synthesizeDocket')}</span>
+        <ArrowRight className="w-4 h-4 rtl:rotate-180" />
       </button>
     );
   } else if (scheme.state === 'ELIGIBLE-BLOCKED') {
     const expiredCount = scheme.delta?.expiredDocs?.length || 0;
-    const badgeText = expiredCount > 0 ? (expiredCount === 1 ? '1 Prerequisite Expired' : `${expiredCount} Prerequisites Expired`) : 'Missing Credential';
+    const badgeText = expiredCount > 0
+      ? (expiredCount === 1
+          ? t('yojnaSetu.card.prerequisiteExpiredSingular', { count: 1 })
+          : t('yojnaSetu.card.prerequisitesExpiredPlural', { count: expiredCount }))
+      : t('yojnaSetu.card.missingCredential');
 
     badgePill = (
       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap leading-none bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 shrink-0">
@@ -76,15 +82,15 @@ export function SchemeCard({
         onClick={() => onInspectDelta(scheme)}
         className="w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-neutral-800 dark:text-[#EDEDED] bg-neutral-100 hover:bg-neutral-200 dark:bg-[#16191F] dark:hover:bg-[#1D212A] border border-neutral-300 dark:border-white/[0.08] active:scale-[0.99] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
       >
-        <span>Inspect Eligibility Delta</span>
-        <ArrowRight className="w-4 h-4" />
+        <span>{t('yojnaSetu.card.inspectDelta')}</span>
+        <ArrowRight className="w-4 h-4 rtl:rotate-180" />
       </button>
     );
   } else {
     // INELIGIBLE
     badgePill = (
       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap leading-none bg-neutral-500/10 text-neutral-500 dark:text-[#8A8F98] border border-neutral-500/20 shrink-0">
-        Criteria Not Met
+        {t('yojnaSetu.card.criteriaNotMet')}
       </span>
     );
 
@@ -166,7 +172,7 @@ export function SchemeCard({
             <CreditCard className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
             <div>
               <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-[#8A8F98] block">
-                Entitlement / Benefit
+                {t('yojnaSetu.card.entitlementBenefit')}
               </span>
               <span className="text-xs sm:text-sm font-semibold text-neutral-800 dark:text-[#EDEDED]">
                 {benefit}
@@ -178,7 +184,7 @@ export function SchemeCard({
         {/* Ineligible Reason if applicable */}
         {scheme.state === 'INELIGIBLE' && (
           <div className="mt-3 p-2.5 rounded-lg bg-rose-500/[0.06] border border-rose-500/20 text-xs text-rose-700 dark:text-rose-400">
-            <span className="font-semibold block mb-0.5">Reason:</span>
+            <span className="font-semibold block mb-0.5">{t('yojnaSetu.card.reasonLabel')}</span>
             {scheme.ineligibleReason}
           </div>
         )}
@@ -189,7 +195,7 @@ export function SchemeCard({
         <div className="flex items-center justify-between text-[11px] text-neutral-500 dark:text-[#8A8F98]">
           <span className="inline-flex items-center gap-1">
             <Clock className="w-3.5 h-3.5" />
-            {scheme.deadline || 'Always Open'}
+            {scheme.deadline || t('yojnaSetu.card.alwaysOpen')}
           </span>
           <span className="font-mono text-[10px] text-neutral-400 dark:text-neutral-500 uppercase">
             {scheme.id}

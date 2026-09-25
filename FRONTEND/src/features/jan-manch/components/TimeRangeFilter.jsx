@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const TIME_RANGES = [
   { id: "3Y", label: "3Y", description: "Past 3 Fiscal Years" },
@@ -12,10 +13,12 @@ const TIME_RANGES = [
  * Compact segmented pill container with high-contrast Obsidian dark styling.
  */
 export default function TimeRangeFilter({ selectedRange = "ALL", onRangeChange }) {
+  const { t } = useTranslation();
+
   return (
     <div
       role="group"
-      aria-label="Time range selector"
+      aria-label={t("janManch.timeRangeSelector")}
       className="inline-flex items-center p-1 rounded-lg bg-neutral-100 dark:bg-[#16191F] border border-neutral-200 dark:border-white/[0.08]"
     >
       {TIME_RANGES.map((range) => {

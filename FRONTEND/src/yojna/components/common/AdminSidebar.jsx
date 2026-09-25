@@ -1,6 +1,6 @@
 import React from 'react';
 import { useData, ADMIN_VIEWS } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import {
   LayoutDashboard,
   FileText,
@@ -13,7 +13,7 @@ import {
 
 export const AdminSidebar = () => {
   const { currentView, navigateTo, isSidebarCollapsed, setIsSidebarCollapsed } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const activeView = ADMIN_VIEWS.includes(currentView) ? currentView : 'admin-overview';
 

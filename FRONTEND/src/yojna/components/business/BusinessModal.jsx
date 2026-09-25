@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import { Building2, X, AlertCircle } from 'lucide-react';
 
 export const BusinessModal = ({ isOpen, onClose, editingBusiness = null }) => {
   const { addBusiness, updateBusiness } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const [businessName, setBusinessName] = useState('');
   const [businessType, setBusinessType] = useState('Private Limited');

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { User, ChevronDown, ArrowRight, Lock, AlertTriangle } from "lucide-react";
 import { useHousehold } from "../../context/HouseholdContext";
 import PinGateModal from "./PinGateModal";
@@ -10,6 +11,7 @@ import PinGateModal from "./PinGateModal";
  * Navigating to /profile via this chip sends state: { from: location.pathname } for context logo resolution.
  */
 export default function ProfileChip() {
+  const { t } = useTranslation();
   const { household, activeMemberId, activeMember, setActiveMember } = useHousehold();
   const location = useLocation();
 
@@ -65,19 +67,19 @@ export default function ProfileChip() {
 
   return (
     <>
-      <div className="relative inline-block text-left" ref={containerRef}>
+      <div className="relative inline-block text-start" ref={containerRef}>
         {/* Profile Chip Button */}
         <button
           type="button"
           onClick={() => setIsDropdownOpen((prev) => !prev)}
-          className="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0F1115] text-slate-800 dark:text-[#EDEDED] hover:bg-slate-50 dark:hover:bg-[#16191F] text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0F1115] text-slate-800 dark:text-[#EDEDED] hover:bg-slate-50 dark:hover:bg-[#16191F] text-xs font-semibold shadow-xs transition-colors cursor-pointer"
           aria-haspopup="true"
           aria-expanded={isDropdownOpen}
         >
           <div className="w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 flex items-center justify-center text-[11px] font-bold">
             <User size={12} />
           </div>
-          <span className="max-w-[120px] truncate">{activeMember?.name || "Citizen"}</span>
+          <span className="max-w-[120px] truncate">{activeMember?.name || t("nav.citizenFallback", "Citizen")}</span>
           <ChevronDown
             size={13}
             className={`text-slate-400 dark:text-[#8A8F98] transition-transform duration-200 ${
@@ -88,7 +90,7 @@ export default function ProfileChip() {
 
         {/* Dropdown Menu */}
         {isDropdownOpen && (
-          <div className="absolute right-0 top-full mt-2 w-72 bg-white dark:bg-[#0F1115] shadow-xl rounded-2xl border border-slate-200 dark:border-white/[0.08] p-3 z-50 animate-in fade-in zoom-in-95 duration-150">
+          <div className="absolute end-0 top-full mt-2 w-72 bg-white dark:bg-[#0F1115] shadow-xl rounded-2xl border border-slate-200 dark:border-white/[0.08] p-3 z-50 animate-in fade-in zoom-in-95 duration-150">
             {/* Active Citizen Info */}
             <div className="px-3 py-2.5 bg-slate-50 dark:bg-[#16191F] border border-slate-100 dark:border-white/[0.08] rounded-xl mb-2">
               <div className="flex items-center justify-between">
@@ -111,15 +113,15 @@ export default function ProfileChip() {
               onClick={() => setIsDropdownOpen(false)}
               className="flex items-center justify-between px-3 py-2 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-[#16191F] rounded-xl transition-colors"
             >
-              <span>Unified Family Profile</span>
-              <ArrowRight size={13} />
+              <span>{t("nav.unifiedFamilyProfile", "Unified Family Profile")}</span>
+              <ArrowRight size={13} className="rtl:rotate-180 transition-transform" />
             </Link>
 
             <div className="border-t border-slate-100 dark:border-white/[0.08] my-2" />
 
             {/* Household Members Switcher */}
             <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-[#8A8F98]">
-              Switch Member Profile
+              {t("nav.switchMemberProfile", "Switch Member Profile")}
             </div>
             <div className="space-y-1 mt-1">
               {household?.members?.map((m) => {
@@ -130,34 +132,34 @@ export default function ProfileChip() {
                     key={m.memberId}
                     type="button"
                     onClick={() => handleMemberSelect(m)}
-                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs transition-colors cursor-pointer ${
+                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-start text-xs transition-colors cursor-pointer ${
                       isSelected
                         ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-bold border border-blue-200 dark:border-blue-800/60"
                         : "hover:bg-slate-100 dark:hover:bg-[#16191F] text-slate-600 dark:text-[#8A8F98] dark:hover:text-[#EDEDED]"
                     }`}
                   >
                     <div>
-                      <div className="flex items-center space-x-1.5">
+                      <div className="flex items-center gap-1.5">
                         <span>{m.name}</span>
                         {isSelected && (
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
                         )}
                       </div>
                       <div className="text-[10px] text-slate-400 dark:text-[#8A8F98]/70">
-                        {m.relation} • Age {m.age}
+                        {m.relation} • {t("common.age", "Age")} {m.age}
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-1 text-[11px] text-slate-400">
+                    <div className="flex items-center gap-1 text-[11px] text-slate-400">
                       {hasPin ? (
                         <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium text-[10px]">
                           <Lock size={11} />
-                          <span>PIN</span>
+                          <span>{t("common.pin", "PIN")}</span>
                         </span>
                       ) : (
                         <span className="flex items-center gap-1 text-amber-600 dark:text-amber-400 font-medium text-[10px]">
                           <AlertTriangle size={11} />
-                          <span>No PIN</span>
+                          <span>{t("common.noPin", "No PIN")}</span>
                         </span>
                       )}
                     </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Landmark,
   GraduationCap,
@@ -23,52 +24,53 @@ import IntentRouterSearch from "../features/intent-router/IntentRouterSearch";
  *   • NO floating AI icon
  */
 export default function HomeDashboard() {
+  const { t } = useTranslation();
   const { activeMember } = useHousehold();
 
   const domainModules = [
     {
       path: "/yojna-setu",
-      title: "Yojna Setu",
-      subtitle: "Government Schemes & Welfare",
-      description: "Discover central and state schemes, evaluate eligibility, and track application disbursements.",
+      title: "YojnaSetu",
+      subtitle: t("hub.modules.yojnaSetu.subtitle", "Government Schemes & Welfare"),
+      description: t("hub.modules.yojnaSetu.description", "Central and state schemes, eligibility checks, and application tracking."),
       icon: Landmark,
-      badge: "Active Module",
+      badge: t("hub.badges.activeModule", "Live"),
       badgeColor: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800/50"
     },
     {
       path: "/shiksha-setu",
-      title: "Shiksha Setu",
-      subtitle: "Education & Skilling",
-      description: "Scholarships, skill certifications, education loan interest subsidies, and collegiate verification.",
+      title: "ShikshaSetu",
+      subtitle: t("hub.modules.shikshaSetu.subtitle", "Education & Skilling"),
+      description: t("hub.modules.shikshaSetu.description", "Scholarships, skill certifications, and education loan subsidies."),
       icon: GraduationCap,
-      badge: "Phase 2 Pipeline",
+      badge: t("hub.badges.pipeline", "Coming Soon"),
       badgeColor: "bg-slate-100 text-slate-600 dark:bg-[#16191F] dark:text-[#8A8F98] border-slate-200 dark:border-white/[0.08]"
     },
     {
       path: "/rozgar-setu",
-      title: "Rozgar Setu",
-      subtitle: "Employment & Jobs",
-      description: "Employment exchange registration, MGNREGA workfare wages, and apprenticeship programs.",
+      title: "RozgarSetu",
+      subtitle: t("hub.modules.rozgarSetu.subtitle", "Employment & Jobs"),
+      description: t("hub.modules.rozgarSetu.description", "Job registration, MGNREGA wages, and apprenticeship programs."),
       icon: Briefcase,
-      badge: "Phase 2 Pipeline",
+      badge: t("hub.badges.pipeline", "Coming Soon"),
       badgeColor: "bg-slate-100 text-slate-600 dark:bg-[#16191F] dark:text-[#8A8F98] border-slate-200 dark:border-white/[0.08]"
     },
     {
       path: "/kisan-setu",
-      title: "Kisan Setu",
-      subtitle: "Agriculture & Mandi",
-      description: "PM-KISAN direct transfers, crop insurance claims, live APMC mandi rates, and soil health cards.",
+      title: "KisanSetu",
+      subtitle: t("hub.modules.kisanSetu.subtitle", "Agriculture & Mandi"),
+      description: t("hub.modules.kisanSetu.description", "PM-KISAN transfers, crop insurance, and mandi rates."),
       icon: Sprout,
-      badge: "Phase 2 Pipeline",
+      badge: t("hub.badges.pipeline", "Coming Soon"),
       badgeColor: "bg-slate-100 text-slate-600 dark:bg-[#16191F] dark:text-[#8A8F98] border-slate-200 dark:border-white/[0.08]"
     },
     {
       path: "/nagar-setu",
-      title: "Nagar Setu",
-      subtitle: "Municipal Services",
-      description: "Civil certificates, property tax dues, water connections, and civic grievance resolution.",
+      title: "NagarSetu",
+      subtitle: t("hub.modules.nagarSetu.subtitle", "Municipal Services"),
+      description: t("hub.modules.nagarSetu.description", "Civil certificates, property tax, and civic grievances."),
       icon: Building2,
-      badge: "Phase 2 Pipeline",
+      badge: t("hub.badges.pipeline", "Coming Soon"),
       badgeColor: "bg-slate-100 text-slate-600 dark:bg-[#16191F] dark:text-[#8A8F98] border-slate-200 dark:border-white/[0.08]"
     }
   ];
@@ -79,13 +81,13 @@ export default function HomeDashboard() {
       <div className="relative overflow-hidden bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-sm border border-blue-600/30">
         <div className="max-w-2xl space-y-2">
           <div className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-white/15 text-[11px] font-semibold uppercase tracking-wider text-blue-100">
-            <span>Federated Citizen Hub</span>
+            <span>{t("hub.bannerTag", "Federated Citizen Hub")}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            Welcome back, {activeMember?.name || "Rahul"}!
+            {t("hub.welcomeBack", { name: activeMember?.name || t("nav.citizenFallback", "Citizen"), defaultValue: "Welcome back, Rahul!" })}
           </h1>
           <p className="text-sm text-blue-100/90 leading-relaxed">
-            Access citizen welfare entitlements, federated DPI services, and verified document credentials under one national reference architecture.
+            {t("hub.bannerDesc", "Citizen welfare, DPI services, and verified documents — all in one portal.")}
           </p>
         </div>
       </div>
@@ -95,10 +97,10 @@ export default function HomeDashboard() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white uppercase">
-              All Services
+              {t("nav.allServices", "All Services")}
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Select a specialized domain portal to orchestrate citizen services
+              {t("hub.allServicesSubtitle", "Select a specialized domain portal to orchestrate citizen services")}
             </p>
           </div>
         </div>
@@ -145,8 +147,8 @@ export default function HomeDashboard() {
                 </div>
 
                 <div className="pt-4 mt-4 border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-blue-400">
-                  <span>Enter Gateway</span>
-                  <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                  <span>{t("hub.enterGateway", "Enter Gateway")}</span>
+                  <ArrowRight size={14} className="group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:rotate-180 transition-transform" />
                 </div>
               </Link>
             );

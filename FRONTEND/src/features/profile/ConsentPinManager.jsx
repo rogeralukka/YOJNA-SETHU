@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { KeyRound, Lock, AlertTriangle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useHousehold } from "../../context/HouseholdContext";
 import PinGateModal from "../../components/shared/PinGateModal";
 
 export default function ConsentPinManager() {
+  const { t } = useTranslation();
   const { household } = useHousehold();
   const [pinModalMember, setPinModalMember] = useState(null);
 
@@ -31,10 +33,10 @@ export default function ConsentPinManager() {
           </div>
           <div>
             <h2 className="text-base font-semibold text-slate-900 dark:text-[#EDEDED]">
-              Consent PIN Manager
+              {t("profile.consentPinTitle")}
             </h2>
             <p className="text-xs text-slate-500 dark:text-[#8A8F98]">
-              Per-member consent authorization PINs for credential and scheme applications
+              {t("profile.consentPinSubtitle")}
             </p>
           </div>
         </div>
@@ -60,12 +62,12 @@ export default function ConsentPinManager() {
                   {hasPin ? (
                     <span className="text-emerald-600 dark:text-emerald-400 flex items-center space-x-2">
                       <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
-                      <span>PIN Configured</span>
+                      <span>{t("profile.pinConfigured")}</span>
                     </span>
                   ) : (
                     <span className="text-amber-600 dark:text-amber-400 flex items-center space-x-2">
                       <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
-                      <span>No PIN Set</span>
+                      <span>{t("profile.noPinSet")}</span>
                     </span>
                   )}
                 </div>
@@ -80,7 +82,7 @@ export default function ConsentPinManager() {
                     : "bg-blue-600 text-white hover:bg-blue-700 shadow-xs"
                 }`}
               >
-                {hasPin ? "Update PIN" : "Set PIN"}
+                {hasPin ? t("profile.updatePin") : t("profile.setPin")}
               </button>
             </div>
           );

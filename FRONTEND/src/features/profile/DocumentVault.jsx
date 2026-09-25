@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useHousehold } from "../../context/HouseholdContext";
 import PinGateModal from "../../components/shared/PinGateModal";
+import { useTranslation } from "react-i18next";
 
 /**
  * Format ISO date string (YYYY-MM-DD or ISO-8601) to DD-MM-YYYY per Global Rules.
@@ -32,6 +33,7 @@ function formatDate(isoStr) {
 }
 
 export default function DocumentVault() {
+  const { t } = useTranslation();
   const {
     household,
     activeMemberId,
@@ -108,7 +110,7 @@ export default function DocumentVault() {
           </div>
           <div className="flex flex-wrap items-center gap-2.5">
             <h2 className="text-base font-semibold text-slate-900 dark:text-[#EDEDED]">
-              Document Ledger (DigiLocker URI Pointers)
+              {t("profile.documentLedgerTitle")}
             </h2>
 
             {/* Clickable PII Tooltip Badge (Rule 20 / Item 6) */}
@@ -117,17 +119,17 @@ export default function DocumentVault() {
                 type="button"
                 onClick={() => setShowPiiTooltip((prev) => !prev)}
                 className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900 text-blue-700 dark:text-blue-300 text-[11px] font-bold cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
-                aria-label="Zero Raw PII Storage Protocol Information"
+                aria-label={t("profile.zeroPiiProtocol")}
               >
                 <ShieldCheck size={13} className="text-blue-600 dark:text-blue-400" />
-                <span>Zero Raw PII Storage Protocol</span>
+                <span>{t("profile.zeroPiiProtocol")}</span>
                 <Info size={12} className="text-blue-500" />
               </button>
 
               {showPiiTooltip && (
                 <div className="absolute left-0 top-8 z-50 w-80 p-4 rounded-xl bg-white dark:bg-[#0F1115] shadow-xl border border-slate-200 dark:border-white/[0.08] text-xs space-y-2 animate-in fade-in">
                   <div className="flex items-center justify-between font-bold text-slate-900 dark:text-[#EDEDED]">
-                    <span>Data Privacy & Security Architecture</span>
+                    <span>{t("profile.privacyArchitecture")}</span>
                     <button
                       onClick={() => setShowPiiTooltip(false)}
                       className="text-slate-400 hover:text-slate-600 dark:hover:text-[#EDEDED] cursor-pointer"
@@ -136,16 +138,16 @@ export default function DocumentVault() {
                     </button>
                   </div>
                   <p className="text-slate-600 dark:text-[#8A8F98] leading-relaxed text-[11px]">
-                    NagrikPath never stores plaintext Aadhaar numbers, biometric payloads, or uploaded files on central servers.
+                    {t("profile.privacyDesc")}
                   </p>
                   <ul className="space-y-1.5 text-[11px] text-slate-500 dark:text-[#8A8F98]/80 pt-1">
                     <li className="flex items-start space-x-1.5">
                       <Check size={13} className="text-emerald-500 shrink-0 mt-0.5" />
-                      <span><strong>DigiLocker URI Pointers:</strong> All verification records link directly to authoritative issuer endpoints.</span>
+                      <span><strong>{t("profile.digilockerPointers")}: </strong>{t("profile.digilockerPointersDesc")}</span>
                     </li>
                     <li className="flex items-start space-x-1.5">
                       <Check size={13} className="text-emerald-500 shrink-0 mt-0.5" />
-                      <span><strong>Consent Gated:</strong> Every credential access requires the citizen's 4-digit PIN.</span>
+                      <span><strong>{t("profile.consentGated")}: </strong>{t("profile.consentGatedDesc")}</span>
                     </li>
                   </ul>
                 </div>
@@ -155,14 +157,14 @@ export default function DocumentVault() {
         </div>
 
         <span className="text-xs text-slate-400 dark:text-[#8A8F98] font-mono self-start sm:self-auto">
-          DigiLocker Pulled Records
+          {t("profile.digilockerRecords")}
         </span>
       </div>
 
       {/* MEMBER VAULT SWITCHER TABS (Single Source of Truth, Addendum 2) */}
       <div className="space-y-2">
         <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-[#8A8F98]">
-          Select Citizen Member Vault (Consent PIN Verification Required)
+          {t("profile.selectMemberVault")}
         </div>
         <div className="flex flex-wrap gap-2 border-b border-slate-100 dark:border-white/[0.08] pb-3">
           {members.map((m) => {
@@ -194,14 +196,14 @@ export default function DocumentVault() {
         <div className="p-4 rounded-xl bg-rose-500/[0.06] dark:bg-rose-500/[0.08] border border-rose-500/20 text-rose-900 dark:text-rose-200 space-y-1.5 animate-in fade-in">
           <div className="flex items-center space-x-2 font-bold text-xs">
             <AlertTriangle size={16} className="text-rose-600 dark:text-rose-400 shrink-0" />
-            <span>Inherited Entitlement Blocker Notice</span>
+            <span>{t("profile.inheritedBlockerTitle")}</span>
           </div>
           {/* Exact String from Specification (Item 6 & Addendum 3) */}
           <p className="text-xs font-semibold pl-6 text-rose-600 dark:text-rose-400">
-            Inherited from Head of Household — EXPIRED (31-03-2024)
+            {t("profile.inheritedExpired", { date: "31-03-2024" })}
           </p>
           <p className="text-[11px] text-rose-700/80 dark:text-rose-300/80 pl-6 leading-relaxed">
-            Welfare schemes requiring household income verification (e.g. Post-Matric OBC Scholarship) are currently blocked.
+            {t("profile.inheritedBlockedDesc")}
           </p>
           <div className="pl-6 pt-1">
             <button
@@ -212,7 +214,7 @@ export default function DocumentVault() {
               }}
               className="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:underline cursor-pointer inline-flex items-center space-x-1"
             >
-              <span>Switch to Ramesh Kumar's vault to pull latest issuance →</span>
+              <span>{t("profile.switchToRamesh")}</span>
             </button>
           </div>
         </div>
@@ -223,14 +225,14 @@ export default function DocumentVault() {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <span className="text-sm font-bold text-slate-900 dark:text-[#EDEDED]">
-              {currentMember.name}'s Verified Credentials Vault
+              {t("profile.memberVaultTitle", { name: currentMember.name })}
             </span>
             <span className="text-xs text-slate-400 dark:text-[#8A8F98] font-mono">
               ({currentMember.maskedAadhaar})
             </span>
           </div>
           <span className="text-xs text-slate-500 dark:text-[#8A8F98] font-medium">
-            {currentMember.documents?.length || 0} Registered Document(s)
+            {t("profile.registeredDocsCount", { count: currentMember.documents?.length || 0 })}
           </span>
         </div>
 
@@ -262,10 +264,10 @@ export default function DocumentVault() {
                       }`}
                     >
                       {isExpired ? (
-                        "EXPIRED"
+                        t("profile.expired")
                       ) : (
                         <>
-                          <span>VERIFIED</span>
+                          <span>{t("profile.verified")}</span>
                           <Check size={11} />
                         </>
                       )}
@@ -273,17 +275,17 @@ export default function DocumentVault() {
                   </div>
 
                   <div className="space-y-1.5 text-[11px] text-slate-500 dark:text-[#8A8F98] flex-1">
-                    <div>Issuer: <span className="font-semibold text-slate-700 dark:text-[#EDEDED]">{doc.issuer}</span></div>
+                    <div>{t("profile.issuer")}: <span className="font-semibold text-slate-700 dark:text-[#EDEDED]">{doc.issuer}</span></div>
                     <div className="font-mono text-[10px] truncate text-slate-400 dark:text-[#8A8F98]/70">URI: {doc.uri}</div>
-                    <div>Issued On: <span className="font-medium text-slate-600 dark:text-[#EDEDED]">{formatDate(doc.issuedOn)}</span></div>
+                    <div>{t("profile.issuedOn")}: <span className="font-medium text-slate-600 dark:text-[#EDEDED]">{formatDate(doc.issuedOn)}</span></div>
                     {doc.expiresOn && (
                       <div className={isExpired ? "font-bold text-red-600 dark:text-red-400" : ""}>
-                        Expires On: {formatDate(doc.expiresOn)}
+                        {t("profile.expiresOn")}: {formatDate(doc.expiresOn)}
                       </div>
                     )}
                     {isExpired && (
                       <div className="font-semibold text-red-600 dark:text-red-400 pt-1 text-xs">
-                        Document EXPIRED ({formatDate(doc.expiresOn)})
+                        {t("profile.docExpiredNotice", { date: formatDate(doc.expiresOn) })}
                       </div>
                     )}
                   </div>
@@ -301,10 +303,10 @@ export default function DocumentVault() {
                       {isPulling ? (
                         <>
                           <Loader2 size={14} className="animate-spin text-white" />
-                          <span>Pulling from State e-District...</span>
+                          <span>{t("profile.pullingFromEDistrict")}</span>
                         </>
                       ) : (
-                        <span>Fetch Latest Issuance (State e-District via DigiLocker Pull API)</span>
+                        <span>{t("profile.fetchLatestIssuance")}</span>
                       )}
                     </button>
                   </div>

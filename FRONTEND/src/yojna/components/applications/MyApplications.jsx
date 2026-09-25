@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useData } from '../../context/DataContext';
-import { useLang } from '../../context/LangContext';
+import { useTranslation } from '../../hooks/useYojnaTranslation';
 import { ApplicationDetailModal } from './ApplicationDetailModal';
 import {
   Search,
@@ -17,7 +17,7 @@ import {
 
 export const MyApplications = () => {
   const { applications } = useData();
-  const { t } = useLang();
+  const { t } = useTranslation();
 
   const [activeTab, setActiveTab] = useState('all'); // 'all' | 'personal' | 'business'
   const [searchQuery, setSearchQuery] = useState('');
@@ -49,21 +49,21 @@ export const MyApplications = () => {
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
             <CheckCircle2 className="w-3.5 h-3.5" />
-            <span>Approved</span>
+            <span>{t('yojnaSetu.statusApproved', 'Approved')}</span>
           </span>
         );
       case 'Rejected':
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20">
             <XCircle className="w-3.5 h-3.5" />
-            <span>Rejected</span>
+            <span>{t('yojnaSetu.statusRejected', 'Rejected')}</span>
           </span>
         );
       default:
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
             <Clock className="w-3.5 h-3.5" />
-            <span>{status || 'In Review'}</span>
+            <span>{status === 'Approved' ? t('yojnaSetu.statusApproved', 'Approved') : status === 'Rejected' ? t('yojnaSetu.statusRejected', 'Rejected') : t('yojnaSetu.statusInReview', status || 'In Review')}</span>
           </span>
         );
     }
@@ -200,8 +200,8 @@ export const MyApplications = () => {
                   onClick={() => setSelectedApp(app)}
                   className="w-full py-2.5 rounded-xl bg-neutral-100 dark:bg-[#16191F] hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 text-neutral-800 dark:text-[#EDEDED] border border-neutral-200 dark:border-white/[0.08] font-semibold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <span>View Details</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>{t('yojnaSetu.actions.viewDetails', 'View Details')}</span>
+                  <ArrowRight className="w-4 h-4 rtl:rotate-180" />
                 </button>
               </div>
             </div>
